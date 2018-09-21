@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.couplets.CoupletsMapper">
+    
+	<sql id="coupletsColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.lexicon_id AS "lexicon.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.picture AS "picture",
+		a.details AS "details",
+		a.recommend AS "recommend",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+		lexicon.title AS "lexicon.title",
+		lexicon.type AS "lexicon.type",
+		lexicon.isoriginal AS "lexicon.isOriginal",
+				
+		size.name AS "size.name",
+				
+		frame.name AS "frame.name",
+				
+		craft.name AS "craft.name"
+	</sql>
+	
+	<sql id="coupletsJoins">
+		
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+	</sql>
+	
+    <resultMap type="Couplets" id="CoupletsResult" autoMapping="true">
+    	<result column="details" property="details"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="CoupletsResult" >
+		SELECT 
+			<include refid="coupletsColumns"/>
+		FROM cultural_couplets a
+		<include refid="coupletsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="CoupletsResult" >
+		SELECT 
+			<include refid="coupletsColumns"/>
+		FROM cultural_couplets a
+		<include refid="coupletsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="lexicon != null and lexicon.id != null and lexicon.id != ''">
+				AND a.lexicon_id = #{lexicon.id}
+			</if>
+			<if test="size != null and size.id != null and size.id != ''">
+				AND a.size_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{size.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{size.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{size.id},'%')</if>
+			</if>
+			<if test="frame != null and frame.id != null and frame.id != ''">
+				AND a.frame_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{frame.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{frame.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{frame.id},'%')</if>
+			</if>
+			<if test="craft != null and craft.id != null and craft.id != ''">
+				AND a.craft_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{craft.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{craft.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{craft.id},'%')</if>
+			</if>
+			<if test="recommend != null and recommend != ''">
+				AND a.recommend = #{recommend}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="CoupletsResult" >
+		SELECT 
+			<include refid="coupletsColumns"/>
+		FROM cultural_couplets a
+		<include refid="coupletsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_couplets(
+			id,
+			name,
+			lexicon_id,
+			size_id,
+			frame_id,
+			craft_id,
+			picture,
+			details,
+			recommend,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{lexicon.id},
+			#{size.id},
+			#{frame.id},
+			#{craft.id},
+			#{picture},
+			#{details},
+			#{recommend},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_couplets SET 	
+			name = #{name},
+			lexicon_id = #{lexicon.id},
+			size_id = #{size.id},
+			frame_id = #{frame.id},
+			craft_id = #{craft.id},
+			picture = #{picture},
+			details = #{details},
+			recommend = #{recommend},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_couplets
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_couplets SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Couplets" statementType="STATEMENT">
+		select * FROM cultural_couplets  where ${propertyName} = '${value}'
+	</select>
+	 <!--  分类查询  -->
+	<select id="getCoupletsList" resultMap="CoupletsResult">
+		select
+		a.id AS "id",
+		a.name AS "name",
+		a.lexicon_id AS "lexicon.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.picture AS "picture",
+		a.details AS "details",
+		a.recommend AS "recommend",
+		a.price AS "price",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		lexicon.title AS "lexicon.title",
+		lexicon.type AS "lexicon.type",
+		lexicon.isoriginal AS "lexicon.isOriginal",
+
+		size.name AS "size.name",
+		frame.name AS "frame.name",
+		craft.name AS "craft.name"
+
+		from cultural_couplets a
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+		where lexicon.type = #{type}
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from cultural_couplets a
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		where lexicon.type= #{type}
+	</select>
+</mapper>

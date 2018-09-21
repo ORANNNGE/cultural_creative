@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.finished.DecorationMapper">
+    
+	<sql id="decorationColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.intro AS "intro",
+		a.details AS "details",
+		a.picture AS "picture",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="decorationJoins">
+		
+	</sql>
+	
+    <resultMap type="Decoration" id="DecorationResult" autoMapping="true">
+    	<result column="details" property="details"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="DecorationResult" >
+		SELECT 
+			<include refid="decorationColumns"/>
+		FROM cultural_decoration a
+		<include refid="decorationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="DecorationResult" >
+		SELECT 
+			<include refid="decorationColumns"/>
+		FROM cultural_decoration a
+		<include refid="decorationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="DecorationResult" >
+		SELECT 
+			<include refid="decorationColumns"/>
+		FROM cultural_decoration a
+		<include refid="decorationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_decoration(
+			id,
+			title,
+			intro,
+			details,
+			picture,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{title},
+			#{intro},
+			#{details},
+			#{picture},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_decoration SET 	
+			title = #{title},
+			intro = #{intro},
+			details = #{details},
+			picture = #{picture},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_decoration
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_decoration SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Decoration" statementType="STATEMENT">
+		select * FROM cultural_decoration  where ${propertyName} = '${value}'
+	</select>
+
+	<!-- 得到最新4条数据 -->
+	<select id="getNewest" resultMap="DecorationResult" >
+		SELECT
+		<include refid="decorationColumns"/>
+		from cultural_decoration a limit 4
+	</select>
+</mapper>

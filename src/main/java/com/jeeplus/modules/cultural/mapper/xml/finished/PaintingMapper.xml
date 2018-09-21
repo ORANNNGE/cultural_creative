@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.finished.PaintingMapper">
+    
+	<sql id="paintingColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.author_id AS "author.id",
+		a.picture AS "picture",
+		a.intro AS "intro",
+		a.details AS "details",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+				
+		author.name AS "author.name",
+		author.type AS "author.type"
+	</sql>
+	
+	<sql id="paintingJoins">
+		
+		LEFT JOIN cultural_author author ON author.id = a.author_id
+	</sql>
+	
+    <resultMap type="Painting" id="PaintingResult" autoMapping="true">
+    	<result column="details" property="details"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="PaintingResult" >
+		SELECT 
+			<include refid="paintingColumns"/>
+		FROM cultural_painting a
+		<include refid="paintingJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="PaintingResult" >
+		SELECT 
+			<include refid="paintingColumns"/>
+		FROM cultural_painting a
+		<include refid="paintingJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+			<if test="author != null and author.id != null and author.id != ''">
+				AND a.author_id = #{author.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="PaintingResult" >
+		SELECT 
+			<include refid="paintingColumns"/>
+		FROM cultural_painting a
+		<include refid="paintingJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_painting(
+			id,
+			title,
+			author_id,
+			picture,
+			intro,
+			details,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{title},
+			#{author.id},
+			#{picture},
+			#{intro},
+			#{details},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_painting SET 	
+			title = #{title},
+			author_id = #{author.id},
+			picture = #{picture},
+			intro = #{intro},
+			details = #{details},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_painting
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_painting SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Painting" statementType="STATEMENT">
+		select * FROM cultural_painting  where ${propertyName} = '${value}'
+	</select>
+
+	<!-- 查询最新的发布的四条-->
+	<select id="getNewest" resultMap="PaintingResult" >
+		SELECT
+		<include refid="paintingColumns"/>
+		FROM cultural_painting a
+		<include refid="paintingJoins"/>
+		limit 4
+	</select>
+</mapper>

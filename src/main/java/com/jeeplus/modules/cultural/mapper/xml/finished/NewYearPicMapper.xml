@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.finished.NewYearPicMapper">
+    
+	<sql id="newYearPicColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.type AS "type",
+		a.picture AS "picture",
+		a.intro AS "intro",
+		a.details AS "details",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="newYearPicJoins">
+		
+	</sql>
+	
+    <resultMap type="NewYearPic" id="NewYearPicResult" autoMapping="true">
+    	<result column="details" property="details"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="NewYearPicResult" >
+		SELECT 
+			<include refid="newYearPicColumns"/>
+		FROM cultural_newyearpic a
+		<include refid="newYearPicJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="NewYearPicResult" >
+		SELECT 
+			<include refid="newYearPicColumns"/>
+		FROM cultural_newyearpic a
+		<include refid="newYearPicJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="title != null and title != ''">
+				AND a.title = #{title}
+			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="NewYearPicResult" >
+		SELECT 
+			<include refid="newYearPicColumns"/>
+		FROM cultural_newyearpic a
+		<include refid="newYearPicJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_newyearpic(
+			id,
+			title,
+			type,
+			picture,
+			intro,
+			details,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{title},
+			#{type},
+			#{picture},
+			#{intro},
+			#{details},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_newyearpic SET 	
+			title = #{title},
+			type = #{type},
+			picture = #{picture},
+			intro = #{intro},
+			details = #{details},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_newyearpic
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_newyearpic SET
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="NewYearPic" statementType="STATEMENT">
+		select * FROM cultural_newyearpic  where ${propertyName} = '${value}'
+	</select>
+
+	<!-- 查询最新的发布的四条-->
+	<select id="getNewest" resultMap="NewYearPicResult" >
+		SELECT
+		<include refid="newYearPicColumns"/>
+		FROM cultural_newyearpic a
+		<include refid="newYearPicJoins"/>
+		limit 4
+	</select>
+</mapper>

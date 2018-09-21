@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.couplets.LexiconMapper">
+    
+	<sql id="lexiconColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.rightline AS "rightline",
+		a.leftline AS "leftline",
+		a.topline AS "topline",
+		a.type AS "type",
+		a.isoriginal AS "isOriginal",
+		a.author_id AS "author.id",
+		a.meaning AS "meaning",
+		a.picture AS "picture",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+		author.name AS "author.name"
+	</sql>
+	
+	<sql id="lexiconJoins">
+		
+		LEFT JOIN cultural_author author ON author.id = a.author_id
+	</sql>
+	
+    <resultMap type="Lexicon" id="LexiconResult" autoMapping="true">
+    	<result column="meaning" property="meaning"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
+    </resultMap>
+    
+	<select id="get" resultMap="LexiconResult" >
+		SELECT 
+			<include refid="lexiconColumns"/>
+		FROM cultural_lexicon a
+		<include refid="lexiconJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="LexiconResult" >
+		SELECT 
+			<include refid="lexiconColumns"/>
+		FROM cultural_lexicon a
+		<include refid="lexiconJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="title != null and title != ''">
+				AND a.title = #{title}
+			</if>
+			<if test="rightline != null and rightline != ''">
+				AND a.rightline = #{rightline}
+			</if>
+			<if test="leftline != null and leftline != ''">
+				AND a.leftline = #{leftline}
+			</if>
+			<if test="topline != null and topline != ''">
+				AND a.topline = #{topline}
+			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
+			<if test="isOriginal != null and isOriginal != ''">
+				AND a.isoriginal = #{isOriginal}
+			</if>
+			<if test="author != null and author.id != null and author.id != ''">
+				AND a.author_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{author.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{author.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{author.id},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultMap="LexiconResult" >
+		SELECT 
+			<include refid="lexiconColumns"/>
+		FROM cultural_lexicon a
+		<include refid="lexiconJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_lexicon(
+			id,
+			title,
+			rightline,
+			leftline,
+			topline,
+			type,
+			isoriginal,
+			author_id,
+			meaning,
+			picture,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{title},
+			#{rightline},
+			#{leftline},
+			#{topline},
+			#{type},
+			#{isOriginal},
+			#{author.id},
+			#{meaning},
+			#{picture},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_lexicon SET 	
+			title = #{title},
+			rightline = #{rightline},
+			leftline = #{leftline},
+			topline = #{topline},
+			type = #{type},
+			isoriginal = #{isOriginal},
+			author_id = #{author.id},
+			meaning = #{meaning},
+			picture = #{picture},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_lexicon
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_lexicon SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Lexicon" statementType="STATEMENT">
+		select * FROM cultural_lexicon  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
