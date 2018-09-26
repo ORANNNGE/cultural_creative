@@ -9,6 +9,9 @@ if(pathName.indexOf('couplets') >= 0){
 if(pathName.indexOf('lexicon') >= 0){
     $('#toLexicon').attr('class','foot-c on-c');
 }
+if(pathName.indexOf('personal') >= 0){
+    $('#toPersonal').attr('class','foot-d on-d');
+}
 // if(pathName == 'to/index'){
 //     $('#toIndex').attr('class','foot-a on-a');
 // }
@@ -28,4 +31,8 @@ function toCouplets(){
 function toLexicon(){
     if(pathName == '/to/lexicon') return;
     location.href = 'lexicon';
+}
+function toPersonal(){
+    if(pathName == '/to/personal') return;
+    location.href = 'personal';
 }

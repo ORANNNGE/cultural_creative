@@ -159,7 +159,7 @@
         </div>
     </div>
     <!--底部Tab-->
-    <jsp:include page="include/include.jsp"></jsp:include>
+    <jsp:include page="include/footerNavigation.jsp"></jsp:include>
 </div>
 </body>
 <script type="text/javascript" src="../webpage/modules/cultural/fore/js/jquery.1.8.2.min.js" ></script>
