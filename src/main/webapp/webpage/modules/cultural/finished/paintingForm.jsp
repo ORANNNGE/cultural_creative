@@ -5,7 +5,10 @@
 	<title>美术作品管理</title>
 	<meta name="decorator" content="ani"/>
 	<!-- SUMMERNOTE -->
-	<%@include file="/webpage/include/summernote.jsp" %>
+    <script type="text/javascript" charset="utf-8" src="${ctxStatic}/plugin/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="${ctxStatic}/plugin/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="${ctxStatic}/plugin/ueditor/ueditor.all.js"></script>
+
 	<script type="text/javascript">
 		var validateForm;
 		var $table; // 父页面table表格id
@@ -14,12 +17,13 @@
 		  if(validateForm.form()){
 			  $table = table;
 			  $topIndex = index;
+              var docContent = UE.getEditor('editor').getContent();
+              $("#details").val(docContent);
 			  jp.loading();
-					$("input[name='details']").val($('#details').summernote('code'));//取富文本的值
+					//$("input[name='details']").val($('#details').summernote('code'));//取富文本的值
 			  $("#inputForm").submit();
 			  return true;
 		  }
-
 		  return false;
 		}
 
@@ -47,19 +51,19 @@
 					}
 				}
 			});
-			
+
 				//富文本初始化
-			$('#details').summernote({
+			/*$('#details').summernote({
 				height: 300,
                 lang: 'zh-CN'
-            });
+            });*/
 		});
 	</script>
 </head>
 <body class="bg-white">
 		<form:form id="inputForm" modelAttribute="painting" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>	
+		<sys:message content="${message}"/>
 		<table class="table table-bordered">
 		   <tbody>
 				<tr>
@@ -87,10 +91,12 @@
 				<tr>
 					<td class="width-15 active"><label class="pull-right">详情：</label></td>
 					<td class="width-35">
-                        <input type="hidden" name="details"/>
+                        <%--<input type="hidden" name="details"/>
 						<div id="details">
                           ${fns:unescapeHtml(painting.details)}
-                        </div>
+                        </div>--%>
+                                <form:hidden path="details" htmlEscape="true"/>
+                            <script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
 					</td>
 					<td class="width-15 active"><label class="pull-right">价格：</label></td>
 					<td class="width-35">
@@ -108,5 +114,18 @@
 		 	</tbody>
 		</table>
 	</form:form>
+<script type="text/javascript">
+	var ue = UE.getEditor('editor');
+	$(function () {
+		var content = $('#details').val();
+		//判断ueditor 编辑器是否创建成功
+		ue.addListener("ready", function () {
+			// editor准备好之后才可以使用
+			// ue.setContent(content);
+			ue.setContent("");
+			ue.execCommand('inserthtml', jp.unescapeHTML(content));
+		});
+	});
+</script>
 </body>
 </html>

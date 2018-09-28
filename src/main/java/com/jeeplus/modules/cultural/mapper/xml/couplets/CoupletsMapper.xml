@@ -229,4 +229,12 @@
 		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
 		where lexicon.type= #{type}
 	</select>
+
+	<select id="getById" resultMap="CoupletsResult">
+		SELECT
+		<include refid="coupletsColumns"/>
+		FROM cultural_couplets a
+		<include refid="coupletsJoins"/>
+		where a.id = #{id}
+	</select>
 </mapper>

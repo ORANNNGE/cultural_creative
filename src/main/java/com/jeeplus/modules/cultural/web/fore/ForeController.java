@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 import java.util.List;
@@ -205,5 +206,11 @@ public class ForeController {
         PageInfo page = new PageInfo(decorationList);
         json.put("page",page);
         return json;
+    }
+
+    @RequestMapping(value="get")
+    @ResponseBody
+    public String get(HttpServletRequest request){
+        return "1545jj";
     }
 }

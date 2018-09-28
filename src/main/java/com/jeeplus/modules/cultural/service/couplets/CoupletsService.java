@@ -32,6 +32,9 @@ public class CoupletsService extends CrudService<CoupletsMapper, Couplets> {
 		}
 		return datas;
 	}
+	public Couplets getById(String id){
+		return mapper.getById(id);
+	}
 	public int getCount(String type){
 		return mapper.getCount(type);
 	}

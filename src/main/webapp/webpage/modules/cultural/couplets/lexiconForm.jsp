@@ -5,8 +5,12 @@
 	<title>词库管理</title>
 	<meta name="decorator" content="ani"/>
 	<!-- SUMMERNOTE -->
-	<%@include file="/webpage/include/summernote.jsp" %>
+	<script type="text/javascript" charset="utf-8" src="${ctxStatic}/plugin/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="${ctxStatic}/plugin/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="${ctxStatic}/plugin/ueditor/ueditor.all.js"></script>
+
 	<script type="text/javascript">
+
 		var validateForm;
 		var $table; // 父页面table表格id
 		var $topIndex;//弹出窗口的 index
@@ -14,8 +18,12 @@
 		  if(validateForm.form()){
 			  $table = table;
 			  $topIndex = index;
+
+              var docContent = UE.getEditor('editor').getContent();
+              $("#meaning").val(docContent);
+
 			  jp.loading();
-					$("input[name='meaning']").val($('#meaning').summernote('code'));//取富文本的值
+					//$("input[name='meaning']").val($('#meaning').summernote('code'));//取富文本的值
 			  $("#inputForm").submit();
 			  return true;
 		  }
@@ -49,10 +57,10 @@
 			});
 			
 				//富文本初始化
-			$('#meaning').summernote({
+			/*$('#meaning').summernote({
 				height: 300,
                 lang: 'zh-CN'
-            });
+            });*/
 		});
 	</script>
 </head>
@@ -99,11 +107,13 @@
 							 title="选择作者" cssClass="form-control required" fieldLabels="作者" fieldKeys="name" searchLabels="作者" searchKeys="name" ></sys:gridselect>
 					</td>
 					<td class="width-15 active"><label class="pull-right">寓意：</label></td>
-					<td class="width-35">
-                        <input type="hidden" name="meaning"/>
+					<td class="width-55">
+                        <%--<input type="hidden" name="meaning"/>
 						<div id="meaning">
                           ${fns:unescapeHtml(lexicon.meaning)}
-                        </div>
+                        </div>--%>
+							<form:hidden path="meaning" htmlEscape="true"/>
+							<script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
 					</td>
 				</tr>
 				<tr>
@@ -120,5 +130,18 @@
 		 	</tbody>
 		</table>
 	</form:form>
+<script type="text/javascript">
+	var ue = UE.getEditor('editor');
+		$(function () {
+			var content = $('#meaning').val();
+			//判断ueditor 编辑器是否创建成功
+			ue.addListener("ready", function () {
+				// editor准备好之后才可以使用
+				// ue.setContent(content);
+				ue.setContent("");
+				ue.execCommand('inserthtml', jp.unescapeHTML(content));
+			});
+	});
+</script>
 </body>
 </html>
