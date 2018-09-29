@@ -32,7 +32,9 @@ public class CalligraphyService extends CrudService<CalligraphyMapper, Calligrap
 		return datas;
 	}
 	public Calligraphy get(String id) {
-		return super.get(id);
+		Calligraphy data = super.get(id);
+		data.setPicture(data.getPicture().replace("|",""));
+		return data;
 	}
 	
 	public List<Calligraphy> findList(Calligraphy calligraphy) {

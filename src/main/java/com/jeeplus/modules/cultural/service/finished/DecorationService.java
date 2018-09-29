@@ -32,7 +32,9 @@ public class DecorationService extends CrudService<DecorationMapper, Decoration>
 		return datas;
 	}
 	public Decoration get(String id) {
-		return super.get(id);
+		Decoration data = super.get(id);
+		data.setPicture(data.getPicture().replace("|",""));
+		return data;
 	}
 	
 	public List<Decoration> findList(Decoration decoration) {

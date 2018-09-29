@@ -33,7 +33,9 @@ public class NewYearPicService extends CrudService<NewYearPicMapper, NewYearPic>
 		return datas;
 	}
 	public NewYearPic get(String id) {
-		return super.get(id);
+		NewYearPic data = super.get(id);
+		data.setPicture(data.getPicture().replace("|",""));
+		return data;
 	}
 	
 	public List<NewYearPic> findList(NewYearPic newYearPic) {

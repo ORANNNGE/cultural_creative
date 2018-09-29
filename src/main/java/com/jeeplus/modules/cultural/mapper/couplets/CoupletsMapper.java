@@ -18,5 +18,4 @@ import java.util.List;
 public interface CoupletsMapper extends BaseMapper<Couplets> {
     List<Couplets> getCoupletsList(String type);
     int getCount(String type);
-    Couplets getById(String id);
 }

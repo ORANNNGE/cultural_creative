@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <!--适配当前屏幕-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <link rel="stylesheet" href="../webpage/modules/cultural/fore/css/base.css" />
-    <link rel="stylesheet" href="../webpage/modules/cultural/fore/css/style.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <title>文创天下·楹联</title>
 </head>
 <body>
@@ -15,9 +15,9 @@
     <div class="lunbo" id="lunbo">
         <div class="bd">
             <ul>
-                <li><a href="#"><img src="../webpage/modules/cultural/fore/images/index-bg.png" /></a></li>
-                <li><a href="#"><img src="../webpage/modules/cultural/fore/images/index-bg.png" /></a></li>
-                <li><a href="#"><img src="../webpage/modules/cultural/fore/images/index-bg.png" /></a></li>
+                <li><a href="#"><img src="images/index-bg.png" /></a></li>
+                <li><a href="#"><img src="images/index-bg.png" /></a></li>
+                <li><a href="#"><img src="images/index-bg.png" /></a></li>
             </ul>
         </div>
         <div class="hd">
@@ -38,7 +38,7 @@
             <div class="bd">
                 <ul >
                     <li  v-for="item in gvmtAndCpnData">
-                        <a class="unit-i-a" href="###"><div class="unit-img"><img v-bind:src=" '../' + item.picture" /></div></a>
+                        <a class="unit-i-a" href="###"><div class="unit-img"><img :src="item.picture" /></div></a>
                         <a class="unit-a" href="###" v-text="item.name"></a>
                         <div class="unit-txt">
                             <span v-text="'￥'+item.price"></span>
@@ -48,7 +48,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="midd-more-a"><a href="index-govAndComp">查看更多>></a></div>
+            <div class="midd-more-a"><a :href="govAndComp">查看更多>></a></div>
         </div>
         <!--家庭成品楹联-->
         <div class="mid-tit home-tit">
@@ -58,7 +58,7 @@
             <div class="home-ul">
                 <ul>
                     <li v-for="item in homeData">
-                        <a class="home-i-a" href="###"><div class="home-img"><img :src=" '../' + item.picture" /></div></a>
+                        <a class="home-i-a" href="###"><div class="home-img"><img :src="item.picture" /></div></a>
                         <a class="home-a" href="###" v-text="item.name"></a>
                         <div class="home-txt">
                             <span v-text=" '￥' + item.price"></span>
@@ -68,7 +68,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="midd-more-a"><a href="index-home">查看更多>></a></div>
+            <div class="midd-more-a"><a href="home">查看更多>></a></div>
         </div>
         <!--年画作品-->
         <div class="mid-tit year-tit">
@@ -88,7 +88,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="midd-more-a"><a href="index-newYearPic">查看更多>></a></div>
+            <div class="midd-more-a"><a href="newYearPic">查看更多>></a></div>
         </div>
         <!--书画作品展示-->
         <div class="mid-tit year-tit">
@@ -103,9 +103,9 @@
                     <ul>
                         <li v-for="(item,index) in clgpAndPntData">
                             <div v-if="index%2 != 1">
-                                <div class="igra-bg"><img src="../webpage/modules/cultural/fore/images/index-shbg.png" /> </div>
+                                <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
                                 <div class="igra-div">
-                                    <div class="igra-img"><img :src=" '../' + item.picture" /></div>
+                                    <div class="igra-img"><img :src="item.picture" /></div>
                                     <div class="igra-txt">
                                         <h3 v-text="item.author.name"></h3>
                                         <h3>作品展示：</h3>
@@ -118,7 +118,7 @@
                             </div>
 
                             <div v-else>
-                                <div class="igra-bg"><img src="../webpage/modules/cultural/fore/images/index-shbg.png" /> </div>
+                                <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
                                 <div class="igra-div igras">
                                     <div class=  "igra-txt">
                                         <h3 v-text="item.author.name"></h3>
@@ -128,14 +128,14 @@
                                             <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
                                         </div>
                                     </div>
-                                    <div class="igra-img"><img :src="'../'+item.picture" /></div>
+                                    <div class="igra-img"><img :src="item.picture" /></div>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="midd-more-a"><a href="index-clgrafAndPaint">查看更多>></a></div>
+            <div class="midd-more-a"><a href="clgrafAndPaint">查看更多>></a></div>
         </div>
         <!--室内装饰、工艺品-->
         <div class="mid-tit year-tit">
@@ -145,7 +145,7 @@
             <div class="year-ul">
                 <ul>
                     <li v-for="item in decorationsData">
-                        <div class="year-img"><img :src="''+item.picture" /></div>
+                        <div class="year-img"><img :src="item.picture" /></div>
                         <div class="year-txt">
                             <p class="year-p" v-text="item.details">室内装饰品</p>
                             <div class="year-a clearfix">
@@ -155,18 +155,18 @@
                     </li>
                 </ul>
             </div>
-            <div class="midd-more-a"><a href="index-decoration">查看更多>></a></div>
+            <div class="midd-more-a"><a href="decoration">查看更多>></a></div>
         </div>
     </div>
     <!--底部Tab-->
     <jsp:include page="include/footerNavigation.jsp"></jsp:include>
 </div>
 </body>
-<script type="text/javascript" src="../webpage/modules/cultural/fore/js/jquery.1.8.2.min.js" ></script>
-<script src="../webpage/modules/cultural/fore/js/footerNavigation.js"></script>
+<script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
+<script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
+<script src="js/footerNavigation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../webpage/modules/cultural/fore/js/index.js"></script>
-<script type="text/javascript" src="../webpage/modules/cultural/fore/js/TouchSlide.1.1.js" ></script>
+<script src="js/index.js"></script>
 <script type="text/javascript">
     TouchSlide({
         slideCell:"#lunbo",

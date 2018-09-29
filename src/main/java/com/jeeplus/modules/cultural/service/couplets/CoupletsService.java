@@ -32,14 +32,13 @@ public class CoupletsService extends CrudService<CoupletsMapper, Couplets> {
 		}
 		return datas;
 	}
-	public Couplets getById(String id){
-		return mapper.getById(id);
-	}
 	public int getCount(String type){
 		return mapper.getCount(type);
 	}
 	public Couplets get(String id) {
-		return super.get(id);
+		Couplets data = super.get(id);
+		data.setPicture(data.getPicture().replace("|",""));
+		return data;
 	}
 	
 	public List<Couplets> findList(Couplets couplets) {

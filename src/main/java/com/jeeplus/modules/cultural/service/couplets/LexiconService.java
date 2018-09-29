@@ -23,7 +23,9 @@ import com.jeeplus.modules.cultural.mapper.couplets.LexiconMapper;
 public class LexiconService extends CrudService<LexiconMapper, Lexicon> {
 
 	public Lexicon get(String id) {
-		return super.get(id);
+		Lexicon data = super.get(id);
+		data.setPicture(data.getPicture().replace("|",""));
+		return data;
 	}
 	
 	public List<Lexicon> findList(Lexicon lexicon) {

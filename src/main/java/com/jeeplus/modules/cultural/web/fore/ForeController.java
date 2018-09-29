@@ -70,7 +70,7 @@ public class ForeController {
                 government.add(c);
             }
             if("2".equals(c.getLexicon().getType()) && company.size() < 4){
-                company.add(c);
+                  company.add(c);
             }
             if("3".equals(c.getLexicon().getType()) && home.size() < 4){
                 home.add(c);
@@ -208,9 +208,143 @@ public class ForeController {
         return json;
     }
 
-    @RequestMapping(value="get")
+    /**
+     *  根据id获取楹联
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getCoupletsById")
     @ResponseBody
-    public String get(HttpServletRequest request){
-        return "1545jj";
+    public AjaxJson getCoupletsById(String id){
+        AjaxJson json = new AjaxJson();
+        Couplets data = coupletsService.get(id);
+        if(data != null){
+            json.setSuccess(true);
+            json.setErrorCode("1");
+            json.setMsg("查询couplets成功");
+            json.put("data",data);
+        }else{
+            json.setSuccess(false);
+            json.setErrorCode("0");
+            json.setMsg("未查询到");
+        }
+        return json;
     }
+
+    /**
+     *  根据id获取词库
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getLexiconById")
+    @ResponseBody
+    public AjaxJson getLexiconById(String id){
+        AjaxJson json = new AjaxJson();
+        Lexicon data = lexiconService.get(id);
+        if(data != null){
+            json.setSuccess(true);
+            json.setErrorCode("1");
+            json.setMsg("查询lexicon成功");
+            json.put("data",data);
+        }else{
+            json.setSuccess(false);
+            json.setErrorCode("0");
+            json.setMsg("未查询到");
+        }
+        return json;
+    }
+
+    /**
+     *  根据id获取书法作品
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getCalligraphyById")
+    @ResponseBody
+    public AjaxJson getCalligraphyById(String id){
+        AjaxJson json = new AjaxJson();
+        Calligraphy data = calligraphyService.get(id);
+        if(data != null){
+            json.setSuccess(true);
+            json.setErrorCode("1");
+            json.setMsg("查询calligraphy成功");
+            json.put("data",data);
+        }else{
+            json.setSuccess(false);
+            json.setErrorCode("0");
+            json.setMsg("未查询到");
+        }
+        return json;
+    }
+
+    /**
+     *  根据id获取书法作品
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getPaintingById")
+    @ResponseBody
+    public AjaxJson getPaintingById(String id){
+        AjaxJson json = new AjaxJson();
+        Painting data = paintingService.get(id);
+        if(data != null){
+            json.setSuccess(true);
+            json.setErrorCode("1");
+            json.setMsg("查询painting成功");
+            json.put("data",data);
+        }else{
+            json.setSuccess(false);
+            json.setErrorCode("0");
+            json.setMsg("未查询到");
+        }
+        return json;
+    }
+
+    /**
+     *  根据id获取书法作品
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getDecorationById")
+    @ResponseBody
+    public AjaxJson getDecorationById(String id){
+        AjaxJson json = new AjaxJson();
+        Decoration data = decorationService.get(id);
+        if(data != null){
+            json.setSuccess(true);
+            json.setErrorCode("1");
+            json.setMsg("查询decoration成功");
+            json.put("data",data);
+        }else{
+            json.setSuccess(false);
+            json.setErrorCode("0");
+            json.setMsg("未查询到");
+        }
+        return json;
+    }
+
+    /**
+     *  根据id获取书法作品
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getNewYearPicById")
+    @ResponseBody
+    public AjaxJson getNewYearPicById(String id){
+        AjaxJson json = new AjaxJson();
+        NewYearPic data = newYearPicService.get(id);
+        if(data != null){
+            json.setSuccess(true);
+            json.setErrorCode("1");
+            json.setMsg("查询newYearPic成功");
+            json.put("data",data);
+        }else{
+            json.setSuccess(false);
+            json.setErrorCode("0");
+            json.setMsg("未查询到");
+        }
+        return json;
+    }
+
+
 }

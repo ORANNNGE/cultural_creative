@@ -5,18 +5,16 @@
     <meta charset="utf-8" />
     <!--适配当前屏幕-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <link rel="stylesheet" href="../webpage/modules/cultural/fore/css/base.css" />
-    <link rel="stylesheet" href="../webpage/modules/cultural/fore/css/style.css" />
-    <link rel="stylesheet" href="../webpage/modules/cultural/fore/css/more-style.css" />
-    <script type="text/javascript" src="../webpage/modules/cultural/fore/js/jquery.1.8.2.min.js" ></script>
-    <script type="text/javascript" src="../webpage/modules/cultural/fore/js/TouchSlide.1.1.js" ></script>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/more-style.css" />
     <title>单位成品楹联</title>
 </head>
 <body>
 <div class="index-body" id="govAndComp">
     <!--图片-->
     <div class="lunbo" id="lunbo">
-        <img src="../webpage/modules/cultural/fore/images/index-bg.png" />
+        <img src="images/index-bg.png" />
     </div>
     <div class="middle">
         <div class="unit">
@@ -28,7 +26,7 @@
             <div class="bd">
                 <ul>
                     <li v-for="item in couplets">
-                        <a class="unit-i-a" href="###"><div class="unit-img"><img v-bind:src=" '../' + item.picture" /></div></a>
+                        <a class="unit-i-a" href="###"><div class="unit-img"><img v-bind:src="item.picture" /></div></a>
                         <a class="unit-a" href="###" v-text="item.name"></a>
                         <div class="unit-txt">
                             <span v-text="'￥'+item.price"></span>
@@ -45,11 +43,11 @@
     <jsp:include page="include/footerNavigation.jsp"></jsp:include>
 </div>
 </body>
-<script type="text/javascript" src="../webpage/modules/cultural/fore/js/jquery.1.8.2.min.js" ></script>
-<script type="text/javascript" src="../webpage/modules/cultural/fore/js/TouchSlide.1.1.js" ></script>
+<script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
+<script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../webpage/modules/cultural/fore/js/index-govAndComp.js"></script>
-<script src="../webpage/modules/cultural/fore/js/footerNavigation.js"></script>
+<script src="js/govAndComp.js"></script>
+<script src="js/footerNavigation.js"></script>
 </html>
 
 

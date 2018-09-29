@@ -32,7 +32,9 @@ public class PaintingService extends CrudService<PaintingMapper, Painting> {
 		return datas;
 	}
 	public Painting get(String id) {
-		return super.get(id);
+		Painting data = super.get(id);
+		data.setPicture(data.getPicture().replace("|",""));
+		return data;
 	}
 	
 	public List<Painting> findList(Painting painting) {
