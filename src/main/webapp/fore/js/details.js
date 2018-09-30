@@ -18,6 +18,9 @@ switch (pathName) {
     case "/fore/paintingDetails.jsp":
         url = "getPaintingById";
         break;
+    case "/fore/decorationDetails.jsp":
+        url = "getDecorationById";
+        break;
 
     default:
         url = "";
@@ -43,8 +46,8 @@ function getDetails(){
     return data;
 }
 
-//楹联详情
 var data = getDetails();
+//详情
 var details = data.data;
 //Vue实例
 new Vue({

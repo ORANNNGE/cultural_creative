@@ -75,6 +75,15 @@ var vm = new Vue({
             $('#calligraphies').attr("class","");
             $('#paintings').attr("class","on");
         },
+        //跳转到书画详情页
+        clgrafAndPaintDetails:function (id) {
+            var isCalligraphyOn =  $('#calligraphies').attr("class") == 'on' ? true : false;
+            var isPaintingsOn =  $('#paintings').attr("class") == 'on' ? true : false;
+            console.log(isCalligraphyOn);
+            console.log(isPaintingsOn);
+            if(isCalligraphyOn) location.href='calligraphyDetails.jsp?id='+id;
+            if(isPaintingsOn) location.href='paintingDetails.jsp?id='+id;
+        },
     }
 })
 //下拉加载

@@ -29,7 +29,7 @@
             <div class="cou-ul">
                 <ul>
                     <li v-for="item in couplets">
-                        <div class="cou-img"><img :src="item.picture" /></div>
+                        <a class="cou-img" :href="'coupletsDetails.jsp?id='+item.id"><img :src="item.picture" /></a>
                         <div class="cou-txt">
                             <p v-text="item.name"></p>
                             <div class="cou-a clearfix">

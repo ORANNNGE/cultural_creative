@@ -27,7 +27,7 @@
                         <li v-for="(item,index) in list">
                             <div v-if="index%2 != 1">
                                 <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
-                                <div class="igra-div">
+                                <div class="igra-div" @click="clgrafAndPaintDetails(item.id)">
                                     <div class="igra-img"><img :src="item.picture" /></div>
                                     <div class="igra-txt">
                                         <h3 v-text="item.author.name"></h3>
@@ -42,7 +42,7 @@
 
                             <div v-else>
                                 <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
-                                <div class="igra-div igras">
+                                <div class="igra-div igras" @click="clgrafAndPaintDetails(item.id)">
                                     <div class=  "igra-txt">
                                         <h3 v-text="item.author.name"></h3>
                                         <h3>作品展示：</h3>

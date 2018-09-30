@@ -147,7 +147,7 @@
             <div class="year-ul">
                 <ul>
                     <li v-for="item in decorationsData">
-                        <div class="year-img"><img :src="item.picture" /></div>
+                        <a class="year-img" :href="'decorationDetails.jsp?id='+item.id"><img :src="item.picture" /></a>
                         <div class="year-txt">
                             <p class="year-p" v-text="item.details">室内装饰品</p>
                             <div class="year-a clearfix">

@@ -48,15 +48,16 @@
             </div>
             <div class="coupm-intr">
                 <div class="c-intr-tit">作品简介</div>
-                <div class="c-book-p">
+                <div v-html="details"></div>
+               <%-- <div class="c-book-p">
                     <h3>作者：莫然</h3>
                     <p>书画是绘画和书法的统称。画，是人们生活中创造的结晶，画的起源久远，有着丰富的意思。"画中有诗，诗中有画"，中国古代，诗与画分不开。画的作品也体现了作者的情感和思想，画中常常包含着艺术家强烈的思想感情，因此艺术也深深地孕育在画中。书，一说是书法，也就是俗话说的所谓的字，另一种观点则认为书是指文化内涵。由此可知，书画是指绘画和书法，也可以理解为具有文化内涵的绘画。</p>
-                </div>
+                </div>--%>
             </div>
-            <div class="coupm-decor">
-                <div class="c-foot-img"><img src="images/index-b1.png" /> </div>
-                <div class="c-foot-img"><img src="images/index-b2.png" /> </div>
-            </div>
+            <%--<div class="coupm-decor">--%>
+                <%--<div class="c-foot-img"><img src="images/index-b1.png" /> </div>--%>
+                <%--<div class="c-foot-img"><img src="images/index-b2.png" /> </div>--%>
+            <%--</div>--%>
             <div class="coupm-a">
                 <a href="##">立即购买</a>
             </div>

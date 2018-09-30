@@ -50,15 +50,14 @@
                 <div class="c-intr-tit">商品介绍</div>
                 <div v-html="details"></div>
             </div>
-            <div class="coupm-decor">
+            <%--<div class="coupm-decor">
                 <div class="c-foot-img"><img src="images/index-s1.png" /> </div>
                 <div class="c-foot-img"><img src="images/index-s2.png" /> </div>
-            </div>
+            </div>--%>
             <div class="coupm-a">
                 <a href="##">立即购买</a>
             </div>
         </div>
-
     </div>
 </div>
 </body>
