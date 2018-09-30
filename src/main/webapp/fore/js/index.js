@@ -68,16 +68,16 @@ var indexVm = new Vue({
             this.gvmtAndCpnData = government;
             $('#companyCouplets').attr("class","");
             $('#governmentCouplets').attr("class","on");
-        }
+        },
+        //跳转到书画详情页
+        clgrafAndPaintDetails:function (id) {
+            var isCalligraphyOn =  $('#calligraphies').attr("class") == 'on' ? true : false;
+            var isPaintingsOn =  $('#paintings').attr("class") == 'on' ? true : false;
+            console.log(isCalligraphyOn);
+            console.log(isPaintingsOn);
+            if(isCalligraphyOn) location.href='calligraphyDetails.jsp?id='+id;
+            if(isPaintingsOn) location.href='paintingDetails.jsp?id='+id;
+        },
     }
 })
 
-/*
-function toIndexGovAndComp(){
-    var type = '1';
-    var governmentOn =  $('#governmentCouplets').attr("class") == 'on' ? true : false;
-    if(!governmentOn){
-        type = '2';
-    }
-    location.href = ''
-}*/

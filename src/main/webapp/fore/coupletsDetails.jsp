@@ -12,7 +12,7 @@
     <title>商品详情</title>
 </head>
 <body>
-<div class="index-body" id="coupletsDetails">
+<div class="index-body" id="details">
     <!--楹联成品库(商品详情)-->
     <div class="couplet-more">
         <div class="coupm-up">
@@ -51,19 +51,6 @@
             <div class="coupm-intr" >
                 <div class="c-intr-tit">商品介绍</div>
                 <div v-html="details"></div>
-                <%--<div class="c-intr-txt">
-                    <div class="c-intr-let">
-                        <p class="c-intr-let-p"><span>词：</span>上联：龙凤呈祥阳春锦绣</p>
-                        <p>下联：鲲鹏展翅白雪芳菲</p>
-                        <p>横批：龙凤呈祥</p>
-                    </div>
-                    <div class="c-intr-p">
-                        <p>楹联框：红色镂空楹联框</p>
-                        <p>抒写字体：行书</p>
-                        <p>设计色彩：金色，红色</p>
-                        <p>制作工艺：浮雕烫金</p>
-                    </div>
-                </div>--%>
             </div>
             <div class="c-intr-ul">
                 <ul>
@@ -162,7 +149,7 @@
 <script type="text/javascript" src="js/specification-change.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
-<script src="js/couplesDetails.js"></script>
+<script src="js/details.js"></script>
 </html>
 
 

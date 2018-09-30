@@ -60,8 +60,8 @@
             <div class="home-ul">
                 <ul>
                     <li v-for="item in homeData">
-                        <a class="home-i-a" href="###"><div class="home-img"><img :src="item.picture" /></div></a>
-                        <a class="home-a" href="###" v-text="item.name"></a>
+                        <a class="home-i-a" :href="'coupletsDetails.jsp?id='+item.id"><div class="home-img"><img :src="item.picture" /></div></a>
+                        <a class="home-a" :href="'coupletsDetails.jsp?id='+item.id" v-text="item.name"></a>
                         <div class="home-txt">
                             <span v-text=" '￥' + item.price"></span>
                             <p v-if="item.lexicon.isOriginal == '1'">原创</p>
@@ -80,7 +80,7 @@
             <div class="year-ul" id="newYearPics">
                 <ul>
                     <li v-for="item in newYearPicsData">
-                        <div class="year-img"><img :src="'../' + item.picture" /></div>
+                        <a class="year-img" :href="'newYearPicDetails.jsp?id='+item.id"><img :src="item.picture" /></a>
                         <div class="year-txt">
                             <p class="year-p" v-text="item.title"></p>
                             <div class="year-a clearfix">
@@ -104,10 +104,10 @@
                 <div class="igra-ul">
                     <ul>
                         <li v-for="(item,index) in clgpAndPntData">
-                            <div v-if="index%2 != 1">
+                                <div v-if="index%2 != 1">
                                 <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
-                                <div class="igra-div">
-                                    <div class="igra-img"><img :src="item.picture" /></div>
+                                <div class="igra-div" @click="clgrafAndPaintDetails(item.id)">
+                                    <a class="igra-img" ><img :src="item.picture" /></a>
                                     <div class="igra-txt">
                                         <h3 v-text="item.author.name"></h3>
                                         <h3>作品展示：</h3>
@@ -121,7 +121,7 @@
 
                             <div v-else>
                                 <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
-                                <div class="igra-div igras">
+                                <div class="igra-div igras" @click="clgrafAndPaintDetails(item.id)">
                                     <div class=  "igra-txt">
                                         <h3 v-text="item.author.name"></h3>
                                         <h3>作品展示：</h3>
