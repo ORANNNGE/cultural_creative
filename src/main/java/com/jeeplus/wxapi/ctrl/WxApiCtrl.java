@@ -99,6 +99,7 @@ public class WxApiCtrl extends BaseController {
             String timestamp = request.getParameter("timestamp");// 时间戳
             String nonce = request.getParameter("nonce");// 随机数
             String echostr = request.getParameter("echostr");// 随机字符串
+            System.out.println(echostr);
 
             // 校验成功返回  echostr，成功成为开发者；否则返回error，接入失败
             if (SignUtil.validSign(signature, token, timestamp, nonce)) {

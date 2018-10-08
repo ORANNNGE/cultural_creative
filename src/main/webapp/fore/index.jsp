@@ -166,6 +166,8 @@
 </body>
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
 <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>   
+<script src="js/myUtils.js"></script>
 <script src="js/footerNavigation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/index.js"></script>

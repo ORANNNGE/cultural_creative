@@ -86,6 +86,24 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+		        field: 'openid',
+		        title: '微信标识',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'nickname',
+		        title: '昵称',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'headimg',
+		        title: '头像',
+		        sortable: true
+		       
+		    }
+			,{
 		        field: 'createDate',
 		        title: '创建时间',
 		        sortable: true

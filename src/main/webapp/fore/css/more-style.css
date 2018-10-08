@@ -925,6 +925,10 @@
 	background: #fff;
 	border-radius: 50%;
 }
+/*个人中心图片圆角*/
+.person-up .perup-left .perup-tou img{
+	border-radius:50%;
+}
 .person-up .perup-left .perup-txt{
 	display: inline-block;
 	vertical-align: bottom;

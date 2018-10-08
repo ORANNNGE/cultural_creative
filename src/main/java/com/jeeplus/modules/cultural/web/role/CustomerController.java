@@ -38,7 +38,7 @@ import com.jeeplus.modules.cultural.service.role.CustomerService;
 /**
  * 用户Controller
  * @author orange
- * @version 2018-09-04
+ * @version 2018-10-07
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/role/customer")

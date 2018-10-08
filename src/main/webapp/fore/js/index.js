@@ -1,6 +1,32 @@
 /**
  * 首页index
  */
+//获取code
+var code = getParaFromURL('code');
+var state = getParaFromURL('state');
+// console.log('code:'+code);
+// console.log('state:'+state);
+function wechatLogin(){
+    $.ajax({
+        type:'post',
+        data:{'code':code},
+        dataType:'json',
+        url:'../wechat/login',
+        success:function (result) {
+            console.log(result);
+            layer.msg('授权登录成功');
+        },
+        error:function (result){
+            console.log(result);
+            layer.msg('授权登录失败');
+        }
+    })
+}
+//若code不为空，则执行微信登录
+if(code){
+    wechatLogin();
+}
+
 //首页的数据
 var data;
 //请求首页的数据

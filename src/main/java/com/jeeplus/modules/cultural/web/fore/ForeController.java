@@ -10,9 +10,11 @@ import com.jeeplus.modules.cultural.entity.finished.Calligraphy;
 import com.jeeplus.modules.cultural.entity.finished.Decoration;
 import com.jeeplus.modules.cultural.entity.finished.NewYearPic;
 import com.jeeplus.modules.cultural.entity.finished.Painting;
+import com.jeeplus.modules.cultural.entity.role.Customer;
 import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
+import com.jeeplus.modules.cultural.service.role.CustomerService;
 import com.jeeplus.modules.cultural.utils.PageUtils;
 import com.jeeplus.modules.sys.entity.Log;
 import org.slf4j.Logger;
@@ -42,6 +44,8 @@ public class ForeController {
     PaintingService paintingService;
     @Autowired
     LexiconService lexiconService;
+    @Autowired
+    CustomerService customerService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -346,5 +350,27 @@ public class ForeController {
         return json;
     }
 
+    /**
+     * 根据在session中存放的用户id，查询该用户的信息
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="getCustomerInfo")
+    @ResponseBody
+    public AjaxJson getCustomerInfo(HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        String id = (String) request.getSession().getAttribute("customerId");
+        Customer customer = customerService.get(id);
+        if(customer != null){
+            customer.setOpenid(null);
+            json.setMsg("查询用户成功");
+            json.put("data", customer);
+            return json;
+        }else{
+            json.setSuccess(false);
+            json.setMsg("查询失败");
+            return json;
+        }
+    }
 
 }

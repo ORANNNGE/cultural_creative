@@ -14,10 +14,10 @@
 <div class="index-body" id="personalCenter">
     <div class="person-center">
         <div class="person-up">
-            <div class="perup-left">
-                <div class="perup-tou"><img src="images/coup-people.png" /></div>
+            <div class="perup-left" id="customerInfo">
+                <div class="perup-tou"><img :src="data.headimg" /></div>
                 <div class="perup-txt">
-                    <h3>江南才子</h3>
+                    <h3 v-text="data.nickname"></h3>
                     <p><i><img src="images/per-v.png"/></i>会员用户</p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="permi-more">
-                <a href="###"><i><img src="images/per-jbzl.png"/></i>基本资料</a>
+                <a href="personal-base.jsp"><i><img src="images/per-jbzl.png"/></i>基本资料</a>
                 <a href="###"><i><img src="images/per-ggxx.png"/></i>公告信息</a>
                 <a href="###"><i><img src="images/per-ptjs.png"/></i>平台介绍</a>
                 <a href="###"><i><img src="images/per-lxkf.png"/></i>联系客服</a>
@@ -67,9 +67,9 @@
 </div>
 </body>
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
-<script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="js/lexicon.js"></script>
 <script src="js/footerNavigation.js"></script>
+<script src="js/customerInfo.js"></script>
 </html>
 

@@ -24,7 +24,7 @@
                     <li v-for="item in lexicons">
                         <div class="thesaurus-img"><img :src="'../' + item.picture" /></div>
                         <div class="thesaurus-btn">
-                            <a href="###">选定</a>
+                            <a :href="'lexiconDetails.jsp?id='+item.id">选定</a>
                         </div>
                     </li>
                 </ul>

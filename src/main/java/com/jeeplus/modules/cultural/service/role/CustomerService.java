@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.role.CustomerMapper;
 /**
  * 用户Service
  * @author orange
- * @version 2018-09-04
+ * @version 2018-10-07
  */
 @Service
 @Transactional(readOnly = true)

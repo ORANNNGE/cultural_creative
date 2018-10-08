@@ -5,7 +5,9 @@
 	<sql id="customerColumns">
 		a.id AS "id",
 		a.phonenum AS "phonenum",
-		a.password AS "password",
+		a.openid AS "openid",
+		a.nickname AS "nickname",
+		a.headimg AS "headimg",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -72,7 +74,9 @@
 		INSERT INTO cultural_customer(
 			id,
 			phonenum,
-			password,
+			openid,
+			nickname,
+			headimg,
 			create_by,
 			create_date,
 			update_by,
@@ -82,7 +86,9 @@
 		) VALUES (
 			#{id},
 			#{phonenum},
-			#{password},
+			#{openid},
+			#{nickname},
+			#{headimg},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -95,7 +101,9 @@
 	<update id="update">
 		UPDATE cultural_customer SET 	
 			phonenum = #{phonenum},
-			password = #{password},
+			openid = #{openid},
+			nickname = #{nickname},
+			headimg = #{headimg},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}

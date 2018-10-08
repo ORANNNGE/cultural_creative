@@ -10,13 +10,15 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 用户Entity
  * @author orange
- * @version 2018-09-04
+ * @version 2018-10-07
  */
 public class Customer extends DataEntity<Customer> {
 	
 	private static final long serialVersionUID = 1L;
 	private String phonenum;		// 手机号
-	private String password;		// 密码
+	private String openid;		// 微信标识
+	private String nickname;		// 昵称
+	private String headimg;		// 头像
 	
 	public Customer() {
 		super();
@@ -35,13 +37,31 @@ public class Customer extends DataEntity<Customer> {
 		this.phonenum = phonenum;
 	}
 	
-	@ExcelField(title="密码", align=2, sort=2)
-	public String getPassword() {
-		return password;
+	@ExcelField(title="微信标识", align=2, sort=2)
+	public String getOpenid() {
+		return openid;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+	
+	@ExcelField(title="昵称", align=2, sort=3)
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	
+	@ExcelField(title="头像", align=2, sort=4)
+	public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
 	}
 	
 }

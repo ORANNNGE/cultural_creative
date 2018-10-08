@@ -10,7 +10,7 @@ import com.jeeplus.modules.cultural.entity.role.Customer;
 /**
  * 用户MAPPER接口
  * @author orange
- * @version 2018-09-04
+ * @version 2018-10-07
  */
 @MyBatisMapper
 public interface CustomerMapper extends BaseMapper<Customer> {

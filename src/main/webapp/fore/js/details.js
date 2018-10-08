@@ -21,11 +21,14 @@ switch (pathName) {
     case "/fore/decorationDetails.jsp":
         url = "getDecorationById";
         break;
+    case "/fore/lexiconDetails.jsp":
+        url = "getLexiconById";
+        break;
 
     default:
         url = "";
 }
-
+console.log(url);
 var param = getParaFromURL('id');
 
 function getDetails(){
@@ -59,6 +62,11 @@ new Vue({
         details:function () {
             var text = this.data.details;
             return parseBlob(text);
+        },
+        meaning:function () {
+            var text = this.data.meaning;
+            return parseBlob(text);
         }
+
     }
 })

@@ -8,19 +8,16 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/more-style.css" />
-    <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
-    <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
-    <script type="text/javascript" src="js/specification-change.js" ></script>
     <title>商品详情</title>
 </head>
 <body>
-<div class="index-body">
+<div class="index-body" id="details">
     <!--楹联词库(商品详情)-->
     <div class="thesaurus-more">
         <div class="thesam-up coupm-up">
             <!--图片-->
             <div class="thesam-tit">
-                <div class="thesam-img"><img src="images/thesa-bg.png" /> </div></div>
+                <div class="thesam-img"><img :src="data.picture" /> </div></div>
             <!--样式选择-->
             <div class="thesam-div">
                 <!--选择字体或书法家-->
@@ -66,8 +63,8 @@
             </div>
             <div class="thesaurm-intr">
                 <div class="thesam-intr-tit">商品介绍</div>
-                <div class="thesam-intr-txt">
-                    <p>从传统的寓意来说，龙有喜水、好飞、通天、善变、灵异、征瑞、兆祸、示威等神性。凤有喜火、向阳、秉德、兆瑞、崇高、尚洁、示美、喻情等神性。神性的互补和对应，使龙和凤走到了一起：一个是众兽之君，一个是百鸟之王；一个变化飞腾而灵异，一个高雅美善而祥瑞；两者之间的美好的互助合作关系建立起来，便“龙凤呈祥”了。“龙凤呈祥”吉祥物寓意着会带来一派祥和之气！</p>
+                <div class="thesam-intr-txt" v-html="meaning">
+                    <%--<p>从传统的寓意来说，龙有喜水、好飞、通天、善变、灵异、征瑞、兆祸、示威等神性。凤有喜火、向阳、秉德、兆瑞、崇高、尚洁、示美、喻情等神性。神性的互补和对应，使龙和凤走到了一起：一个是众兽之君，一个是百鸟之王；一个变化飞腾而灵异，一个高雅美善而祥瑞；两者之间的美好的互助合作关系建立起来，便“龙凤呈祥”了。“龙凤呈祥”吉祥物寓意着会带来一派祥和之气！</p>--%>
                 </div>
             </div>
             <div class="thesam-a">
@@ -199,5 +196,10 @@
     </div>
 </div>
 </body>
+<script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
+<script type="text/javascript" src="js/specification-change.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/myUtils.js"></script>
+<script src="js/details.js"></script>
 </html>
 
