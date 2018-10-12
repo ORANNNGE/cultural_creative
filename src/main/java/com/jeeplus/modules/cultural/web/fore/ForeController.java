@@ -10,13 +10,17 @@ import com.jeeplus.modules.cultural.entity.finished.Calligraphy;
 import com.jeeplus.modules.cultural.entity.finished.Decoration;
 import com.jeeplus.modules.cultural.entity.finished.NewYearPic;
 import com.jeeplus.modules.cultural.entity.finished.Painting;
+import com.jeeplus.modules.cultural.entity.order.Address;
 import com.jeeplus.modules.cultural.entity.role.Customer;
 import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
+import com.jeeplus.modules.cultural.service.order.AddressService;
 import com.jeeplus.modules.cultural.service.role.CustomerService;
+import com.jeeplus.modules.cultural.utils.MsgUtil;
 import com.jeeplus.modules.cultural.utils.PageUtils;
 import com.jeeplus.modules.sys.entity.Log;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("fore")
@@ -46,6 +52,8 @@ public class ForeController {
     LexiconService lexiconService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    AddressService addressService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -371,6 +379,123 @@ public class ForeController {
             json.setMsg("查询失败");
             return json;
         }
+    }
+
+    @RequestMapping(value="getVerifyCode")
+    @ResponseBody
+    public AjaxJson getVerifyCode(String phoneNum,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        //从session 获取用户id
+        String customerId = (String)request.getSession().getAttribute("customerId");
+        //是否存在该用户
+        boolean isExist = customerService.get(customerId)==null?false:true;
+        //判断手机号格式
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+        if(phoneNum == null || "".equals(phoneNum)){
+            json.setSuccess(false);
+            json.setMsg("手机号不能为空");
+            return json;
+        }
+        boolean isPhoneNum = Pattern.matches("^1[356789]\\d{9}$", phoneNum);
+        if(!isPhoneNum){
+            json.setSuccess(false);
+            json.setMsg("手机号格式不正确");
+            return json;
+        }
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在，请联系客服");
+            return json;
+        }
+        String respMsg = MsgUtil.sendVerifyCode(phoneNum, request);
+        json.setMsg("已发送");
+        json.put("respMsg", respMsg);
+        return json;
+    }
+
+    @RequestMapping(value="bindPhoneNum")
+    @ResponseBody
+    public AjaxJson bindPhoneNum(String verifyCode,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+
+        //从session 获取用户id
+        String customerId = (String)request.getSession().getAttribute("customerId");
+        //从session 获取用户之前验证的手机号
+        String phoneNum = (String)request.getSession().getAttribute("verifyPhoneNum");
+        //从session 获取发送的验证码
+        String code = (String)request.getSession().getAttribute("code");
+
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+
+        if(verifyCode == null || "".equals(verifyCode)){
+            json.setSuccess(false);
+            json.setMsg("请输入验证码");
+            return json;
+        }
+
+//        //判断手机号格式
+//        boolean isPhoneNum = Pattern.matches("^1[356789]\\d{9}$", phoneNum);
+//        if(!isPhoneNum){
+//            json.setSuccess(false);
+//            json.setMsg("手机号格式不正确");
+//            return json;
+//        }
+
+        //验证手机号
+        if(!verifyCode.equals(code)){
+            json.setSuccess(false);
+            json.setMsg("验证码不正确");
+            return json;
+        }
+
+        customer.setPhonenum(phoneNum);
+        customerService.save(customer);
+        json.setMsg("绑定成功");
+        return json;
+    }
+
+    @RequestMapping(value="addAddress")
+    @ResponseBody
+    public AjaxJson addAddress(Address address,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String)request.getSession().getAttribute("customerId");
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+        address.setCustomer(customer);
+        addressService.save(address);
+        json.setMsg("添加成功");
+        return json;
     }
 
 }

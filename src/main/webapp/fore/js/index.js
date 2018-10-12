@@ -13,11 +13,11 @@ function wechatLogin(){
         dataType:'json',
         url:'../wechat/login',
         success:function (result) {
-            console.log(result);
-            layer.msg('授权登录成功');
-        },
-        error:function (result){
-            console.log(result);
+            console.log(result.msg);
+            if(result.success){
+                layer.msg('授权登录成功');
+                return;
+            }
             layer.msg('授权登录失败');
         }
     })

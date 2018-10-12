@@ -10,10 +10,13 @@ function getCustomerInfo(){
         async:false,
         success:function (result) {
             data = result.body;
+            console.log(data);
         }
     })
     return data;
 }
+
+
 
 var data = getCustomerInfo();
 var customerInfo = data.data;
@@ -21,5 +24,13 @@ new Vue({
     el:'#customerInfo',
     data:{
         data:customerInfo,
+    },
+    computed:{
+        isPhoneNum:function () {
+            phoneNum = this.data.phonenum;
+            if(phoneNum){
+                return true;
+            }
+        }
     }
 });

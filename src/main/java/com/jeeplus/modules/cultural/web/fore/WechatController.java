@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +49,6 @@ public class WechatController {
                 OAuthAccessToken token = WxApi.getOAuthAccessToken(account.getAppid(),account.getAppsecret(),code);
                 getOAuthUserInfoUrl = WxApi.getOAuthUserinfoUrl(token.getAccessToken(),token.getOpenid());
                 JSONObject jsonObject = WxApi.httpsRequest(getOAuthUserInfoUrl, HttpMethod.GET,null);
-
                 //若用户第一次登录，则把微信相关信息持久化,并将用户的id存入session
                 String nickname = jsonObject.getString("nickname");
                 String headimgurl = jsonObject.getString("headimgurl");
@@ -64,12 +64,9 @@ public class WechatController {
                 }else{
                     request.getSession().setAttribute("customerId", uniCustomer.getId());
                 }
-                log.debug(customer.getId());
-                log.debug(uniCustomer.getId());
-                log.debug(jsonObject.toJSONString());
-//                log.debug(jsonObject.getString("nickname"));
-//                log.debug(jsonObject.getString("headimgurl"));
-//                log.debug(jsonObject.getString("openid"));
+//                log.debug(customer.getId());
+//                log.debug(uniCustomer.getId());
+//                log.debug(jsonObject.toJSONString());
                 json.put("data",jsonObject);
             }catch (WxErrorException e){
                 e.printStackTrace();

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="perup-map">
-                <a href="###"><i><img src="images/per-map.png"/></i>收货地址</a>
+                <a href="personal-address.jsp"><i><img src="images/per-map.png"/></i>收货地址</a>
             </div>
         </div>
         <div class="person-middle">
