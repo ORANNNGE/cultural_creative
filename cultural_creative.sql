@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50520
 File Encoding         : 65001
 
-Date: 2018-09-30 21:37:40
+Date: 2018-10-12 21:03:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -718,6 +718,31 @@ CREATE TABLE `cms_site` (
 INSERT INTO `cms_site` VALUES ('1', 'Toteny软件研发中心', 'Toteny软件研发中心', '/userfiles/1/images/cms/site/2018/06/swhz.jpg', 'www.baidu.com', 'Toteny软件研发中心', 'Toteny软件研发中心', '', 'Toteny软件研发中心', '1', '2018-03-04 18:30:34', '1', '2018-06-05 14:16:52', '上海市青少年体育超级联赛网', '0', null);
 
 -- ----------------------------
+-- Table structure for cultural_address
+-- ----------------------------
+DROP TABLE IF EXISTS `cultural_address`;
+CREATE TABLE `cultural_address` (
+  `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
+  `name` varchar(64) DEFAULT NULL COMMENT '姓名',
+  `phonenum` varchar(64) DEFAULT NULL COMMENT '手机号',
+  `district` varchar(255) DEFAULT NULL COMMENT '地区',
+  `details` varchar(255) DEFAULT NULL COMMENT '详细地址',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
+  `customer_id` varchar(64) DEFAULT NULL COMMENT '用户',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货地址';
+
+-- ----------------------------
+-- Records of cultural_address
+-- ----------------------------
+INSERT INTO `cultural_address` VALUES ('1539344781669', 'aa', '123', '天津市/天津市/和平区', '123', '1', '2018-10-12 19:46:21', '1', '2018-10-12 20:04:49', '123', '0', '1538968164093');
+
+-- ----------------------------
 -- Table structure for cultural_author
 -- ----------------------------
 DROP TABLE IF EXISTS `cultural_author`;
@@ -890,20 +915,23 @@ DROP TABLE IF EXISTS `cultural_customer`;
 CREATE TABLE `cultural_customer` (
   `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
   `phonenum` varchar(64) DEFAULT NULL COMMENT '手机号',
-  `password` varchar(64) DEFAULT NULL COMMENT '密码',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
+  `openid` varchar(64) DEFAULT NULL COMMENT '微信标识',
+  `nickname` varchar(64) DEFAULT NULL COMMENT '昵称',
+  `headimg` varchar(255) DEFAULT NULL COMMENT '头像',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
 
 -- ----------------------------
 -- Records of cultural_customer
 -- ----------------------------
-INSERT INTO `cultural_customer` VALUES ('1536219366492', '123123123', '123123', '1', '2018-09-06 15:36:06', '1', '2018-09-06 15:36:06', '', '0');
+INSERT INTO `cultural_customer` VALUES ('1536219366492', '123123123', '1', '2018-09-06 15:36:06', '1', '2018-09-06 15:36:06', '', '0', null, null, null);
+INSERT INTO `cultural_customer` VALUES ('1538968164093', '17339609508', null, '2018-10-08 11:09:24', null, '2018-10-12 16:52:19', null, '0', 'ofyMt1AcpaRmqJWvffAPWZh2IH9E', '.......', 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKtjlLsAdNV7AfxZLM9A7mB7iczpwRA0Pg82V3Q64Bajecz9lD57HzfWgkWXQib4kxRSzibnMApxI8PQ/132');
 
 -- ----------------------------
 -- Table structure for cultural_decoration
@@ -1175,6 +1203,7 @@ INSERT INTO `gen_custom_obj` VALUES ('1536154736561', 'Lexicon', 'com.jeeplus.mo
 INSERT INTO `gen_custom_obj` VALUES ('1536154744976', 'Customer', 'com.jeeplus.modules.cultural.entity.role.Customer', '/cultural/role/customer/data', '1', '2018-09-05 21:39:04', '1', '2018-09-05 21:39:04', null, '0', 'cultural_customer');
 INSERT INTO `gen_custom_obj` VALUES ('1536154749330', 'Craft', 'com.jeeplus.modules.cultural.entity.spec.Craft', '/cultural/spec/craft/data', '1', '2018-09-05 21:39:09', '1', '2018-09-05 21:39:09', null, '0', 'cultural_craft');
 INSERT INTO `gen_custom_obj` VALUES ('1536218427799', 'NewYearPic', 'com.jeeplus.modules.cultural.entity.finished.NewYearPic', '/cultural/finished/newYearPic/data', '1', '2018-09-06 15:20:27', '1', '2018-09-06 15:20:27', null, '0', 'cultural_newyearpic');
+INSERT INTO `gen_custom_obj` VALUES ('1539344020654', 'Address', 'com.jeeplus.modules.cultural.entity.order.Address', '/cultural/order/address/data', '1', '2018-10-12 19:33:40', '1', '2018-10-12 19:33:40', null, '0', 'cultural_address');
 INSERT INTO `gen_custom_obj` VALUES ('ecbce45154ef4df6aa84c25e4ffc44d3', 'Category', 'com.jeeplus.modules.cms.entity.Category', '/cms/category/treeData', '1', '2018-06-03 21:52:36', '1', '2018-06-03 21:52:36', null, '0', 'cms_category');
 
 -- ----------------------------
@@ -1217,7 +1246,7 @@ INSERT INTO `gen_scheme` VALUES ('1528272641100', null, 'curd', 'com.jeeplus.mod
 INSERT INTO `gen_scheme` VALUES ('1528532846862', null, 'curd', 'com.jeeplus.modules', 'cms', '', '敏感词', '敏感词', 'toteny', '1528532743708', '1', '2018-06-09 16:27:27', '1', '2018-06-09 16:27:27', null, '0', '1', 'E:\\jeeplus');
 INSERT INTO `gen_scheme` VALUES ('1528532937018', null, 'curd', 'com.jeeplus.modules', 'cms', '', '操作日志', '操作日志', 'toteny', '1528532743637', '1', '2018-06-09 16:28:57', '1', '2018-06-09 16:35:55', null, '0', '1', 'E:\\jeeplus');
 INSERT INTO `gen_scheme` VALUES ('1535697806805', null, 'curd', 'com.jeeplus.modules', 'cultural', 'couplets', '词库', '词库', 'orange', '1535600568356', '1', '2018-08-31 14:43:26', '1', '2018-09-17 10:02:28', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
-INSERT INTO `gen_scheme` VALUES ('1536058081034', null, 'curd', 'com.jeeplus.modules', 'cultural', 'role', '用户', '用户', 'orange', '1536057974771', '1', '2018-09-04 18:48:01', '1', '2018-09-04 18:48:49', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
+INSERT INTO `gen_scheme` VALUES ('1536058081034', null, 'curd', 'com.jeeplus.modules', 'cultural', 'role', '用户', '用户', 'orange', '1536057974771', '1', '2018-09-04 18:48:01', '1', '2018-10-07 19:47:58', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
 INSERT INTO `gen_scheme` VALUES ('1536060786738', null, 'curd', 'com.jeeplus.modules', 'cultural', 'role', '安装人员', '安装人员', 'orange', '1536060734883', '1', '2018-09-04 19:33:06', '1', '2018-09-06 15:32:54', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
 INSERT INTO `gen_scheme` VALUES ('1536152003536', null, 'curd', 'com.jeeplus.modules', 'cultural', 'spec', '制作工艺', '制作工艺', 'orange', '1536113728511', '1', '2018-09-05 20:53:23', '1', '2018-09-05 21:13:59', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
 INSERT INTO `gen_scheme` VALUES ('1536152040331', null, 'curd', 'com.jeeplus.modules', 'cultural', 'spec', '楹联框', '楹联框', 'orange', '1536113322766', '1', '2018-09-05 20:54:00', '1', '2018-09-05 21:14:12', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
@@ -1229,6 +1258,7 @@ INSERT INTO `gen_scheme` VALUES ('1536220954894', null, 'curd', 'com.jeeplus.mod
 INSERT INTO `gen_scheme` VALUES ('1536237147810', null, 'curd', 'com.jeeplus.modules', 'cultural', 'finished', '美术作品', '美术作品', 'orange', '1536221321705', '1', '2018-09-06 20:32:27', '1', '2018-09-13 11:16:30', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
 INSERT INTO `gen_scheme` VALUES ('1536238152985', null, 'curd', 'com.jeeplus.modules', 'cultural', 'finished', '装饰品', '装饰品', 'orange', '1536237937603', '1', '2018-09-06 20:49:12', '1', '2018-09-13 11:16:51', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
 INSERT INTO `gen_scheme` VALUES ('1536801124780', null, 'curd', 'com.jeeplus.modules', 'cultural', 'role', '作者', '作者', 'orange', '1536800294309', '1', '2018-09-13 09:12:04', '1', '2018-09-13 10:55:16', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
+INSERT INTO `gen_scheme` VALUES ('1539343586387', null, 'curd', 'com.jeeplus.modules', 'cultural', 'order', '收货地址', '收货地址', 'orange', '1539343478281', '1', '2018-10-12 19:26:26', '1', '2018-10-12 20:00:14', null, '0', '2', 'D:\\idea_workspace\\cultural_creative');
 INSERT INTO `gen_scheme` VALUES ('184ab207fb494c5d9d54aab827973441', null, 'curd', 'com.jeeplus.modules', 'test', 'manytomany', '学生', '学生', 'lgf', '1d898672a4b848c0818c1c04c32c4498', '1', '2017-02-17 11:37:39', '1', '2017-06-20 18:41:20', null, '0', '1', 'C:\\j');
 INSERT INTO `gen_scheme` VALUES ('2917758f13eb4984934b2cbc9f94dc81', null, 'curd_many', 'com.thinkgem.jeesite', 'test', '', 'test', 'test', 'test', '73326f175c2d4a63b2d89820a79ba2eb', '8b454376c0434e2792a1dc57edf80dbd', '2016-01-03 21:45:23', '8b454376c0434e2792a1dc57edf80dbd', '2016-01-04 11:02:09', null, '0', null, null);
 INSERT INTO `gen_scheme` VALUES ('2d5ed2d9f55842d0aadf8609f69084a5', null, 'curd', 'com.jeeplus.modules', 'gen', '', '数据库表单', '数据库表单', 'lgf', 'd8d479aacdd8405fb487f733ea7c509b', '1', '2017-03-26 00:23:53', '1', '2017-03-26 00:23:53', null, '0', null, null);
@@ -1295,7 +1325,7 @@ INSERT INTO `gen_table` VALUES ('1528272541978', 'wx_msg_news_article', '图文�
 INSERT INTO `gen_table` VALUES ('1528532743637', 'cms_log', '日志表', 'CmsLog', '', '', '1', '2018-06-09 16:25:44', '1', '2018-06-09 16:35:48', null, '0', '', '0', 'cms_log', '日志表', '1', '1');
 INSERT INTO `gen_table` VALUES ('1528532743708', 'cms_sensitive', '敏感词', 'Sensitive', '', '', '1', '2018-06-09 16:25:44', null, '2018-06-09 16:26:49', null, '0', '1', '0', 'cms_sensitive', '敏感词', '1', '1');
 INSERT INTO `gen_table` VALUES ('1535600568356', 'cultural_lexicon', '词库', 'Lexicon', '', '', '1', '2018-08-30 11:42:48', null, '2018-09-17 10:02:13', null, '0', '1', '0', 'cultural_lexicon', '词库', '1', '1');
-INSERT INTO `gen_table` VALUES ('1536057974771', 'cultural_customer', '用户', 'Customer', '', '', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '1', '0', 'cultural_customer', '用户', '1', '1');
+INSERT INTO `gen_table` VALUES ('1536057974771', 'cultural_customer', '用户', 'Customer', '', '', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '1', '0', 'cultural_customer', '用户', '1', '1');
 INSERT INTO `gen_table` VALUES ('1536060734883', 'cultural_installer', '安装人员', 'Installer', '', '', '1', '2018-09-04 19:32:14', null, '2018-09-04 19:32:14', null, '0', '1', '0', 'cultural_installer', '安装人员', '1', '1');
 INSERT INTO `gen_table` VALUES ('1536111223495', 'cultural_typeface', '字体', 'Typeface', '', '', '1', '2018-09-05 09:33:43', null, '2018-09-05 10:09:30', null, '0', '1', '0', 'cultural_typeface', '字体', '1', '1');
 INSERT INTO `gen_table` VALUES ('1536111752245', 'cultural_size', '尺寸', 'Size', '', '', '1', '2018-09-05 09:42:32', null, '2018-09-05 10:09:12', null, '0', '1', '0', 'cultural_size', '尺寸', '1', '1');
@@ -1307,6 +1337,7 @@ INSERT INTO `gen_table` VALUES ('1536220051298', 'cultural_calligraphy', '书法
 INSERT INTO `gen_table` VALUES ('1536221321705', 'cultural_painting', '美术作品', 'Painting', '', '', '1', '2018-09-06 16:08:41', '1', '2018-09-13 11:16:25', null, '0', '1', '0', 'cultural_painting', '美术作品', '1', '1');
 INSERT INTO `gen_table` VALUES ('1536237937603', 'cultural_decoration', '装饰品', 'Decoration', '', '', '1', '2018-09-06 20:45:37', '1', '2018-09-13 11:16:46', null, '0', '1', '0', 'cultural_decoration', '装饰品', '1', '1');
 INSERT INTO `gen_table` VALUES ('1536800294309', 'cultural_author', '作者', 'Author', '', '', '1', '2018-09-13 08:58:14', null, '2018-09-13 10:55:03', null, '0', '1', '0', 'cultural_author', '作者', '1', '1');
+INSERT INTO `gen_table` VALUES ('1539343478281', 'cultural_address', '收货地址', 'Address', '', '', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '1', '0', 'cultural_address', '收货地址', '1', '1');
 INSERT INTO `gen_table` VALUES ('1b35940a16e041c0b997d7940b9baaf6', 'cms_article_img', '文章图片集', 'ArticleImg', '', '', '1', '2018-06-03 13:51:17', '1', '2018-06-03 13:55:02', null, '0', '', '0', 'cms_article_img', '文章图片集', '1', '1');
 INSERT INTO `gen_table` VALUES ('227808b5358540a18f59066e53a073b6', 'wx_account', '微信账号', 'WxAccount', '', '', '1', '2018-06-03 20:08:45', null, '2018-06-03 20:57:45', null, '0', '1', '0', 'wx_account', '微信账号', '1', '1');
 INSERT INTO `gen_table` VALUES ('3de0379f55504683a5eb60c4b120a352', 'cms_click_volume', '新闻访问量', 'ClickVolume', '', '', '1', '2018-06-03 13:51:17', '1', '2018-06-03 13:53:21', null, '0', '', '0', 'cms_click_volume', '新闻访问量', '1', '1');
@@ -1436,15 +1467,14 @@ INSERT INTO `gen_table_column` VALUES ('1535600568592', '1535600568356', 'update
 INSERT INTO `gen_table_column` VALUES ('1535600568594', '1535600568356', 'remarks', '备注信息', 'nvarchar(255)', 'String', 'remarks', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '14', '1', '2018-08-30 11:42:48', null, '2018-09-17 10:02:13', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'remarks', '备注信息', 'nvarchar(255)', '0');
 INSERT INTO `gen_table_column` VALUES ('1535600568596', '1535600568356', 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', 'String', 'delFlag', '0', '0', '1', '0', '0', '0', '=', 'radiobox', 'del_flag', null, '15', '1', '2018-08-30 11:42:48', null, '2018-09-17 10:02:13', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', '0');
 INSERT INTO `gen_table_column` VALUES ('1535687967187', '1535600568356', 'title', '标题', 'varchar(255)', 'String', 'title', '0', '1', '1', '1', '1', '1', '=', 'input', '', null, '1', '1', '2018-08-31 11:59:27', null, '2018-09-17 10:02:13', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'title', '标题', 'varchar(255)', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974778', '1536057974771', 'id', '主键', 'varchar(64)', 'String', 'id', '1', '0', '1', '0', '0', '0', '=', 'input', '', null, '0', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'id', '主键', 'varchar(64)', '1');
-INSERT INTO `gen_table_column` VALUES ('1536057974784', '1536057974771', 'phonenum', '手机号', 'varchar(64)', 'String', 'phonenum', '0', '1', '1', '1', '1', '1', '=', 'input', '', null, '1', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'phonenum', '手机号', 'varchar(64)', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974795', '1536057974771', 'password', '密码', 'varchar(64)', 'String', 'password', '0', '1', '1', '1', '0', '0', '=', 'input', '', null, '2', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'password', '密码', 'varchar(64)', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974797', '1536057974771', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy.id', '0', '0', '1', '0', '0', '0', '=', 'input', '', null, '3', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'create_by', '创建者', 'varchar(64)', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974799', '1536057974771', 'create_date', '创建时间', 'datetime', 'java.util.Date', 'createDate', '0', '0', '1', '0', '1', '0', '=', 'dateselect', '', null, '4', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'create_date', '创建时间', 'datetime', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974809', '1536057974771', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy.id', '0', '0', '1', '1', '0', '0', '=', 'input', '', null, '5', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'update_by', '更新者', 'varchar(64)', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974811', '1536057974771', 'update_date', '更新时间', 'datetime', 'java.util.Date', 'updateDate', '0', '0', '1', '1', '0', '0', '=', 'dateselect', '', null, '6', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'update_date', '更新时间', 'datetime', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974848', '1536057974771', 'remarks', '备注信息', 'nvarchar(255)', 'String', 'remarks', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '7', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'remarks', '备注信息', 'nvarchar(255)', '0');
-INSERT INTO `gen_table_column` VALUES ('1536057974849', '1536057974771', 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', 'String', 'delFlag', '0', '0', '1', '0', '0', '0', '=', 'radiobox', 'del_flag', null, '8', '1', '2018-09-04 18:46:14', null, '2018-09-04 18:46:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974778', '1536057974771', 'id', '主键', 'varchar(64)', 'String', 'id', '1', '0', '1', '0', '0', '0', '=', 'input', '', null, '0', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'id', '主键', 'varchar(64)', '1');
+INSERT INTO `gen_table_column` VALUES ('1536057974784', '1536057974771', 'phonenum', '手机号', 'varchar(64)', 'String', 'phonenum', '0', '1', '1', '1', '1', '1', '=', 'input', '', null, '1', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'phonenum', '手机号', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974797', '1536057974771', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy.id', '0', '0', '1', '0', '0', '0', '=', 'input', '', null, '5', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'create_by', '创建者', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974799', '1536057974771', 'create_date', '创建时间', 'datetime', 'java.util.Date', 'createDate', '0', '0', '1', '0', '1', '0', '=', 'dateselect', '', null, '6', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'create_date', '创建时间', 'datetime', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974809', '1536057974771', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy.id', '0', '0', '1', '1', '0', '0', '=', 'input', '', null, '7', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'update_by', '更新者', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974811', '1536057974771', 'update_date', '更新时间', 'datetime', 'java.util.Date', 'updateDate', '0', '0', '1', '1', '0', '0', '=', 'dateselect', '', null, '8', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'update_date', '更新时间', 'datetime', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974848', '1536057974771', 'remarks', '备注信息', 'nvarchar(255)', 'String', 'remarks', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '9', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'remarks', '备注信息', 'nvarchar(255)', '0');
+INSERT INTO `gen_table_column` VALUES ('1536057974849', '1536057974771', 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', 'String', 'delFlag', '0', '0', '1', '0', '0', '0', '=', 'radiobox', 'del_flag', null, '10', '1', '2018-09-04 18:46:14', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', '0');
 INSERT INTO `gen_table_column` VALUES ('1536060734884', '1536060734883', 'id', '主键', 'varchar(64)', 'String', 'id', '1', '0', '1', '0', '0', '0', '=', 'input', '', null, '0', '1', '2018-09-04 19:32:14', null, '2018-09-04 19:32:14', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'id', '主键', 'varchar(64)', '1');
 INSERT INTO `gen_table_column` VALUES ('1536060734889', '1536060734883', 'name', '姓名', 'varchar(64)', 'String', 'name', '0', '1', '1', '1', '1', '1', '=', 'input', '', null, '1', '1', '2018-09-04 19:32:14', null, '2018-09-04 19:32:14', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'name', '姓名', 'varchar(64)', '0');
 INSERT INTO `gen_table_column` VALUES ('1536060734892', '1536060734883', 'phonenum', '手机号', 'varchar(64)', 'String', 'phonenum', '0', '1', '1', '1', '1', '1', '=', 'input', '', null, '2', '1', '2018-09-04 19:32:14', null, '2018-09-04 19:32:14', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'phonenum', '手机号', 'varchar(64)', '0');
@@ -1571,6 +1601,21 @@ INSERT INTO `gen_table_column` VALUES ('1536801395280', '1536220051298', 'intro'
 INSERT INTO `gen_table_column` VALUES ('1536801700750', '1536221321705', 'intro', '简介', 'varchar(255)', 'String', 'intro', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '4', '1', '2018-09-13 09:21:40', '1', '2018-09-13 11:16:25', null, '0', '1', null, '', '', '', '', 'string', '8', '32', '', '', null, 'intro', '简介', 'varchar(255)', '0');
 INSERT INTO `gen_table_column` VALUES ('1536802511318', '1536237937603', 'intro', '简介', 'varchar(180)', 'String', 'intro', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '2', '1', '2018-09-13 09:35:11', '1', '2018-09-13 11:16:46', null, '0', '1', null, '', '', '', '', 'string', '16', '40', '', '', null, 'intro', '简介', 'varchar(180)', '0');
 INSERT INTO `gen_table_column` VALUES ('1537149733186', '1535600568356', 'picture', '图片', 'varchar(255)', 'String', 'picture', '0', '1', '1', '1', '1', '0', '=', 'fileselect', '', null, '9', '1', '2018-09-17 10:02:13', null, '2018-09-17 10:02:13', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'picture', '图片', 'varchar(255)', '0');
+INSERT INTO `gen_table_column` VALUES ('1538912851649', '1536057974771', 'openid', '微信标识', 'varchar(64)', 'String', 'openid', '0', '1', '1', '1', '1', '0', '=', 'input', '', null, '2', '1', '2018-10-07 19:47:31', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'openid', '微信标识', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1538912851652', '1536057974771', 'nickname', '昵称', 'varchar(64)', 'String', 'nickname', '0', '1', '1', '1', '1', '0', '=', 'input', '', null, '3', '1', '2018-10-07 19:47:31', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'nickname', '昵称', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1538912851656', '1536057974771', 'headimg', '头像', 'varchar(255)', 'String', 'headimg', '0', '1', '1', '1', '1', '0', '=', 'input', '', null, '4', '1', '2018-10-07 19:47:31', null, '2018-10-07 19:47:31', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'headimg', '头像', 'varchar(255)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478284', '1539343478281', 'id', '主键', 'varchar(64)', 'String', 'id', '1', '0', '1', '0', '0', '0', '=', 'input', '', null, '0', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'id', '主键', 'varchar(64)', '1');
+INSERT INTO `gen_table_column` VALUES ('1539343478303', '1539343478281', 'name', '姓名', 'varchar(64)', 'String', 'name', '0', '1', '1', '1', '1', '1', 'like', 'input', '', null, '1', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'name', '姓名', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478304', '1539343478281', 'phonenum', '手机号', 'varchar(64)', 'String', 'phonenum', '0', '1', '1', '1', '1', '1', 'like', 'input', '', null, '2', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'phonenum', '手机号', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478306', '1539343478281', 'district', '地区', 'varchar(255)', 'String', 'district', '0', '1', '1', '1', '1', '0', '=', 'cityselect', '', null, '3', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'district', '地区', 'varchar(255)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478308', '1539343478281', 'details', '详细地址', 'varchar(255)', 'String', 'details', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '5', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'details', '详细地址', 'varchar(255)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478309', '1539343478281', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy.id', '0', '0', '1', '0', '0', '0', '=', 'input', '', null, '6', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'create_by', '创建者', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478310', '1539343478281', 'create_date', '创建时间', 'datetime', 'java.util.Date', 'createDate', '0', '0', '1', '0', '0', '0', '=', 'dateselect', '', null, '7', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'create_date', '创建时间', 'datetime', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478311', '1539343478281', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy.id', '0', '0', '1', '1', '0', '0', '=', 'input', '', null, '8', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'update_by', '更新者', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478313', '1539343478281', 'update_date', '更新时间', 'datetime', 'java.util.Date', 'updateDate', '0', '0', '1', '1', '0', '0', '=', 'dateselect', '', null, '9', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'update_date', '更新时间', 'datetime', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478314', '1539343478281', 'remarks', '备注信息', 'nvarchar(255)', 'String', 'remarks', '0', '1', '1', '1', '1', '0', '=', 'textarea', '', null, '10', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'remarks', '备注信息', 'nvarchar(255)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539343478315', '1539343478281', 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', 'String', 'delFlag', '0', '0', '1', '0', '0', '0', '=', 'radiobox', 'del_flag', null, '11', '1', '2018-10-12 19:24:38', null, '2018-10-12 19:59:59', null, '0', '0', null, '', '', '', '', '', '', '', '', '', null, 'del_flag', '逻辑删除标记（0：显示；1：隐藏）', 'varchar(64)', '0');
+INSERT INTO `gen_table_column` VALUES ('1539345473702', '1539343478281', 'customer_id', '用户', 'varchar(64)', 'com.jeeplus.modules.cultural.entity.role.Customer', 'customer.id|nickname', '0', '1', '1', '1', '1', '1', 'like', 'gridselect', '', null, '4', '1', '2018-10-12 19:57:53', null, '2018-10-12 19:59:59', null, '0', '1', 'cultural_customer', '微信昵称', 'nickname', '微信昵称', 'nickname', '', '', '', '', '', '/cultural/role/customer/data', 'customer_id', '用户', 'varchar(64)', '0');
 INSERT INTO `gen_table_column` VALUES ('1612a2ef8ce74198814d16693dcdfe1a', '6224202a62744502be91c6ce27e0362f', 'news_index', 'news_index', 'int(11)', null, 'newsIndex', '0', '1', '1', '1', '0', '0', '=', 'input', '', null, '120', '1', '2018-06-03 20:08:45', '1', '2018-06-03 20:08:45', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, 'news_index', 'news_index', 'int(11)', '0');
 INSERT INTO `gen_table_column` VALUES ('1644f714b6a9480c88242e3a84201a60', 'e8494f6c841a4eac8b9e8fbb5c6ad251', 'pic_path', '封面图片', 'varchar(255)', 'String', 'picPath', '0', '1', '1', '1', '1', '0', '=', 'fileselect', '', null, '6', '1', '2018-06-03 20:08:46', null, '2018-06-06 16:07:54', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'pic_path', '封面图片', 'varchar(255)', '0');
 INSERT INTO `gen_table_column` VALUES ('16f000aeeba14449bdb025be5e5066bb', '44da72a33aa04c3ca6208f73379aed21', 'image', '栏目图片', 'varchar(255)', 'String', 'image', '0', '1', '1', '1', '0', '0', '=', 'fileselect', '', null, '7', '1', '2018-06-03 13:51:17', '1', '2018-06-03 22:20:52', null, '0', '1', null, '', '', '', '', '', '', '', '', '', null, 'image', '栏目图片', 'varchar(255)', '0');
@@ -1784,7 +1829,7 @@ CREATE TABLE `gen_template` (
 -- ----------------------------
 -- Records of gen_template
 -- ----------------------------
-INSERT INTO `gen_template` VALUES ('0', '0', ',,', '0', '0', '0', null, null, '1', '2018-09-30 20:22:15', null, '0');
+INSERT INTO `gen_template` VALUES ('0', '0', ',,', '0', '0', '0', null, null, '1', '2018-10-12 19:56:44', null, '0');
 
 -- ----------------------------
 -- Table structure for group_user
@@ -4345,7 +4390,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 INSERT INTO `qrtz_scheduler_state` VALUES ('org.springframework.scheduling.quartz.SchedulerFactoryBean#0', 'DESKTOP-00J5LGD1486132388186', '1486132433275', '15000');
 INSERT INTO `qrtz_scheduler_state` VALUES ('scheduler', 'DESKTOP-00J5LGD1486132301003', '1486132307741', '15000');
 INSERT INTO `qrtz_scheduler_state` VALUES ('scheduler1', 'DESKTOP-00J5LGD1486132464164', '1486132524259', '15000');
-INSERT INTO `qrtz_scheduler_state` VALUES ('schedulerFactoryBean', 'DESKTOP-QTA6JFC1538309687206', '1538314443511', '15000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('schedulerFactoryBean', 'DESKTOP-QTA6JFC1539348743692', '1539349344690', '15000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -5380,6 +5425,35 @@ INSERT INTO `sys_log` VALUES ('1538310135234', '1', '代码生成-表单配置',
 INSERT INTO `sys_log` VALUES ('1538310627598', '1', '系统设置-区域管理', '1', '2018-09-30 20:30:27', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/sys/area/', 'GET', '', '');
 INSERT INTO `sys_log` VALUES ('1538310630647', '1', '系统设置-字典管理', '1', '2018-09-30 20:30:30', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/sys/dict/', 'GET', '', '');
 INSERT INTO `sys_log` VALUES ('1538310638523', '1', '系统登录', '1', '2018-09-30 20:30:38', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1538788935422', '1', '系统登录', '1', '2018-10-06 09:22:15', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1538791417477', '1', '系统登录', '1', '2018-10-06 10:03:37', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1538805137971', '1', '系统登录', '1', '2018-10-06 13:52:17', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1538809244116', '1', '系统登录', '1', '2018-10-06 15:00:44', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1538912246638', '1', '系统登录', '1', '2018-10-07 19:37:26', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1538912261106', '1', '代码生成-表单配置', '1', '2018-10-07 19:37:41', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1538912856003', '1', '代码生成-表单配置-同步数据库', '1', '2018-10-07 19:47:36', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/synchDb', 'GET', 0x69643D31353336303537393734373731266973466F7263653D31, '');
+INSERT INTO `sys_log` VALUES ('1538912870167', '1', '代码生成-表单配置-生成代码', '1', '2018-10-07 19:47:50', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/genCodeForm', 'GET', 0x67656E5461626C652E69643D31353336303537393734373731267461626C65547970653D30, '');
+INSERT INTO `sys_log` VALUES ('1539342882942', '1', '系统设置-菜单管理', '1', '2018-10-12 19:14:42', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/sys/menu/', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539342928305', '1', '系统登录', '1', '2018-10-12 19:15:28', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1539342958632', '1', '系统登录', '1', '2018-10-12 19:15:58', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1539342968271', '1', '代码生成-表单配置', '1', '2018-10-12 19:16:08', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539343490224', '1', '代码生成-表单配置-同步数据库', '1', '2018-10-12 19:24:50', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/synchDb', 'GET', 0x69643D31353339333433343738323831266973466F7263653D31, '');
+INSERT INTO `sys_log` VALUES ('1539343492754', '1', '代码生成-表单配置-生成代码', '1', '2018-10-12 19:24:52', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/genCodeForm', 'GET', 0x67656E5461626C652E69643D31353339333433343738323831267461626C65547970653D30, '');
+INSERT INTO `sys_log` VALUES ('1539343516464', '1', '代码生成-表单配置-生成代码', '1', '2018-10-12 19:25:16', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/genCodeForm', 'GET', 0x67656E5461626C652E69643D31353336313535393333383633267461626C65547970653D30, '');
+INSERT INTO `sys_log` VALUES ('1539343521893', '1', '代码生成-表单配置-生成代码', '1', '2018-10-12 19:25:21', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/genCodeForm', 'GET', 0x67656E5461626C652E69643D31353339333433343738323831267461626C65547970653D30, '');
+INSERT INTO `sys_log` VALUES ('1539343871812', '1', '系统登录', '1', '2018-10-12 19:31:11', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1539343889315', '1', '代码生成-表单配置', '1', '2018-10-12 19:31:29', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539343893359', '1', '代码生成-表单配置-生成代码', '1', '2018-10-12 19:31:33', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/genCodeForm', 'GET', 0x67656E5461626C652E69643D31353339333433343738323831267461626C65547970653D30, '');
+INSERT INTO `sys_log` VALUES ('1539343951919', '1', '系统设置-菜单管理', '1', '2018-10-12 19:32:31', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/sys/menu/', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539343959008', '1', '系统设置-菜单管理-删除', '1', '2018-10-12 19:32:39', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/sys/menu/delete', 'GET', 0x69643D31353339333433373235333931, '');
+INSERT INTO `sys_log` VALUES ('1539344013889', '1', '代码生成-表单配置', '1', '2018-10-12 19:33:33', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539344731851', '1', '系统登录', '1', '2018-10-12 19:45:31', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin', 'GET', 0x6C6F67696E3D, '');
+INSERT INTO `sys_log` VALUES ('1539344737493', '1', '系统设置-菜单管理', '1', '2018-10-12 19:45:37', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/sys/menu/', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539344741021', '1', '订单管理-收货地址', '1', '2018-10-12 19:45:41', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/cultural/order/address', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539345404541', '1', '代码生成-表单配置', '1', '2018-10-12 19:56:44', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable', 'GET', '', '');
+INSERT INTO `sys_log` VALUES ('1539345608444', '1', '代码生成-表单配置-同步数据库', '1', '2018-10-12 20:00:08', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/synchDb', 'GET', 0x69643D31353339333433343738323831266973466F7263653D31, '');
+INSERT INTO `sys_log` VALUES ('1539345611171', '1', '代码生成-表单配置-生成代码', '1', '2018-10-12 20:00:11', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/gen/genTable/genCodeForm', 'GET', 0x67656E5461626C652E69643D31353339333433343738323831267461626C65547970653D30, '');
+INSERT INTO `sys_log` VALUES ('1539345879661', '1', '订单管理-收货地址', '1', '2018-10-12 20:04:39', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '/admin/cultural/order/address', 'GET', '', '');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -5554,6 +5628,14 @@ INSERT INTO `sys_menu` VALUES ('1536395313075', '1536395313043', '0,1,1536205854
 INSERT INTO `sys_menu` VALUES ('1536395313083', '1536395313043', '0,1,1536205854735,1536395313043,', '查看', '120', null, null, null, '0', 'cultural:finished:painting:view', '1', '2018-09-08 16:28:33', '1', '2018-09-08 16:28:33', null, '0', '1');
 INSERT INTO `sys_menu` VALUES ('1536395313091', '1536395313043', '0,1,1536205854735,1536395313043,', '导入', '150', null, null, null, '0', 'cultural:finished:painting:import', '1', '2018-09-08 16:28:33', '1', '2018-09-08 16:28:33', null, '0', '1');
 INSERT INTO `sys_menu` VALUES ('1536395313099', '1536395313043', '0,1,1536205854735,1536395313043,', '导出', '180', null, null, null, '0', 'cultural:finished:painting:export', '1', '2018-09-08 16:28:33', '1', '2018-09-08 16:28:33', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539342925067', '1', '0,1,', '订单管理', '470', '', '', 'fa fa-th-list', '1', '', '1', '2018-10-12 19:15:25', '1', '2018-10-12 19:15:25', '', '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029890', '1539342925067', '0,1,1539342925067,', '收货地址', '30', '/cultural/order/address', null, 'fa fa-home', '1', 'cultural:order:address:list', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029902', '1539344029890', '0,1,1539342925067,1539344029890,', '增加', '30', null, null, null, '0', 'cultural:order:address:add', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029906', '1539344029890', '0,1,1539342925067,1539344029890,', '删除', '60', null, null, null, '0', 'cultural:order:address:del', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029911', '1539344029890', '0,1,1539342925067,1539344029890,', '编辑', '90', null, null, null, '0', 'cultural:order:address:edit', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029917', '1539344029890', '0,1,1539342925067,1539344029890,', '查看', '120', null, null, null, '0', 'cultural:order:address:view', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029920', '1539344029890', '0,1,1539342925067,1539344029890,', '导入', '150', null, null, null, '0', 'cultural:order:address:import', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
+INSERT INTO `sys_menu` VALUES ('1539344029923', '1539344029890', '0,1,1539342925067,1539344029890,', '导出', '180', null, null, null, '0', 'cultural:order:address:export', '1', '2018-10-12 19:33:49', '1', '2018-10-12 19:33:49', null, '0', '1');
 INSERT INTO `sys_menu` VALUES ('16', '14', '0,1,3,14,', '修改', '40', null, null, null, '0', 'sys:area:edit', '1', '2013-05-27 08:00:00', '1', '2013-05-27 08:00:00', null, '0', '2');
 INSERT INTO `sys_menu` VALUES ('162dcf2f398d40f8a50dfeb75b5c6b85', '467cfeb302bf48a098201fd8684fb677', '0,1,9998fa9216674990824c074aad3c789b,467cfeb302bf48a098201fd8684fb677,', '编辑', '90', null, null, null, '0', 'cms:article:edit', '1', '2018-06-03 14:18:10', '1', '2018-06-03 14:18:10', null, '0', '1');
 INSERT INTO `sys_menu` VALUES ('17', '3', '0,1,3,', '机构管理', '40', '/sys/office/list', '', '', '1', 'sys:office:list', '1', '2013-05-27 08:00:00', '1', '2017-04-11 16:45:30', '', '0', '1');
@@ -6342,7 +6424,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '1', '6a642e140e40496a8d467c646b8e935e', 'admin', '5f2c1868803199e566124c49a8472579602990336e7a32cfde9960fb', '1', 'admin', '', '123', '123', '/userfiles/1/images/swhz.jpg', '127.0.0.1', '2018-09-30 20:30:38', '1', '1', '2013-05-27 08:00:00', '1', '2018-06-06 09:31:52', 'wwwwwwwwwwwwwwwww', '0', '/jeeplus/userfiles/1/qrcode/1.png', 'eee');
+INSERT INTO `sys_user` VALUES ('1', '1', '6a642e140e40496a8d467c646b8e935e', 'admin', '5f2c1868803199e566124c49a8472579602990336e7a32cfde9960fb', '1', 'admin', '', '123', '123', '/userfiles/1/images/p1808283995.jpg', '127.0.0.1', '2018-10-12 19:45:31', '1', '1', '2013-05-27 08:00:00', '1', '2018-10-12 19:32:18', 'wwwwwwwwwwwwwwwww', '0', '/jeeplus/userfiles/1/qrcode/test.png', '你好啊111rrr');
 
 -- ----------------------------
 -- Table structure for sys_user_friend
@@ -6466,7 +6548,7 @@ CREATE TABLE `wx_account` (
 -- ----------------------------
 -- Records of wx_account
 -- ----------------------------
-INSERT INTO `wx_account` VALUES ('1538015241749', '文创天下', 'gh_c27412c08dd1', 'wxab30dff202202bfb', '1d5b7d0b1778d3c71821253a2e01d693', '/wxapi/gh_c27412c08dd1/message.html', '94c38b52514e43a2a3808e965b5f8e77', '5', '1', '2018-09-27 10:27:21', '1', '2018-09-27 10:27:21', null, '0');
+INSERT INTO `wx_account` VALUES ('1538015241749', '文创天下', 'gh_c27412c08dd1', 'wxab30dff202202bfb', '1d5b7d0b1778d3c71821253a2e01d693', '/wxapi/gh_c27412c08dd1/message.html', 'orangerange', '5', '1', '2018-09-27 10:27:21', '1', '2018-10-06 13:53:29', null, '0');
 
 -- ----------------------------
 -- Table structure for wx_fans
