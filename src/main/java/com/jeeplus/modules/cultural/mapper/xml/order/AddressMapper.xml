@@ -9,6 +9,7 @@
 		a.district AS "district",
 		a.customer_id AS "customer.id",
 		a.details AS "details",
+		a.is_default AS "isDefault",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -100,6 +101,7 @@
 			district,
 			customer_id,
 			details,
+			is_default,
 			create_by,
 			create_date,
 			update_by,
@@ -113,6 +115,7 @@
 			#{district},
 			#{customer.id},
 			#{details},
+			#{isDefault},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -129,6 +132,7 @@
 			district = #{district},
 			customer_id = #{customer.id},
 			details = #{details},
+			is_default = #{isDefault},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}
@@ -154,5 +158,13 @@
 	<select id="findUniqueByProperty" resultType="Address" statementType="STATEMENT">
 		select * FROM cultural_address  where ${propertyName} = '${value}'
 	</select>
-	
+
+	<select id="getListByCustomerId" resultType="Address">
+		SELECT
+		<include refid="addressColumns"/>
+		FROM cultural_address a
+		<include refid="addressJoins"/>
+		WHERE customer.id = #{customerId}
+	</select>
+
 </mapper>

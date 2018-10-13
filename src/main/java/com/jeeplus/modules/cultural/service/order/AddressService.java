@@ -5,6 +5,7 @@ package com.jeeplus.modules.cultural.service.order;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,17 @@ import com.jeeplus.modules.cultural.mapper.order.AddressMapper;
 /**
  * 收货地址Service
  * @author orange
- * @version 2018-10-12
+ * @version 2018-10-13
  */
 @Service
 @Transactional(readOnly = true)
 public class AddressService extends CrudService<AddressMapper, Address> {
+
+	@Autowired
+	AddressMapper mapper;
+	public List<Address> getListByCustomerId(String customerId){
+		return mapper.getListByCustomerId(customerId);
+	}
 
 	public Address get(String id) {
 		return super.get(id);

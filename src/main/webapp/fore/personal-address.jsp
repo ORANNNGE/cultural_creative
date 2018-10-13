@@ -8,51 +8,16 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/more-style.css" />
-    <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
-    <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
     <title>地址管理</title>
 </head>
 <body style="background: #eee;">
-<div class="personal-address">
+<div class="personal-address" id="addressList">
     <div class="addre-ul">
         <ul>
-            <li>
+            <li v-for="item in data">
                 <div class="addre-up">
-                    <h3>王梦 <span>132******8888</span></h3>
-                    <p>河南省郑州市二七区解放路</p>
-                </div>
-                <div class="addre-label">
-                    <label><input type="checkbox" value="默认" /><span>默认</span></label>
-                    <a href="###">编辑</a>
-                    <p class="addre-delete">删除</p>
-                </div>
-            </li>
-            <li>
-                <div class="addre-up">
-                    <h3>王梦 <span>132******8888</span></h3>
-                    <p>河南省郑州市二七区解放路</p>
-                </div>
-                <div class="addre-label">
-                    <label><input type="checkbox" value="默认" /><span>默认</span></label>
-                    <a href="###">编辑</a>
-                    <p class="addre-delete">删除</p>
-                </div>
-            </li>
-            <li>
-                <div class="addre-up">
-                    <h3>王梦 <span>132******8888</span></h3>
-                    <p>河南省郑州市二七区解放路</p>
-                </div>
-                <div class="addre-label">
-                    <label><input type="checkbox" value="默认" /><span>默认</span></label>
-                    <a href="###">编辑</a>
-                    <p class="addre-delete">删除</p>
-                </div>
-            </li>
-            <li>
-                <div class="addre-up">
-                    <h3>王梦 <span>132******8888</span></h3>
-                    <p>河南省郑州市二七区解放路</p>
+                    <h3 v-text="item.name"> <span v-text="item.phonenum"></span></h3>
+                    <p v-text="item.details"></p>
                 </div>
                 <div class="addre-label">
                     <label><input type="checkbox" value="默认" /><span>默认</span></label>
@@ -68,5 +33,9 @@
 
 </div>
 </body>
+<script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
+<script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/personal-address.js"></script>
 </html>
 

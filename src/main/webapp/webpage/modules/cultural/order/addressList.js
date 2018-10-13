@@ -110,6 +110,15 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+		        field: 'isDefault',
+		        title: '是否默认',
+		        sortable: true,
+		        formatter:function(value, row , index){
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('is_default'))}, value, "-");
+		        }
+		       
+		    }
+			,{
 		        field: 'remarks',
 		        title: '备注信息',
 		        sortable: true

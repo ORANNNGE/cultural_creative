@@ -26,7 +26,7 @@ function addAddress() {
     }
     var param = {
         'name': name,
-        'phoneum': phoneNum,
+        'phonenum': phoneNum,
         'district': district,
         'details': details,
     }
@@ -42,7 +42,8 @@ function addAddress() {
                 layer.msg(result.msg);
                 return;
             }
-                layer.msg(result.msg);
+            layer.msg(result.msg);
+            history.back(-1);
         }
     })
 }

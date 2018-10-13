@@ -11,7 +11,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 收货地址Entity
  * @author orange
- * @version 2018-10-12
+ * @version 2018-10-13
  */
 public class Address extends DataEntity<Address> {
 	
@@ -21,6 +21,7 @@ public class Address extends DataEntity<Address> {
 	private String district;		// 地区
 	private Customer customer;		// 用户
 	private String details;		// 详细地址
+	private String isDefault;		// 是否默认
 	
 	public Address() {
 		super();
@@ -73,6 +74,15 @@ public class Address extends DataEntity<Address> {
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+	
+	@ExcelField(title="是否默认", dictType="is_default", align=2, sort=6)
+	public String getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(String isDefault) {
+		this.isDefault = isDefault;
 	}
 	
 }

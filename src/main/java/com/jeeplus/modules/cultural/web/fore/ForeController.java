@@ -472,6 +472,12 @@ public class ForeController {
         return json;
     }
 
+    /**
+     * 添加收货地址
+     * @param address
+     * @param request
+     * @return
+     */
     @RequestMapping(value="addAddress")
     @ResponseBody
     public AjaxJson addAddress(Address address,HttpServletRequest request){
@@ -493,9 +499,43 @@ public class ForeController {
             return json;
         }
         address.setCustomer(customer);
+        address.setIsDefault("0");
         addressService.save(address);
         json.setMsg("添加成功");
         return json;
     }
 
+    /**
+     * 收货地址列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="getAddressList")
+    @ResponseBody
+    public AjaxJson getAddressList(HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String)request.getSession().getAttribute("customerId");
+
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+
+        List<Address> addressList = addressService.getListByCustomerId(customerId);
+        json.setMsg("总计"+addressList.size()+"条记录");
+        json.put("data", addressList);
+        return json;
+
+    }
 }
