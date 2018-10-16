@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.order.CoupletsPriceMapper">
+    
+	<sql id="coupletsPriceColumns">
+		a.id AS "id",
+		a.couplets_id AS "couplets.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+		couplets.name AS "couplets.name",
+				
+		size.name AS "size.name",
+				
+		frame.name AS "frame.name",
+				
+		craft.name AS "craft.name"
+	</sql>
+	
+	<sql id="coupletsPriceJoins">
+		
+		LEFT JOIN cultural_couplets couplets ON couplets.id = a.couplets_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+	</sql>
+	
+    
+	<select id="get" resultType="CoupletsPrice" >
+		SELECT 
+			<include refid="coupletsPriceColumns"/>
+		FROM cultural_couplets_price a
+		<include refid="coupletsPriceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CoupletsPrice" >
+		SELECT 
+			<include refid="coupletsPriceColumns"/>
+		FROM cultural_couplets_price a
+		<include refid="coupletsPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="couplets != null and couplets.id != null and couplets.id != ''">
+				AND a.couplets_id = #{couplets.id}
+			</if>
+			<if test="size != null and size.id != null and size.id != ''">
+				AND a.size_id = #{size.id}
+			</if>
+			<if test="frame != null and frame.id != null and frame.id != ''">
+				AND a.frame_id = #{frame.id}
+			</if>
+			<if test="craft != null and craft.id != null and craft.id != ''">
+				AND a.craft_id = #{craft.id}
+			</if>
+			<if test="price != null and price != ''">
+				AND a.price = #{price}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CoupletsPrice" >
+		SELECT 
+			<include refid="coupletsPriceColumns"/>
+		FROM cultural_couplets_price a
+		<include refid="coupletsPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_couplets_price(
+			id,
+			couplets_id,
+			size_id,
+			frame_id,
+			craft_id,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{couplets.id},
+			#{size.id},
+			#{frame.id},
+			#{craft.id},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_couplets_price SET 	
+			couplets_id = #{couplets.id},
+			size_id = #{size.id},
+			frame_id = #{frame.id},
+			craft_id = #{craft.id},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_couplets_price
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_couplets_price SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="CoupletsPrice" statementType="STATEMENT">
+		select * FROM cultural_couplets_price  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
