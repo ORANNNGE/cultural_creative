@@ -38,7 +38,7 @@ import com.jeeplus.modules.cultural.service.spec.SizeService;
 /**
  * 尺寸Controller
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-16
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/spec/size")

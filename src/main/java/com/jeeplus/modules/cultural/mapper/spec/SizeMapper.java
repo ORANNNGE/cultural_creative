@@ -10,7 +10,7 @@ import com.jeeplus.modules.cultural.entity.spec.Size;
 /**
  * 尺寸MAPPER接口
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-16
  */
 @MyBatisMapper
 public interface SizeMapper extends BaseMapper<Size> {

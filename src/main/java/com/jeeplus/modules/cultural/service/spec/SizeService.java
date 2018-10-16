@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.spec.SizeMapper;
 /**
  * 尺寸Service
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-16
  */
 @Service
 @Transactional(readOnly = true)

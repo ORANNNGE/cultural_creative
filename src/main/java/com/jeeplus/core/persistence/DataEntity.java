@@ -49,6 +49,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         if (!this.isNewRecord) {
             if (this.getIdType().equals(IDTYPE_UUID)) {
                 setId(UUID.randomUUID().toString().replaceAll("-", ""));
+//                setId(System.currentTimeMillis() + "");
             } else if (this.getIdType().equals(IDTYPE_AUTO)) {
                 //使用自增长不需要设置主键
             }

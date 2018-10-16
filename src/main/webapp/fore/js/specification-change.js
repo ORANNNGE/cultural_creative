@@ -9,12 +9,12 @@ $(function(){
 		$('.couplet-more').css('position','relative')
 	})
 	//选择尺寸
-	$('.norm-size').find('p').toggle(function(){
+	/*$('.norm-size').find('p').toggle(function(){
 		$('.norm-size').find('p').attr('class',' ')
 		$('.norm-size').find('p').eq($(this).index()).attr('class','checked')
 	},function(){
 		$('.norm-size').find('p').eq($(this).index()).attr('class',' ')
-	})
+	})*/
 	//选择专利产品春联框
 	$('.norm-patent').find('p').toggle(function(){
 		$('.norm-patent').find('p').attr('class',' ')

@@ -94,31 +94,20 @@
                         <li><!--尺寸-->
                             <h3>选择尺寸</h3>
                             <div class="norm-size">
-                                <p class=" ">1.1米（竖联100cm*18cm，横批40cm*18cm）</p>
-                                <p>1.3米（竖联118cm*21cm，横批47cm*21cm）</p>
-                                <p>1.6米（竖联145cm*24cm，横批60cm*24cm）</p>
-                                <p>1.8米（竖联170cm*28cm，横批70cm*28cm）</p>
-                                <p>2.0米（竖联180cm*30cm，横批70cm*30cm）</p>
-                                <p>2.2米（竖联190cm*30cm，横批70cm*30cm）</p>
+
+                                <p v-for="item in spec.sizeList" v-text="item.intro" :data-id="item.id" data-type="size" onclick="getCoupletsPrice(this)"></p>
                             </div>
                         </li>
                         <li><!--选择专利-->
                             <h3>选择专利产品春联框</h3>
                             <div class="norm-patent">
-                                <p>金色铝合金春联框</p>
-                                <p class=" ">香槟色铝合金春联框</p>
+                                <p v-for="item in spec.frameList" v-text="item.intro" :data-id="item.id" data-type="frame"></p>
                             </div>
                         </li>
                         <li><!--选择制作工艺-->
                             <h3>选择制作工艺</h3>
                             <div class="norm-crafts">
-                                <p>PVC平板打印（0.5cm厚度）（配春联框）</p>
-                                <p>实力书法家手写春联</p>
-                                <p class=" ">不干胶印刷</p>
-                                <p>植绒布印刷</p>
-                                <p>普通铜板纸印刷（全金色）</p>
-                                <p>普通铜板纸印刷（黑色描金）</p>
-                                <p>普通铜板纸印刷（纯黑字）</p>
+                                <p v-for="item in spec.craftList" v-text="item.intro" :data-id="item.id" data-type="craft"></p>
                             </div>
                         </li>
                     </ul>

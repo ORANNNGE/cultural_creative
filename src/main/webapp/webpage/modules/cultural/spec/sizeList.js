@@ -86,7 +86,7 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'details',
+		        field: 'intro',
 		        title: '简介',
 		        sortable: true
 		       

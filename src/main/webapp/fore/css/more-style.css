@@ -410,14 +410,15 @@
 	color: #fff;
 }
 .norm-down .norm-patent p{
-	width: 49%;
+	margin-top: .14rem;
+	width: 100%;
 }
 .norm-down .norm-crafts p{
 	margin-top: .14rem;
 	width: 100%;
 }
-.norm-down .norm-crafts p:nth-child(3){width: 49%;}
-.norm-down .norm-crafts p:nth-child(4){width: 49%;}
+/*.norm-down .norm-crafts p:nth-child(3){width: 49%;}
+.norm-down .norm-crafts p:nth-child(4){width: 49%;}*/
 
 .norm-down .norm-down-quantity{
 	width: 100%;

@@ -4,7 +4,6 @@
 var pathName = window.location.pathname;
 console.log(pathName);
 var url;
-
 switch (pathName) {
     case "/fore/coupletsDetails.jsp":
         url = "getCoupletsById";
@@ -28,9 +27,26 @@ switch (pathName) {
     default:
         url = "";
 }
+
+//获取规格
+var specUrl = 'getCoupletsSpec';
+function getCoupletsSpec(){
+    var data;
+    $.ajax({
+        type:'post',
+        url:specUrl,
+        dataType:'json',
+        async:false,
+        success:function (result) {
+            data = result.body;
+        }
+    })
+    return data;
+}
+
+//获取详情
 console.log(url);
 var param = getParaFromURL('id');
-
 function getDetails(){
     var data;
     var params = {
@@ -48,6 +64,8 @@ function getDetails(){
     })
     return data;
 }
+var specData = getCoupletsSpec();
+// var spec = specData.data;
 
 var data = getDetails();
 //详情
@@ -57,6 +75,7 @@ new Vue({
     el:'#details',
     data: {
         data:details,
+        spec:specData,
     },
     computed: {
         details:function () {
@@ -70,3 +89,24 @@ new Vue({
 
     }
 })
+
+/*
+查询价格
+ */
+var sizeId;
+var frameId;
+var craftId;
+function getCoupletsPrice(object) {
+    var type = $(object).attr('data-type');
+    var type = $(object).attr('data-type');
+    $(object).css('background','#f00');
+    if(type == 'size'){
+        sizeId = $(object).attr('data-id');
+    }
+    if(type == 'frame'){
+        frameId = $(object).attr('data-id');
+    }
+    if(type == 'craft'){
+        craftId = $(object).attr('data-id');
+    }
+}

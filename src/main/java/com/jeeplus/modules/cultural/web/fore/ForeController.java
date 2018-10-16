@@ -12,11 +12,17 @@ import com.jeeplus.modules.cultural.entity.finished.NewYearPic;
 import com.jeeplus.modules.cultural.entity.finished.Painting;
 import com.jeeplus.modules.cultural.entity.order.Address;
 import com.jeeplus.modules.cultural.entity.role.Customer;
+import com.jeeplus.modules.cultural.entity.spec.Craft;
+import com.jeeplus.modules.cultural.entity.spec.Frame;
+import com.jeeplus.modules.cultural.entity.spec.Size;
 import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
 import com.jeeplus.modules.cultural.service.order.AddressService;
 import com.jeeplus.modules.cultural.service.role.CustomerService;
+import com.jeeplus.modules.cultural.service.spec.CraftService;
+import com.jeeplus.modules.cultural.service.spec.FrameService;
+import com.jeeplus.modules.cultural.service.spec.SizeService;
 import com.jeeplus.modules.cultural.utils.MsgUtil;
 import com.jeeplus.modules.cultural.utils.PageUtils;
 import com.jeeplus.modules.sys.entity.Log;
@@ -54,6 +60,12 @@ public class ForeController {
     CustomerService customerService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    SizeService sizeService;
+    @Autowired
+    CraftService craftService;
+    @Autowired
+    FrameService frameService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -536,6 +548,20 @@ public class ForeController {
         json.setMsg("总计"+addressList.size()+"条记录");
         json.put("data", addressList);
         return json;
+    }
 
+    @RequestMapping(value="getCoupletsSpec")
+    @ResponseBody
+    public AjaxJson getCoupletsSpec(){
+        AjaxJson json = new AjaxJson();
+        List<Size> sizeList = sizeService.findList(new Size());
+        List<Frame> frameList = frameService.findList(new Frame());
+        List<Craft> craftList = craftService.findList(new Craft());
+
+        json.put("sizeList", sizeList);
+        json.put("frameList", frameList);
+        json.put("craftList", craftList);
+
+        return json;
     }
 }
