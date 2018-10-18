@@ -38,7 +38,7 @@ import com.jeeplus.modules.cultural.service.spec.TypefaceService;
 /**
  * 字体Controller
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-18
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/spec/typeface")

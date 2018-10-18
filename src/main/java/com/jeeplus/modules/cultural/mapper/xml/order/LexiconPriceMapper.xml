@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.order.LexiconPriceMapper">
+    
+	<sql id="lexiconPriceColumns">
+		a.id AS "id",
+		a.lexicon_id AS "lexicon.id",
+		a.author_id AS "author.id",
+		a.typeface_id AS "typeface.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.combo AS "combo",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+		lexicon.title AS "lexicon.title",
+		lexicon.rightline AS "lexicon.rightline",
+		lexicon.leftline AS "lexicon.leftline",
+		lexicon.topline AS "lexicon.topline",
+				
+		author.name AS "author.name",
+				
+		typeface.name AS "typeface.name",
+				
+		size.name AS "size.name",
+				
+		frame.name AS "frame.name",
+				
+		craft.name AS "craft.name"
+	</sql>
+	
+	<sql id="lexiconPriceJoins">
+		
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_author author ON author.id = a.author_id
+		LEFT JOIN cultural_typeface typeface ON typeface.id = a.typeface_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+	</sql>
+	
+    
+	<select id="get" resultType="LexiconPrice" >
+		SELECT 
+			<include refid="lexiconPriceColumns"/>
+		FROM cultural_lexicon_price a
+		<include refid="lexiconPriceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="LexiconPrice" >
+		SELECT 
+			<include refid="lexiconPriceColumns"/>
+		FROM cultural_lexicon_price a
+		<include refid="lexiconPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="lexicon != null and lexicon.id != null and lexicon.id != ''">
+				AND a.lexicon_id = #{lexicon.id}
+			</if>
+			<if test="author != null and author.id != null and author.id != ''">
+				AND a.author_id = #{author.id}
+			</if>
+			<if test="typeface != null and typeface.id != null and typeface.id != ''">
+				AND a.typeface_id = #{typeface.id}
+			</if>
+			<if test="size != null and size.id != null and size.id != ''">
+				AND a.size_id = #{size.id}
+			</if>
+			<if test="frame != null and frame.id != null and frame.id != ''">
+				AND a.frame_id = #{frame.id}
+			</if>
+			<if test="craft != null and craft.id != null and craft.id != ''">
+				AND a.craft_id = #{craft.id}
+			</if>
+			<if test="combo != null and combo != ''">
+				AND a.combo = #{combo}
+			</if>
+			<if test="price != null and price != ''">
+				AND a.price = #{price}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="LexiconPrice" >
+		SELECT 
+			<include refid="lexiconPriceColumns"/>
+		FROM cultural_lexicon_price a
+		<include refid="lexiconPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_lexicon_price(
+			id,
+			lexicon_id,
+			author_id,
+			typeface_id,
+			size_id,
+			frame_id,
+			craft_id,
+			combo,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{lexicon.id},
+			#{author.id},
+			#{typeface.id},
+			#{size.id},
+			#{frame.id},
+			#{craft.id},
+			#{combo},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_lexicon_price SET 	
+			lexicon_id = #{lexicon.id},
+			author_id = #{author.id},
+			typeface_id = #{typeface.id},
+			size_id = #{size.id},
+			frame_id = #{frame.id},
+			craft_id = #{craft.id},
+			combo = #{combo},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_lexicon_price
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_lexicon_price SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="LexiconPrice" statementType="STATEMENT">
+		select * FROM cultural_lexicon_price  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

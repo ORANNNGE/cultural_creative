@@ -77,8 +77,8 @@
             <div class="coupm-foot">
                 <div class="c-foot-img"><img src="images/coup-s1.png" /> </div>
             </div>
-            <div class="coupm-a">
-                <a href="##">立即购买</a>
+            <div class="coupm-a" onclick="addCoupletsOrder()">
+                <a href="##" >立即购买</a>
             </div>
         </div>
         <div class="coupletm-norm-bg">
@@ -87,7 +87,7 @@
                 <!--￥100-->
                 <div class="norm-up">
                     <div class="norm-up-img"><img src="images/norm-bg.png" /></div>
-                    <div class="norm-price"><p>￥100</p></div>
+                    <div class="norm-price"><p v-text="'￥'+coupletsPrice.price.price"></p></div>
                 </div>
                 <div class="norm-down">
                     <ul class="norm-down-ul">
@@ -101,13 +101,13 @@
                         <li><!--选择专利-->
                             <h3>选择专利产品春联框</h3>
                             <div class="norm-patent">
-                                <p v-for="item in spec.frameList" v-text="item.intro" :data-id="item.id" data-type="frame"></p>
+                                <p v-for="item in spec.frameList" v-text="item.intro" :data-id="item.id" data-type="frame" onclick="getCoupletsPrice(this)"></p>
                             </div>
                         </li>
                         <li><!--选择制作工艺-->
                             <h3>选择制作工艺</h3>
                             <div class="norm-crafts">
-                                <p v-for="item in spec.craftList" v-text="item.intro" :data-id="item.id" data-type="craft"></p>
+                                <p v-for="item in spec.craftList" v-text="item.intro" :data-id="item.id" data-type="craft" onclick="getCoupletsPrice(this)"></p>
                             </div>
                         </li>
                     </ul>
@@ -116,17 +116,17 @@
                             <label>数量</label>
                         </div>
                         <div class="norm-q-btn">
-                            <input class="norm-q-minus" type="button" value="-" />
-                            <input class="norm-q-number" type="number" value="1" />
-                            <input class="norm-q-plus" type="button" value="+" />
+                            <input class="norm-q-minus" type="button" value="-" @click="minus"/>
+                            <input class="norm-q-number" type="number" value="1" v-model="num"/>
+                            <input class="norm-q-plus" type="button" value="+" @click="plus"/>
                         </div>
                     </div>
                 </div>
                 <div class="norm-buy">
                     <div class="n-buy-price">
-                        <p>总价：<span>￥100</span></p>
+                        <p>总价：<span v-text="'￥' + totalPrice"></span></p>
                     </div>
-                    <a class="n-buy-confirm" href="###">确认</a>
+                    <a class="n-buy-confirm" href="###" >确认</a>
                 </div>
             </div>
         </div>
@@ -136,9 +136,11 @@
 </body>
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
 <script type="text/javascript" src="js/specification-change.js" ></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/details.js"></script>
+<script src="js/CoupletsDetails.js"></script>
 </html>
 
 

@@ -5,16 +5,14 @@ package com.jeeplus.modules.cultural.mapper.order;
 
 import com.jeeplus.core.persistence.BaseMapper;
 import com.jeeplus.core.persistence.annotation.MyBatisMapper;
-import com.jeeplus.modules.cultural.entity.order.Address;
-
-import java.util.List;
+import com.jeeplus.modules.cultural.entity.order.LexiconPrice;
 
 /**
- * 收货地址MAPPER接口
+ * 楹联词库价格MAPPER接口
  * @author orange
- * @version 2018-10-17
+ * @version 2018-10-18
  */
 @MyBatisMapper
-public interface AddressMapper extends BaseMapper<Address> {
-    List<Address> getListByCustomerId(String customerId);
+public interface LexiconPriceMapper extends BaseMapper<LexiconPrice> {
+	
 }

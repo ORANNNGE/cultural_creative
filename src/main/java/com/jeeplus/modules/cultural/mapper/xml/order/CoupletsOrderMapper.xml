@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.order.CoupletsOrderMapper">
+    
+	<sql id="coupletsOrderColumns">
+		a.id AS "id",
+		a.customer_id AS "customer.id",
+		a.couplets_id AS "couplets.id",
+		a.couplets_price_id AS "coupletsPrice.id",
+		a.address_id AS "address.id",
+		a.installer_id AS "installer.id",
+		a.num AS "num",
+		a.total_price AS "totalPrice",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+		customer.nickname AS "customer.nickname",
+				
+		couplets.name AS "couplets.name",
+				
+		coupletsPrice.price AS "coupletsPrice.price",
+				
+		address.district AS "address.district",
+		address.details AS "address.details",
+				
+		installer.name AS "installer.name"
+	</sql>
+	
+	<sql id="coupletsOrderJoins">
+		
+		LEFT JOIN cultural_customer customer ON customer.id = a.customer_id
+		LEFT JOIN cultural_couplets couplets ON couplets.id = a.couplets_id
+		LEFT JOIN cultural_couplets_price coupletsPrice ON coupletsPrice.id = a.couplets_price_id
+		LEFT JOIN cultural_address address ON address.id = a.address_id
+		LEFT JOIN cultural_installer installer ON installer.id = a.installer_id
+	</sql>
+	
+    
+	<select id="get" resultType="CoupletsOrder" >
+		SELECT 
+			<include refid="coupletsOrderColumns"/>
+		FROM cultural_couplets_order a
+		<include refid="coupletsOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CoupletsOrder" >
+		SELECT 
+			<include refid="coupletsOrderColumns"/>
+		FROM cultural_couplets_order a
+		<include refid="coupletsOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="customer != null and customer.id != null and customer.id != ''">
+				AND a.customer_id = #{customer.id}
+			</if>
+			<if test="couplets != null and couplets.id != null and couplets.id != ''">
+				AND a.couplets_id = #{couplets.id}
+			</if>
+			<if test="installer != null and installer.id != null and installer.id != ''">
+				AND a.installer_id = #{installer.id}
+			</if>
+			<if test="num != null and num != ''">
+				AND a.num = #{num}
+			</if>
+			<if test="totalPrice != null and totalPrice != ''">
+				AND a.total_price = #{totalPrice}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CoupletsOrder" >
+		SELECT 
+			<include refid="coupletsOrderColumns"/>
+		FROM cultural_couplets_order a
+		<include refid="coupletsOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_couplets_order(
+			id,
+			customer_id,
+			couplets_id,
+			couplets_price_id,
+			address_id,
+			installer_id,
+			num,
+			total_price,
+			status,
+			create_by,
+			update_by,
+			create_date,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{customer.id},
+			#{couplets.id},
+			#{coupletsPrice.id},
+			#{address.id},
+			#{installer.id},
+			#{num},
+			#{totalPrice},
+			#{status},
+			#{createBy.id},
+			#{updateBy.id},
+			#{createDate},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_couplets_order SET 	
+			customer_id = #{customer.id},
+			couplets_id = #{couplets.id},
+			couplets_price_id = #{coupletsPrice.id},
+			address_id = #{address.id},
+			installer_id = #{installer.id},
+			num = #{num},
+			total_price = #{totalPrice},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_couplets_order
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_couplets_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="CoupletsOrder" statementType="STATEMENT">
+		select * FROM cultural_couplets_order  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

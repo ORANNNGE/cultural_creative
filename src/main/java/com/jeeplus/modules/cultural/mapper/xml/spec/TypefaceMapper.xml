@@ -5,7 +5,7 @@
 	<sql id="typefaceColumns">
 		a.id AS "id",
 		a.name AS "name",
-		a.intro AS "details",
+		a.intro AS "intro",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -82,7 +82,7 @@
 		) VALUES (
 			#{id},
 			#{name},
-			#{details},
+			#{intro},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -95,7 +95,7 @@
 	<update id="update">
 		UPDATE cultural_typeface SET 	
 			name = #{name},
-			intro = #{details},
+			intro = #{intro},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}

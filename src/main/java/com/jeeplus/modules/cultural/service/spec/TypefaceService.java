@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.spec.TypefaceMapper;
 /**
  * 字体Service
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-18
  */
 @Service
 @Transactional(readOnly = true)

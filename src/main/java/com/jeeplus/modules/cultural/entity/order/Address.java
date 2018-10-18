@@ -11,7 +11,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 收货地址Entity
  * @author orange
- * @version 2018-10-13
+ * @version 2018-10-17
  */
 public class Address extends DataEntity<Address> {
 	

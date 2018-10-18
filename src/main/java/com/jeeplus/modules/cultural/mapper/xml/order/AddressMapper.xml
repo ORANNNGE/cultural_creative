@@ -63,6 +63,9 @@
 					<if test="dbName == 'mssql'">'%'+#{customer.id}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{customer.id},'%')</if>
 			</if>
+			<if test="isDefault != null and isDefault != ''">
+				AND a.is_default = #{isDefault}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -159,6 +162,7 @@
 		select * FROM cultural_address  where ${propertyName} = '${value}'
 	</select>
 
+
 	<select id="getListByCustomerId" resultType="Address">
 		SELECT
 		<include refid="addressColumns"/>
@@ -166,5 +170,4 @@
 		<include refid="addressJoins"/>
 		WHERE customer.id = #{customerId}
 	</select>
-
 </mapper>

@@ -36,6 +36,14 @@
 				<sys:gridselect url="${ctx}/cultural/role/customer/data" id="customer" name="customer.id" value="${address.customer.id}" labelName="customer.nickname" labelValue="${address.customer.nickname}"
 					title="选择用户" cssClass="form-control required" fieldLabels="微信昵称" fieldKeys="nickname" searchLabels="微信昵称" searchKeys="nickname" ></sys:gridselect>
 			</div>
+			 <div class="col-xs-12 col-sm-6 col-md-4">
+				<div class="form-group">
+					<label class="label-item single-overflow pull-left" title="是否默认：">&nbsp;是否默认：</label>
+					<div class="col-xs-12">
+						<form:radiobuttons class="i-checks" path="isDefault" items="${fns:getDictList('is_default')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</div>
+				</div>
+			</div>
 		 <div class="col-xs-12 col-sm-6 col-md-4">
 			<div style="margin-top:26px">
 			  <a  id="search" class="btn btn-primary btn-rounded  btn-bordered btn-sm"><i class="fa fa-search"></i> 查询</a>

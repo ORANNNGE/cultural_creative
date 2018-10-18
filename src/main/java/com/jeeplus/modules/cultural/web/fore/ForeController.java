@@ -11,6 +11,8 @@ import com.jeeplus.modules.cultural.entity.finished.Decoration;
 import com.jeeplus.modules.cultural.entity.finished.NewYearPic;
 import com.jeeplus.modules.cultural.entity.finished.Painting;
 import com.jeeplus.modules.cultural.entity.order.Address;
+import com.jeeplus.modules.cultural.entity.order.CoupletsOrder;
+import com.jeeplus.modules.cultural.entity.order.CoupletsPrice;
 import com.jeeplus.modules.cultural.entity.role.Customer;
 import com.jeeplus.modules.cultural.entity.spec.Craft;
 import com.jeeplus.modules.cultural.entity.spec.Frame;
@@ -19,6 +21,8 @@ import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
 import com.jeeplus.modules.cultural.service.order.AddressService;
+import com.jeeplus.modules.cultural.service.order.CoupletsOrderService;
+import com.jeeplus.modules.cultural.service.order.CoupletsPriceService;
 import com.jeeplus.modules.cultural.service.role.CustomerService;
 import com.jeeplus.modules.cultural.service.spec.CraftService;
 import com.jeeplus.modules.cultural.service.spec.FrameService;
@@ -30,6 +34,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,6 +71,10 @@ public class ForeController {
     CraftService craftService;
     @Autowired
     FrameService frameService;
+    @Autowired
+    CoupletsPriceService coupletsPriceService;
+    @Autowired
+    CoupletsOrderService coupletsOrderService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -463,14 +472,6 @@ public class ForeController {
             return json;
         }
 
-//        //判断手机号格式
-//        boolean isPhoneNum = Pattern.matches("^1[356789]\\d{9}$", phoneNum);
-//        if(!isPhoneNum){
-//            json.setSuccess(false);
-//            json.setMsg("手机号格式不正确");
-//            return json;
-//        }
-
         //验证手机号
         if(!verifyCode.equals(code)){
             json.setSuccess(false);
@@ -550,6 +551,10 @@ public class ForeController {
         return json;
     }
 
+    /**
+     * 获取成品楹联规格
+     * @return
+     */
     @RequestMapping(value="getCoupletsSpec")
     @ResponseBody
     public AjaxJson getCoupletsSpec(){
@@ -562,6 +567,104 @@ public class ForeController {
         json.put("frameList", frameList);
         json.put("craftList", craftList);
 
+        return json;
+    }
+
+    /**
+     * 获取成品楹联价格
+     * @param sizeId
+     * @param frameId
+     * @param craftId
+     * @param coupletsId
+     * @return
+     */
+    @RequestMapping(value="getCoupletsPrice")
+    @ResponseBody
+    public AjaxJson getCoupletsPrice(String sizeId,String frameId,String craftId,String coupletsId){
+        AjaxJson json = new AjaxJson();
+        Size size = sizeService.get(sizeId);
+        Frame frame = frameService.get(frameId);
+        Craft craft = craftService.get(craftId);
+        Couplets couplets = coupletsService.get(coupletsId);
+        CoupletsPrice price = new CoupletsPrice();
+        price.setSize(size);
+        price.setFrame(frame);
+        price.setCraft(craft);
+        price.setCouplets(couplets);
+
+        List<CoupletsPrice> coupletsPriceServiceList = coupletsPriceService.findList(price);
+        if(coupletsPriceServiceList.size() == 1){
+            json.put("price", coupletsPriceServiceList.get(0));
+        }else{
+            json.setSuccess(false);
+            json.setMsg("操作失败");
+        }
+        return json;
+    }
+
+    /**
+     * 添加成品楹联订单
+     * @param coupletsPriceId
+     * @param coupletsId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="addCoupletsOrder")
+    @ResponseBody
+    public AjaxJson addCoupletsOrder(String coupletsPriceId, String coupletsId, HttpServletRequest request,Integer num,Double totalPrice){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String) request.getSession().getAttribute("customerId");
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+        //成品楹联
+        Couplets couplets = coupletsService.get(coupletsId);
+        //成品楹联价格
+        CoupletsPrice coupletsPrice = coupletsPriceService.get(coupletsPriceId);
+        //查询收货地址参数
+        Address selectAddress = new Address();
+        //设置参数
+        selectAddress.setCustomer(customer);
+        selectAddress.setIsDefault("1");
+        List<Address> addressList = addressService.findList(selectAddress);
+        //收货地址
+        Address address = null;
+        for (Address addr : addressList) {
+            //找到默认收货地址
+            if("1".equals(addr.getIsDefault())){
+                address = addr;
+            }
+        }
+        //没有默认收货地址则返回失败
+        if(address == null){
+            json.setSuccess(false);
+            json.setMsg("请设置默认收货地址");
+        }
+        //成品楹联订单
+        CoupletsOrder coupletsOrder = new CoupletsOrder();
+        coupletsOrder.setAddress(address);
+        coupletsOrder.setCouplets(couplets);
+        coupletsOrder.setCoupletsPrice(coupletsPrice);
+        coupletsOrder.setCustomer(customer);
+        coupletsOrder.setInstaller(null);
+        coupletsOrder.setNum(num);
+        coupletsOrder.setTotalPrice(totalPrice);
+        coupletsOrder.setStatus("1");
+        //持久化
+        coupletsOrderService.save(coupletsOrder);
+        json.setMsg("购买成功");
         return json;
     }
 }

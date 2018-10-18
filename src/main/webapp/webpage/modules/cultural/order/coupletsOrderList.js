@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
 $(document).ready(function() {
-	$('#typefaceTable').bootstrapTable({
+	$('#coupletsOrderTable').bootstrapTable({
 		 
 		  //请求方法
                method: 'get',
@@ -34,7 +34,7 @@ $(document).ready(function() {
                //可供选择的每页的行数（*）    
                pageList: [10, 25, 50, 100],
                //这个接口需要处理bootstrap table传递的固定参数,并返回特定格式的json数据  
-               url: "${ctx}/cultural/spec/typeface/data",
+               url: "${ctx}/cultural/order/coupletsOrder/data",
                //默认值为 'limit',传给服务端的参数为：limit, offset, search, sort, order Else
                //queryParamsType:'',   
                ////查询参数,每次调用是会带上这个参数，可自定义                         
@@ -54,11 +54,11 @@ $(document).ready(function() {
                    if($el.data("item") == "edit"){
                    	edit(row.id);
                    } else if($el.data("item") == "delete"){
-                        jp.confirm('确认要删除该字体记录吗？', function(){
+                        jp.confirm('确认要删除该成品楹联订单记录吗？', function(){
                        	jp.loading();
-                       	jp.get("${ctx}/cultural/spec/typeface/delete?id="+row.id, function(data){
+                       	jp.get("${ctx}/cultural/order/coupletsOrder/delete?id="+row.id, function(data){
                    	  		if(data.success){
-                   	  			$('#typefaceTable').bootstrapTable('refresh');
+                   	  			$('#coupletsOrderTable').bootstrapTable('refresh');
                    	  			jp.success(data.msg);
                    	  		}else{
                    	  			jp.error(data.msg);
@@ -77,18 +77,61 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'name',
-		        title: '名称',
+		        field: 'customer.nickname',
+		        title: '用户',
 		        sortable: true
 		        ,formatter:function(value, row , index){
-		        	return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-		         }
+ 			    if(value == null){
+		            	return "<a href='javascript:edit(\""+row.id+"\")'>-</a>";
+		            }else{
+		                return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
+		            }
+		        }
 		       
 		    }
 			,{
-		        field: 'intro',
-		        title: '简介',
+		        field: 'couplets.name',
+		        title: '成品楹联',
 		        sortable: true
+		       
+		    }
+			,{
+		        field: 'coupletsPrice.price',
+		        title: '价格',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'address.district',
+		        title: '收货地址',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'installer.name',
+		        title: '安装人员',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'num',
+		        title: '数量',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'totalPrice',
+		        title: '总价',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'status',
+		        title: '订单状态',
+		        sortable: true,
+		        formatter:function(value, row , index){
+		        	return jp.getDictLabel(${fns:toJson(fns:getDictList('order_status'))}, value, "-");
+		        }
 		       
 		    }
 			,{
@@ -105,13 +148,13 @@ $(document).ready(function() {
 	  if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
 
 		 
-		  $('#typefaceTable').bootstrapTable("toggleView");
+		  $('#coupletsOrderTable').bootstrapTable("toggleView");
 		}
 	  
-	  $('#typefaceTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
+	  $('#coupletsOrderTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
                 'check-all.bs.table uncheck-all.bs.table', function () {
-            $('#remove').prop('disabled', ! $('#typefaceTable').bootstrapTable('getSelections').length);
-            $('#edit').prop('disabled', $('#typefaceTable').bootstrapTable('getSelections').length!=1);
+            $('#remove').prop('disabled', ! $('#coupletsOrderTable').bootstrapTable('getSelections').length);
+            $('#edit').prop('disabled', $('#coupletsOrderTable').bootstrapTable('getSelections').length!=1);
         });
 		  
 		$("#btnImport").click(function(){
@@ -122,7 +165,7 @@ $(document).ready(function() {
 			    content:$("#importBox").html() ,
 			    btn: ['下载模板','确定', '关闭'],
 				    btn1: function(index, layero){
-					  window.location='${ctx}/cultural/spec/typeface/import/template';
+					  window.location='${ctx}/cultural/order/coupletsOrder/import/template';
 				  },
 			    btn2: function(index, layero){
 				        var inputForm =top.$("#importForm");
@@ -142,32 +185,32 @@ $(document).ready(function() {
 		});
 		    
 	  $("#search").click("click", function() {// 绑定查询按扭
-		  $('#typefaceTable').bootstrapTable('refresh');
+		  $('#coupletsOrderTable').bootstrapTable('refresh');
 		});
 	 
 	 $("#reset").click("click", function() {// 绑定查询按扭
 		  $("#searchForm  input").val("");
 		  $("#searchForm  select").val("");
 		  $("#searchForm  .select-item").html("");
-		  $('#typefaceTable').bootstrapTable('refresh');
+		  $('#coupletsOrderTable').bootstrapTable('refresh');
 		});
 		
 		
 	});
 		
   function getIdSelections() {
-        return $.map($("#typefaceTable").bootstrapTable('getSelections'), function (row) {
+        return $.map($("#coupletsOrderTable").bootstrapTable('getSelections'), function (row) {
             return row.id
         });
     }
   
   function deleteAll(){
 
-		jp.confirm('确认要删除该字体记录吗？', function(){
+		jp.confirm('确认要删除该成品楹联订单记录吗？', function(){
 			jp.loading();  	
-			jp.get("${ctx}/cultural/spec/typeface/deleteAll?ids=" + getIdSelections(), function(data){
+			jp.get("${ctx}/cultural/order/coupletsOrder/deleteAll?ids=" + getIdSelections(), function(data){
          	  		if(data.success){
-         	  			$('#typefaceTable').bootstrapTable('refresh');
+         	  			$('#coupletsOrderTable').bootstrapTable('refresh');
          	  			jp.success(data.msg);
          	  		}else{
          	  			jp.error(data.msg);
@@ -177,17 +220,17 @@ $(document).ready(function() {
 		})
   }
    function add(){
-	  jp.openDialog('新增字体', "${ctx}/cultural/spec/typeface/form",'800px', '500px', $('#typefaceTable'));
+	  jp.openDialog('新增成品楹联订单', "${ctx}/cultural/order/coupletsOrder/form",'800px', '500px', $('#coupletsOrderTable'));
   }
   function edit(id){//没有权限时，不显示确定按钮
   	  if(id == undefined){
 			id = getIdSelections();
 		}
-	   <shiro:hasPermission name="cultural:spec:typeface:edit">
-	  jp.openDialog('编辑字体', "${ctx}/cultural/spec/typeface/form?id=" + id,'800px', '500px', $('#typefaceTable'));
+	   <shiro:hasPermission name="cultural:order:coupletsOrder:edit">
+	  jp.openDialog('编辑成品楹联订单', "${ctx}/cultural/order/coupletsOrder/form?id=" + id,'800px', '500px', $('#coupletsOrderTable'));
 	   </shiro:hasPermission>
-	  <shiro:lacksPermission name="cultural:spec:typeface:edit">
-	  jp.openDialogView('查看字体', "${ctx}/cultural/spec/typeface/form?id=" + id,'800px', '500px', $('#typefaceTable'));
+	  <shiro:lacksPermission name="cultural:order:coupletsOrder:edit">
+	  jp.openDialogView('查看成品楹联订单', "${ctx}/cultural/order/coupletsOrder/form?id=" + id,'800px', '500px', $('#coupletsOrderTable'));
 	  </shiro:lacksPermission>
   }
 

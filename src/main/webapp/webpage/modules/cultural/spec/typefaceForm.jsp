@@ -61,7 +61,7 @@
 					</td>
 					<td class="width-15 active"><label class="pull-right">简介：</label></td>
 					<td class="width-35">
-						<form:input path="details" htmlEscape="false"    class="form-control "/>
+						<form:input path="intro" htmlEscape="false"    class="form-control "/>
 					</td>
 				</tr>
 				<tr>

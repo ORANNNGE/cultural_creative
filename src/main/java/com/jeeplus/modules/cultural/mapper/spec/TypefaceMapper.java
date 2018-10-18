@@ -10,7 +10,7 @@ import com.jeeplus.modules.cultural.entity.spec.Typeface;
 /**
  * 字体MAPPER接口
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-18
  */
 @MyBatisMapper
 public interface TypefaceMapper extends BaseMapper<Typeface> {

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
 $(document).ready(function() {
-	$('#typefaceTable').bootstrapTable({
+	$('#lexiconPriceTable').bootstrapTable({
 		 
 		  //请求方法
                method: 'get',
@@ -34,7 +34,7 @@ $(document).ready(function() {
                //可供选择的每页的行数（*）    
                pageList: [10, 25, 50, 100],
                //这个接口需要处理bootstrap table传递的固定参数,并返回特定格式的json数据  
-               url: "${ctx}/cultural/spec/typeface/data",
+               url: "${ctx}/cultural/order/lexiconPrice/data",
                //默认值为 'limit',传给服务端的参数为：limit, offset, search, sort, order Else
                //queryParamsType:'',   
                ////查询参数,每次调用是会带上这个参数，可自定义                         
@@ -54,11 +54,11 @@ $(document).ready(function() {
                    if($el.data("item") == "edit"){
                    	edit(row.id);
                    } else if($el.data("item") == "delete"){
-                        jp.confirm('确认要删除该字体记录吗？', function(){
+                        jp.confirm('确认要删除该词库价格记录吗？', function(){
                        	jp.loading();
-                       	jp.get("${ctx}/cultural/spec/typeface/delete?id="+row.id, function(data){
+                       	jp.get("${ctx}/cultural/order/lexiconPrice/delete?id="+row.id, function(data){
                    	  		if(data.success){
-                   	  			$('#typefaceTable').bootstrapTable('refresh');
+                   	  			$('#lexiconPriceTable').bootstrapTable('refresh');
                    	  			jp.success(data.msg);
                    	  		}else{
                    	  			jp.error(data.msg);
@@ -77,17 +77,57 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'name',
-		        title: '名称',
+		        field: 'lexicon.title',
+		        title: '楹联词库',
 		        sortable: true
 		        ,formatter:function(value, row , index){
-		        	return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-		         }
+ 			    if(value == null){
+		            	return "<a href='javascript:edit(\""+row.id+"\")'>-</a>";
+		            }else{
+		                return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
+		            }
+		        }
 		       
 		    }
 			,{
-		        field: 'intro',
-		        title: '简介',
+		        field: 'author.name',
+		        title: '作者',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'typeface.name',
+		        title: '字体',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'size.name',
+		        title: '尺寸',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'frame.name',
+		        title: '楹联框',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'craft.name',
+		        title: '制作工艺',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'combo',
+		        title: '套餐',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'price',
+		        title: '价格',
 		        sortable: true
 		       
 		    }
@@ -105,13 +145,13 @@ $(document).ready(function() {
 	  if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
 
 		 
-		  $('#typefaceTable').bootstrapTable("toggleView");
+		  $('#lexiconPriceTable').bootstrapTable("toggleView");
 		}
 	  
-	  $('#typefaceTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
+	  $('#lexiconPriceTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
                 'check-all.bs.table uncheck-all.bs.table', function () {
-            $('#remove').prop('disabled', ! $('#typefaceTable').bootstrapTable('getSelections').length);
-            $('#edit').prop('disabled', $('#typefaceTable').bootstrapTable('getSelections').length!=1);
+            $('#remove').prop('disabled', ! $('#lexiconPriceTable').bootstrapTable('getSelections').length);
+            $('#edit').prop('disabled', $('#lexiconPriceTable').bootstrapTable('getSelections').length!=1);
         });
 		  
 		$("#btnImport").click(function(){
@@ -122,7 +162,7 @@ $(document).ready(function() {
 			    content:$("#importBox").html() ,
 			    btn: ['下载模板','确定', '关闭'],
 				    btn1: function(index, layero){
-					  window.location='${ctx}/cultural/spec/typeface/import/template';
+					  window.location='${ctx}/cultural/order/lexiconPrice/import/template';
 				  },
 			    btn2: function(index, layero){
 				        var inputForm =top.$("#importForm");
@@ -142,32 +182,32 @@ $(document).ready(function() {
 		});
 		    
 	  $("#search").click("click", function() {// 绑定查询按扭
-		  $('#typefaceTable').bootstrapTable('refresh');
+		  $('#lexiconPriceTable').bootstrapTable('refresh');
 		});
 	 
 	 $("#reset").click("click", function() {// 绑定查询按扭
 		  $("#searchForm  input").val("");
 		  $("#searchForm  select").val("");
 		  $("#searchForm  .select-item").html("");
-		  $('#typefaceTable').bootstrapTable('refresh');
+		  $('#lexiconPriceTable').bootstrapTable('refresh');
 		});
 		
 		
 	});
 		
   function getIdSelections() {
-        return $.map($("#typefaceTable").bootstrapTable('getSelections'), function (row) {
+        return $.map($("#lexiconPriceTable").bootstrapTable('getSelections'), function (row) {
             return row.id
         });
     }
   
   function deleteAll(){
 
-		jp.confirm('确认要删除该字体记录吗？', function(){
+		jp.confirm('确认要删除该词库价格记录吗？', function(){
 			jp.loading();  	
-			jp.get("${ctx}/cultural/spec/typeface/deleteAll?ids=" + getIdSelections(), function(data){
+			jp.get("${ctx}/cultural/order/lexiconPrice/deleteAll?ids=" + getIdSelections(), function(data){
          	  		if(data.success){
-         	  			$('#typefaceTable').bootstrapTable('refresh');
+         	  			$('#lexiconPriceTable').bootstrapTable('refresh');
          	  			jp.success(data.msg);
          	  		}else{
          	  			jp.error(data.msg);
@@ -177,17 +217,17 @@ $(document).ready(function() {
 		})
   }
    function add(){
-	  jp.openDialog('新增字体', "${ctx}/cultural/spec/typeface/form",'800px', '500px', $('#typefaceTable'));
+	  jp.openDialog('新增词库价格', "${ctx}/cultural/order/lexiconPrice/form",'800px', '500px', $('#lexiconPriceTable'));
   }
   function edit(id){//没有权限时，不显示确定按钮
   	  if(id == undefined){
 			id = getIdSelections();
 		}
-	   <shiro:hasPermission name="cultural:spec:typeface:edit">
-	  jp.openDialog('编辑字体', "${ctx}/cultural/spec/typeface/form?id=" + id,'800px', '500px', $('#typefaceTable'));
+	   <shiro:hasPermission name="cultural:order:lexiconPrice:edit">
+	  jp.openDialog('编辑词库价格', "${ctx}/cultural/order/lexiconPrice/form?id=" + id,'800px', '500px', $('#lexiconPriceTable'));
 	   </shiro:hasPermission>
-	  <shiro:lacksPermission name="cultural:spec:typeface:edit">
-	  jp.openDialogView('查看字体', "${ctx}/cultural/spec/typeface/form?id=" + id,'800px', '500px', $('#typefaceTable'));
+	  <shiro:lacksPermission name="cultural:order:lexiconPrice:edit">
+	  jp.openDialogView('查看词库价格', "${ctx}/cultural/order/lexiconPrice/form?id=" + id,'800px', '500px', $('#lexiconPriceTable'));
 	  </shiro:lacksPermission>
   }
 

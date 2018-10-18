@@ -71,11 +71,15 @@ var data = getDetails();
 //详情
 var details = data.data;
 //Vue实例
-new Vue({
+var vm = new Vue({
     el:'#details',
     data: {
         data:details,
         spec:specData,
+        coupletsPrice:{
+            'price':{'price':0}
+        },
+        num:0
     },
     computed: {
         details:function () {
@@ -85,28 +89,20 @@ new Vue({
         meaning:function () {
             var text = this.data.meaning;
             return parseBlob(text);
+        },
+        totalPrice:function () {
+            var num = parseFloat(this.num);
+            var price = parseFloat(this.coupletsPrice.price.price);
+            return parseFloat(num*price).toFixed(2);
         }
 
+    },
+    methods:{
+        plus:function () {
+            this.num++;
+        },
+        minus:function () {
+            this.num--;
+        }
     }
 })
-
-/*
-查询价格
- */
-var sizeId;
-var frameId;
-var craftId;
-function getCoupletsPrice(object) {
-    var type = $(object).attr('data-type');
-    var type = $(object).attr('data-type');
-    $(object).css('background','#f00');
-    if(type == 'size'){
-        sizeId = $(object).attr('data-id');
-    }
-    if(type == 'frame'){
-        frameId = $(object).attr('data-id');
-    }
-    if(type == 'craft'){
-        craftId = $(object).attr('data-id');
-    }
-}

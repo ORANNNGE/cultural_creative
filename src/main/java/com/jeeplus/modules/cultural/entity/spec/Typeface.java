@@ -10,13 +10,13 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 字体Entity
  * @author orange
- * @version 2018-09-05
+ * @version 2018-10-18
  */
 public class Typeface extends DataEntity<Typeface> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
-	private String details;		// 简介
+	private String intro;		// 简介
 	
 	public Typeface() {
 		super();
@@ -36,12 +36,12 @@ public class Typeface extends DataEntity<Typeface> {
 	}
 	
 	@ExcelField(title="简介", align=2, sort=2)
-	public String getDetails() {
-		return details;
+	public String getIntro() {
+		return intro;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 	
 }
