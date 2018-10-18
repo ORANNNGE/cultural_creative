@@ -54,10 +54,6 @@
 					title="选择制作工艺" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="套餐：">套餐：</label>
-				<form:input path="combo" htmlEscape="false" maxlength="64"  class=" form-control"/>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="价格：">价格：</label>
 				<form:input path="price" htmlEscape="false"  class=" form-control"/>
 			</div>

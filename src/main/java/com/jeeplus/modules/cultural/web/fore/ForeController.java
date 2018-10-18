@@ -13,20 +13,26 @@ import com.jeeplus.modules.cultural.entity.finished.Painting;
 import com.jeeplus.modules.cultural.entity.order.Address;
 import com.jeeplus.modules.cultural.entity.order.CoupletsOrder;
 import com.jeeplus.modules.cultural.entity.order.CoupletsPrice;
+import com.jeeplus.modules.cultural.entity.order.LexiconPrice;
+import com.jeeplus.modules.cultural.entity.role.Author;
 import com.jeeplus.modules.cultural.entity.role.Customer;
 import com.jeeplus.modules.cultural.entity.spec.Craft;
 import com.jeeplus.modules.cultural.entity.spec.Frame;
 import com.jeeplus.modules.cultural.entity.spec.Size;
+import com.jeeplus.modules.cultural.entity.spec.Typeface;
 import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
 import com.jeeplus.modules.cultural.service.order.AddressService;
 import com.jeeplus.modules.cultural.service.order.CoupletsOrderService;
 import com.jeeplus.modules.cultural.service.order.CoupletsPriceService;
+import com.jeeplus.modules.cultural.service.order.LexiconPriceService;
+import com.jeeplus.modules.cultural.service.role.AuthorService;
 import com.jeeplus.modules.cultural.service.role.CustomerService;
 import com.jeeplus.modules.cultural.service.spec.CraftService;
 import com.jeeplus.modules.cultural.service.spec.FrameService;
 import com.jeeplus.modules.cultural.service.spec.SizeService;
+import com.jeeplus.modules.cultural.service.spec.TypefaceService;
 import com.jeeplus.modules.cultural.utils.MsgUtil;
 import com.jeeplus.modules.cultural.utils.PageUtils;
 import com.jeeplus.modules.sys.entity.Log;
@@ -75,6 +81,12 @@ public class ForeController {
     CoupletsPriceService coupletsPriceService;
     @Autowired
     CoupletsOrderService coupletsOrderService;
+    @Autowired
+    TypefaceService typefaceService;
+    @Autowired
+    LexiconPriceService lexiconPriceService;
+    @Autowired
+    AuthorService authorService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -569,6 +581,31 @@ public class ForeController {
 
         return json;
     }
+    
+    @RequestMapping(value="getLexiconSpec")
+    @ResponseBody
+    public AjaxJson getLexiconSpec(){
+        AjaxJson json = new AjaxJson();
+        List<Size> sizeList = sizeService.findList(new Size());
+        List<Frame> frameList = frameService.findList(new Frame());
+        List<Craft> craftList = craftService.findList(new Craft());
+        List<Typeface> typefaceList = typefaceService.findList(new Typeface());
+        List<Author> authors = authorService.findList(new Author());
+        List<Author> authorList = new ArrayList<>();
+        //只返回书法家
+        for (Author author : authors) {
+            if(author.getType() == "1"){
+                authorList.add(author);
+            }
+        }
+        json.put("sizeList", sizeList);
+        json.put("frameList", frameList);
+        json.put("craftList", craftList);
+        json.put("typefaceList", typefaceList);
+        json.put("authorList", authorList);
+
+        return json;
+    }
 
     /**
      * 获取成品楹联价格
@@ -599,6 +636,37 @@ public class ForeController {
             json.setSuccess(false);
             json.setMsg("操作失败");
         }
+        return json;
+    }
+
+    @RequestMapping(value="getLexiconPrice")
+    @ResponseBody
+    public AjaxJson getLexiconPrice(String sizeId,String frameId,String craftId,String lexiconId,String authorId,String typefaceId){
+        AjaxJson json = new AjaxJson();
+        Size size = sizeService.get(sizeId);
+        Frame frame = frameService.get(frameId);
+        Craft craft = craftService.get(craftId);
+        Lexicon lexicon = lexiconService.get(lexiconId);
+        LexiconPrice price = new LexiconPrice();
+        price.setSize(size);
+        price.setFrame(frame);
+        price.setCraft(craft);
+        price.setLexicon(lexicon);
+        if(authorId != null){
+            Author author = authorService.get(authorId);
+            price.setAuthor(author);
+        }
+        if(typefaceId != null){
+            Typeface typeface = typefaceService.get(typefaceId);
+            price.setTypeface(typeface);
+        }
+
+//        if(coupletsPriceServiceList.size() == 1){
+//            json.put("price", coupletsPriceServiceList.get(0));
+//        }else{
+//            json.setSuccess(false);
+//            json.setMsg("操作失败");
+//        }
         return json;
     }
 
@@ -667,4 +735,5 @@ public class ForeController {
         json.setMsg("购买成功");
         return json;
     }
+
 }

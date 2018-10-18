@@ -10,7 +10,6 @@
 		a.size_id AS "size.id",
 		a.frame_id AS "frame.id",
 		a.craft_id AS "craft.id",
-		a.combo AS "combo",
 		a.price AS "price",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -80,9 +79,6 @@
 			<if test="craft != null and craft.id != null and craft.id != ''">
 				AND a.craft_id = #{craft.id}
 			</if>
-			<if test="combo != null and combo != ''">
-				AND a.combo = #{combo}
-			</if>
 			<if test="price != null and price != ''">
 				AND a.price = #{price}
 			</if>
@@ -125,7 +121,6 @@
 			size_id,
 			frame_id,
 			craft_id,
-			combo,
 			price,
 			create_by,
 			create_date,
@@ -141,7 +136,6 @@
 			#{size.id},
 			#{frame.id},
 			#{craft.id},
-			#{combo},
 			#{price},
 			#{createBy.id},
 			#{createDate},
@@ -160,7 +154,6 @@
 			size_id = #{size.id},
 			frame_id = #{frame.id},
 			craft_id = #{craft.id},
-			combo = #{combo},
 			price = #{price},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

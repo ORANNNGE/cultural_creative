@@ -40,7 +40,7 @@ import com.jeeplus.modules.cultural.service.order.LexiconPriceService;
 /**
  * 楹联词库价格Controller
  * @author orange
- * @version 2018-10-18
+ * @version 2018-10-19
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/order/lexiconPrice")

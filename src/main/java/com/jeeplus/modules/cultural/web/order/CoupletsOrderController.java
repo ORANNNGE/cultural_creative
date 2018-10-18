@@ -40,7 +40,7 @@ import com.jeeplus.modules.cultural.service.order.CoupletsOrderService;
 /**
  * 成品楹联订单Controller
  * @author orange
- * @version 2018-10-17
+ * @version 2018-10-19
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/order/coupletsOrder")

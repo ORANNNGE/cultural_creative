@@ -16,7 +16,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 楹联词库价格Entity
  * @author orange
- * @version 2018-10-18
+ * @version 2018-10-19
  */
 public class LexiconPrice extends DataEntity<LexiconPrice> {
 	
@@ -27,7 +27,6 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 	private Size size;		// 尺寸
 	private Frame frame;		// 楹联框
 	private Craft craft;		// 制作工艺
-	private String combo;		// 套餐
 	private String price;		// 价格
 	
 	public LexiconPrice() {
@@ -92,16 +91,7 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 		this.craft = craft;
 	}
 	
-	@ExcelField(title="套餐", align=2, sort=7)
-	public String getCombo() {
-		return combo;
-	}
-
-	public void setCombo(String combo) {
-		this.combo = combo;
-	}
-	
-	@ExcelField(title="价格", align=2, sort=8)
+	@ExcelField(title="价格", align=2, sort=7)
 	public String getPrice() {
 		return price;
 	}

@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.order.LexiconPriceMapper;
 /**
  * 楹联词库价格Service
  * @author orange
- * @version 2018-10-18
+ * @version 2018-10-19
  */
 @Service
 @Transactional(readOnly = true)

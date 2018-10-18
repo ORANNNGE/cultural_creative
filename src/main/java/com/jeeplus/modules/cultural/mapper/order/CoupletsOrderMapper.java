@@ -10,7 +10,7 @@ import com.jeeplus.modules.cultural.entity.order.CoupletsOrder;
 /**
  * 成品楹联订单MAPPER接口
  * @author orange
- * @version 2018-10-17
+ * @version 2018-10-19
  */
 @MyBatisMapper
 public interface CoupletsOrderMapper extends BaseMapper<CoupletsOrder> {

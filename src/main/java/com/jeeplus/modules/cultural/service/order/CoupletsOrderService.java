@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.order.CoupletsOrderMapper;
 /**
  * 成品楹联订单Service
  * @author orange
- * @version 2018-10-17
+ * @version 2018-10-19
  */
 @Service
 @Transactional(readOnly = true)

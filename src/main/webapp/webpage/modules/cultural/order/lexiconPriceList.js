@@ -120,12 +120,6 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'combo',
-		        title: '套餐',
-		        sortable: true
-		       
-		    }
-			,{
 		        field: 'price',
 		        title: '价格',
 		        sortable: true
