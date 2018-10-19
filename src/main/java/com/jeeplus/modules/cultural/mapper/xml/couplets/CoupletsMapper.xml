@@ -18,7 +18,8 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag",
+		a.del_flag AS "del
+		Flag",
 				
 		lexicon.title AS "lexicon.title",
 		lexicon.type AS "lexicon.type",
@@ -208,9 +209,11 @@
 		a.price AS "price",
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
+		
 		lexicon.title AS "lexicon.title",
 		lexicon.type AS "lexicon.type",
-		lexicon.isoriginal AS "lexicon.isOriginal",
+		lexicon.isoriginal AS "lexi
+		con.isOriginal",
 
 		size.name AS "size.name",
 		frame.name AS "frame.name",

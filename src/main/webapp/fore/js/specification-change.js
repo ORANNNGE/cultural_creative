@@ -12,6 +12,7 @@ $(function(){
 		$('.coupletm-norm-bg').hide()
 		$('.couplet-more').css('position','relative')
 	})
+
 	//选择尺寸
 	$('.norm-size').find('p').toggle(function(){
 		$('.norm-size').find('p').attr('class',' ')
@@ -47,12 +48,15 @@ $(function(){
 	$('.thsm-fo').find('p').toggle(function(){
 		$('.thsm-fo').find('p').attr('class','')
 		$('.thsm-fo').find('p').eq($(this).index()).attr('class','checked')
+		$('.thsm-ca').find('p').attr('class','')
+
 	},function(){
-		$('.thsm-fo').find('p').eq($(this).index()).attr('class',' ')
+		$('.thsm-fo').find('p').eq($(this).index()).attr('class','')
 	})
 	$('.thsm-ca').find('p').toggle(function(){
 		$('.thsm-ca').find('p').attr('class','')
 		$('.thsm-ca').find('p').eq($(this).index()).attr('class','checked')
+		$('.thsm-fo').find('p').attr('class','')
 	},function(){
 		$('.thsm-ca').find('p').eq($(this).index()).attr('class',' ')
 	})
@@ -105,5 +109,10 @@ $(function(){
 		$('.thesarusm-norm-bg').hide()
 		$('.thesaurus-more').css('position','relative')
 	})
-	
+
+	$('.thsm-buy').click(function(){
+		$('.thesarusm-norm-bg').hide()
+		$('.thesaurus-more').css('position','relative')
+})
+
 })

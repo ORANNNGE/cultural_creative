@@ -10,10 +10,7 @@ import com.jeeplus.modules.cultural.entity.finished.Calligraphy;
 import com.jeeplus.modules.cultural.entity.finished.Decoration;
 import com.jeeplus.modules.cultural.entity.finished.NewYearPic;
 import com.jeeplus.modules.cultural.entity.finished.Painting;
-import com.jeeplus.modules.cultural.entity.order.Address;
-import com.jeeplus.modules.cultural.entity.order.CoupletsOrder;
-import com.jeeplus.modules.cultural.entity.order.CoupletsPrice;
-import com.jeeplus.modules.cultural.entity.order.LexiconPrice;
+import com.jeeplus.modules.cultural.entity.order.*;
 import com.jeeplus.modules.cultural.entity.role.Author;
 import com.jeeplus.modules.cultural.entity.role.Customer;
 import com.jeeplus.modules.cultural.entity.spec.Craft;
@@ -23,10 +20,7 @@ import com.jeeplus.modules.cultural.entity.spec.Typeface;
 import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
-import com.jeeplus.modules.cultural.service.order.AddressService;
-import com.jeeplus.modules.cultural.service.order.CoupletsOrderService;
-import com.jeeplus.modules.cultural.service.order.CoupletsPriceService;
-import com.jeeplus.modules.cultural.service.order.LexiconPriceService;
+import com.jeeplus.modules.cultural.service.order.*;
 import com.jeeplus.modules.cultural.service.role.AuthorService;
 import com.jeeplus.modules.cultural.service.role.CustomerService;
 import com.jeeplus.modules.cultural.service.spec.CraftService;
@@ -87,6 +81,8 @@ public class ForeController {
     LexiconPriceService lexiconPriceService;
     @Autowired
     AuthorService authorService;
+    @Autowired
+    LexiconOrderService lexiconOrderService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -582,30 +578,6 @@ public class ForeController {
         return json;
     }
     
-    @RequestMapping(value="getLexiconSpec")
-    @ResponseBody
-    public AjaxJson getLexiconSpec(){
-        AjaxJson json = new AjaxJson();
-        List<Size> sizeList = sizeService.findList(new Size());
-        List<Frame> frameList = frameService.findList(new Frame());
-        List<Craft> craftList = craftService.findList(new Craft());
-        List<Typeface> typefaceList = typefaceService.findList(new Typeface());
-        List<Author> authors = authorService.findList(new Author());
-        List<Author> authorList = new ArrayList<>();
-        //只返回书法家
-        for (Author author : authors) {
-            if(author.getType() == "1"){
-                authorList.add(author);
-            }
-        }
-        json.put("sizeList", sizeList);
-        json.put("frameList", frameList);
-        json.put("craftList", craftList);
-        json.put("typefaceList", typefaceList);
-        json.put("authorList", authorList);
-
-        return json;
-    }
 
     /**
      * 获取成品楹联价格
@@ -636,37 +608,6 @@ public class ForeController {
             json.setSuccess(false);
             json.setMsg("操作失败");
         }
-        return json;
-    }
-
-    @RequestMapping(value="getLexiconPrice")
-    @ResponseBody
-    public AjaxJson getLexiconPrice(String sizeId,String frameId,String craftId,String lexiconId,String authorId,String typefaceId){
-        AjaxJson json = new AjaxJson();
-        Size size = sizeService.get(sizeId);
-        Frame frame = frameService.get(frameId);
-        Craft craft = craftService.get(craftId);
-        Lexicon lexicon = lexiconService.get(lexiconId);
-        LexiconPrice price = new LexiconPrice();
-        price.setSize(size);
-        price.setFrame(frame);
-        price.setCraft(craft);
-        price.setLexicon(lexicon);
-        if(authorId != null){
-            Author author = authorService.get(authorId);
-            price.setAuthor(author);
-        }
-        if(typefaceId != null){
-            Typeface typeface = typefaceService.get(typefaceId);
-            price.setTypeface(typeface);
-        }
-
-//        if(coupletsPriceServiceList.size() == 1){
-//            json.put("price", coupletsPriceServiceList.get(0));
-//        }else{
-//            json.setSuccess(false);
-//            json.setMsg("操作失败");
-//        }
         return json;
     }
 
@@ -733,6 +674,133 @@ public class ForeController {
         //持久化
         coupletsOrderService.save(coupletsOrder);
         json.setMsg("购买成功");
+        return json;
+    }
+
+    @RequestMapping(value="getLexiconSpec")
+    @ResponseBody
+    public AjaxJson getLexiconSpec(){
+        AjaxJson json = new AjaxJson();
+        List<Size> sizeList = sizeService.findList(new Size());
+        List<Frame> frameList = frameService.findList(new Frame());
+        List<Craft> craftList = craftService.findList(new Craft());
+        List<Typeface> typefaceList = typefaceService.findList(new Typeface());
+        List<Author> authors = authorService.findList(new Author());
+        List<Author> authorList = new ArrayList<>();
+        //只返回书法家
+        for (Author author : authors) {
+            if("1".equals(author.getType())){
+                authorList.add(author);
+            }
+        }
+        json.put("sizeList", sizeList);
+        json.put("frameList", frameList);
+        json.put("craftList", craftList);
+        json.put("typefaceList", typefaceList);
+        json.put("authorList", authorList);
+
+        return json;
+    }
+
+    /**
+     *
+     * @param sizeId
+     * @param frameId
+     * @param craftId
+     * @param lexiconId
+     * @param authorId
+     * @param typefaceId
+     * @return
+     */
+    @RequestMapping(value="getLexiconPrice")
+    @ResponseBody
+    public AjaxJson getLexiconPrice(String sizeId,String frameId,String craftId,String lexiconId,String authorId,String typefaceId){
+        AjaxJson json = new AjaxJson();
+        Size size = sizeService.get(sizeId);
+        Frame frame = frameService.get(frameId);
+        Craft craft = craftService.get(craftId);
+        Lexicon lexicon = lexiconService.get(lexiconId);
+        LexiconPrice price = new LexiconPrice();
+        price.setSize(size);
+        price.setFrame(frame);
+        price.setCraft(craft);
+        price.setLexicon(lexicon);
+        if(authorId != null){
+            Author author = authorService.get(authorId);
+            price.setAuthor(author);
+        }
+        if(typefaceId != null){
+            Typeface typeface = typefaceService.get(typefaceId);
+            price.setTypeface(typeface);
+        }
+        List<LexiconPrice> lexiconPriceList = lexiconPriceService.findList(price);
+
+        if(lexiconPriceList.size() == 1){
+            json.put("price", lexiconPriceList.get(0));
+        }else{
+            json.setSuccess(false);
+            json.setMsg("操作失败");
+        }
+        return json;
+    }
+
+    @RequestMapping(value="addLexiconOrder")
+    @ResponseBody
+    public AjaxJson addLexiconOrder(String lexiconPriceId, String lexiconId, HttpServletRequest request,Integer num,Double totalPrice){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String) request.getSession().getAttribute("customerId");
+//        customerId = "1538968164093";
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+        //成品楹联
+        Lexicon lexicon = lexiconService.get(lexiconId);
+        //成品楹联价格
+        LexiconPrice lexiconPrice = lexiconPriceService.get(lexiconPriceId);
+        //查询收货地址参数
+        Address selectAddress = new Address();
+        //设置参数
+        selectAddress.setCustomer(customer);
+        selectAddress.setIsDefault("1");
+        List<Address> addressList = addressService.findList(selectAddress);
+        //收货地址
+        Address address = null;
+        for (Address addr : addressList) {
+            //找到默认收货地址
+            if("1".equals(addr.getIsDefault())){
+                address = addr;
+            }
+        }
+        //没有默认收货地址则返回失败
+        if(address == null){
+            json.setSuccess(false);
+            json.setMsg("请设置默认收货地址");
+        }
+        //成品楹联订单
+//        CoupletsOrder coupletsOrder = new CoupletsOrder();
+        LexiconOrder lexiconOrder = new LexiconOrder();
+        lexiconOrder.setCustomer(customer);
+        lexiconOrder.setAddress(address);
+        lexiconOrder.setLexicon(lexicon);
+        lexiconOrder.setLexiconPrice(lexiconPrice);
+        lexiconOrder.setInstaller(null);
+        lexiconOrder.setStatus("1");
+        lexiconOrder.setNum(num);
+        lexiconOrder.setTotalPrice(totalPrice);
+        lexiconOrderService.save(lexiconOrder);
+
         return json;
     }
 

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.order.FinishedOrderMapper">
+    
+	<sql id="finishedOrderColumns">
+		a.id AS "id",
+		a.type AS "type",
+		a.finished_id AS "finishedId",
+		a.finished_name AS "finishedName",
+		a.price AS "price",
+		a.num AS "num",
+		a.total_price AS "totalPrice",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="finishedOrderJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="FinishedOrder" >
+		SELECT 
+			<include refid="finishedOrderColumns"/>
+		FROM cultural_finished_order a
+		<include refid="finishedOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FinishedOrder" >
+		SELECT 
+			<include refid="finishedOrderColumns"/>
+		FROM cultural_finished_order a
+		<include refid="finishedOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
+			<if test="finishedName != null and finishedName != ''">
+				AND a.finished_name = #{finishedName}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FinishedOrder" >
+		SELECT 
+			<include refid="finishedOrderColumns"/>
+		FROM cultural_finished_order a
+		<include refid="finishedOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_finished_order(
+			id,
+			type,
+			finished_id,
+			finished_name,
+			price,
+			num,
+			total_price,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{type},
+			#{finishedId},
+			#{finishedName},
+			#{price},
+			#{num},
+			#{totalPrice},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_finished_order SET 	
+			type = #{type},
+			finished_id = #{finishedId},
+			finished_name = #{finishedName},
+			price = #{price},
+			num = #{num},
+			total_price = #{totalPrice},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_finished_order
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_finished_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="FinishedOrder" statementType="STATEMENT">
+		select * FROM cultural_finished_order  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

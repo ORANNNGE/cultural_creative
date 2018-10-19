@@ -27,7 +27,7 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 	private Size size;		// 尺寸
 	private Frame frame;		// 楹联框
 	private Craft craft;		// 制作工艺
-	private String price;		// 价格
+	private Double price;		// 价格
 	
 	public LexiconPrice() {
 		super();
@@ -92,11 +92,11 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 	}
 	
 	@ExcelField(title="价格", align=2, sort=7)
-	public String getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	

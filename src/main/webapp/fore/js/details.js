@@ -29,8 +29,17 @@ switch (pathName) {
 }
 
 //获取规格
-var specUrl = 'getCoupletsSpec';
-function getCoupletsSpec(){
+var specUrl;
+switch (pathName) {
+    case "/fore/coupletsDetails.jsp":
+        specUrl = "getCoupletsSpec";
+        break;
+    case "/fore/lexiconDetails.jsp":
+        specUrl = "getLexiconSpec";
+        break;
+
+}
+function getSpec(){
     var data;
     $.ajax({
         type:'post',
@@ -64,7 +73,7 @@ function getDetails(){
     })
     return data;
 }
-var specData = getCoupletsSpec();
+var specData = getSpec();
 // var spec = specData.data;
 
 var data = getDetails();
@@ -76,10 +85,10 @@ var vm = new Vue({
     data: {
         data:details,
         spec:specData,
-        coupletsPrice:{
+        thePrice:{
             'price':{'price':0}
         },
-        num:0
+        num:1
     },
     computed: {
         details:function () {
@@ -92,7 +101,7 @@ var vm = new Vue({
         },
         totalPrice:function () {
             var num = parseFloat(this.num);
-            var price = parseFloat(this.coupletsPrice.price.price);
+            var price = parseFloat(this.thePrice.price.price);
             return parseFloat(num*price).toFixed(2);
         }
 
@@ -102,6 +111,7 @@ var vm = new Vue({
             this.num++;
         },
         minus:function () {
+            if(this.num == 0) return;
             this.num--;
         }
     }

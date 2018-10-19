@@ -87,7 +87,7 @@
                 <!--￥100-->
                 <div class="norm-up">
                     <div class="norm-up-img"><img src="images/norm-bg.png" /></div>
-                    <div class="norm-price"><p v-text="'￥'+coupletsPrice.price.price"></p></div>
+                    <div class="norm-price"><p v-text="'￥'+thePrice.price.price"></p></div>
                 </div>
                 <div class="norm-down">
                     <ul class="norm-down-ul">
@@ -140,7 +140,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/details.js"></script>
-<script src="js/CoupletsDetails.js"></script>
+<script src="js/coupletsDetails.js"></script>
 </html>
 
 

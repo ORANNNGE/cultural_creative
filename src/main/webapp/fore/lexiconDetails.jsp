@@ -70,12 +70,12 @@
             <div class="thesam-a">
                 <label>
                     <p>数量</p>
-                    <input type="button" value="-"/>
-                    <input type="number" value="1"/>
-                    <input type="button" value="+"/>
+                    <input type="button" value="-" @click="minus"/>
+                    <input type="number" value="1" v-model="num"/>
+                    <input type="button" value="+" @click="plus"/>
                 </label>
-                <p class="thesam-a-pri">总价：<span>￥100</span></p>
-                <a href="##">立即购买</a>
+                <p class="thesam-a-pri">总价：<span v-text="'￥' + totalPrice" ></span></p>
+                <a href="##" onclick="addLexiconOrder()">立即购买</a>
             </div>
         </div>
         <div class="thesarusm-norm-bg">
@@ -91,12 +91,13 @@
                         <div class="thsm-size">
                             <h3>选择尺寸</h3>
                             <div class="thsm-si">
-                                <p class=" ">1.1米（竖联100cm*18cm，横批40cm*18cm）</p>
+                                <p v-for="item in spec.sizeList" v-text="item.intro" :data-id="item.id" data-type="size" onclick="getLexiconPrice(this)"></p>
+                                <%--<p class=" ">1.1米（竖联100cm*18cm，横批40cm*18cm）</p>
                                 <p>1.3米（竖联118cm*21cm，横批47cm*21cm）</p></li>
                                 <p>1.6米（竖联145cm*24cm，横批60cm*24cm）</p></li>
                                 <p>1.8米（竖联170cm*28cm，横批70cm*28cm）</p></li>
                                 <p>2.0米（竖联180cm*30cm，横批70cm*30cm）</p></li>
-                                <p>2.2米（竖联190cm*30cm，横批70cm*30cm）</p></li>
+                                <p>2.2米（竖联190cm*30cm，横批70cm*30cm）</p></li>--%>
                             </div>
                         </div>
                     </div>
@@ -117,13 +118,14 @@
                         <div class="thsm-production ">
                             <h3>选择制作工艺</h3>
                             <div class="thsm-prod">
-                                <p>PVC平板打印（0.5cm厚度）（配春联框）</p>
+                                <p v-for="item in spec.craftList" v-text="item.intro" :data-id="item.id" data-type="craft" onclick="getLexiconPrice(this)"></p>
+                                <%--<p>PVC平板打印（0.5cm厚度）（配春联框）</p>
                                 <p>实力书法家手写春联</p>
                                 <p class="">不干胶印刷</p>
                                 <p>植绒布印刷</p>
                                 <p>普通铜板纸印刷（全金色）</p>
                                 <p>普通铜板纸印刷（黑色描金）</p>
-                                <p>普通铜板纸印刷（纯黑字）</p>
+                                <p>普通铜板纸印刷（纯黑字）</p>--%>
                             </div>
                         </div>
                     </div>
@@ -144,8 +146,9 @@
                         <div class="thsm-patent">
                             <h3>选择专利产品春联框</h3>
                             <div class="thsm-pate">
-                                <p>金色铝合金春联框</p>
-                                <p class=" ">香槟色铝合金春联框</p>
+                                <p v-for="item in spec.frameList" v-text="item.intro" :data-id="item.id" data-type="frame" onclick="getLexiconPrice(this)"></p>
+                                <%--<p>金色铝合金春联框</p>--%>
+                                <%--<p class=" ">香槟色铝合金春联框</p>--%>
                             </div>
                         </div>
                     </div>
@@ -166,19 +169,20 @@
                         <div class="thsm-font th-font">
                             <h3>选择字体</h3>
                             <div class="thsm-fo">
-                                <p class=" ">楷体</p>
-                                <p>隶书</p>
-                                <p>行书</p>
-                                <p>行楷</p>
+                                <p v-for="item in spec.typefaceList" v-text="item.intro" :data-id="item.id" data-type="typeface" onclick="getLexiconPrice(this)"></p>
+                                <%--<p>隶书</p>--%>
+                                <%--<p>行书</p>--%>
+                                <%--<p>行楷</p>--%>
                             </div>
                         </div>
                         <div class="thsm-callig th-font">
                             <h3>选择书法家</h3>
                             <div class="thsm-ca">
-                                <p>张默默</p>
-                                <p class=" ">张默默</p>
-                                <p>张默默</p>
-                                <p>张默默</p>
+                                <p v-for="item in spec.authorList" v-text="item.name" :data-id="item.id" data-type="author" onclick="getLexiconPrice(this)"></p>
+                                <%--<p>张默默</p>--%>
+                                <%--<p class=" ">张默默</p>--%>
+                                <%--<p>张默默</p>--%>
+                                <%--<p>张默默</p>--%>
                             </div>
                         </div>
                         <div class="thsm-see">
@@ -197,9 +201,11 @@
 </div>
 </body>
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
-<script type="text/javascript" src="js/specification-change.js" ></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/details.js"></script>
+<script src="js/lexiconDetails.js"></script>
+<script type="text/javascript" src="js/specification-change.js" ></script>
 </html>
 

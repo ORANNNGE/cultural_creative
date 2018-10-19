@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.order.LexiconOrderMapper">
+    
+	<sql id="lexiconOrderColumns">
+		a.id AS "id",
+		a.customer_id AS "customer.id",
+		a.lexicon_id AS "lexicon.id",
+		a.lexicon_price_id AS "lexiconPrice.id",
+		a.address_id AS "address.id",
+		a.installer_id AS "installer.id",
+		a.num AS "num",
+		a.total_price AS "totalPrice",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+				
+		customer.nickname AS "customer.nickname",
+				
+		lexicon.title AS "lexicon.title",
+		lexicon.rightline AS "lexicon.rightline",
+		lexicon.leftline AS "lexicon.leftline",
+		lexicon.topline AS "lexicon.topline",
+				
+		lexiconPrice.price AS "lexiconPrice.price",
+				
+		address.district AS "address.district",
+		address.details AS "address.details",
+				
+		installer.name AS "installer.name"
+	</sql>
+	
+	<sql id="lexiconOrderJoins">
+		
+		LEFT JOIN cultural_customer customer ON customer.id = a.customer_id
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_lexicon_price lexiconPrice ON lexiconPrice.id = a.lexicon_price_id
+		LEFT JOIN cultural_address address ON address.id = a.address_id
+		LEFT JOIN cultural_installer installer ON installer.id = a.installer_id
+	</sql>
+	
+    
+	<select id="get" resultType="LexiconOrder" >
+		SELECT 
+			<include refid="lexiconOrderColumns"/>
+		FROM cultural_lexicon_order a
+		<include refid="lexiconOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="LexiconOrder" >
+		SELECT 
+			<include refid="lexiconOrderColumns"/>
+		FROM cultural_lexicon_order a
+		<include refid="lexiconOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="customer != null and customer.id != null and customer.id != ''">
+				AND a.customer_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{customer.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{customer.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{customer.id},'%')</if>
+			</if>
+			<if test="lexicon != null and lexicon.id != null and lexicon.id != ''">
+				AND a.lexicon_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{lexicon.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{lexicon.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{lexicon.id},'%')</if>
+			</if>
+			<if test="lexiconPrice != null and lexiconPrice.id != null and lexiconPrice.id != ''">
+				AND a.lexicon_price_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{lexiconPrice.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{lexiconPrice.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{lexiconPrice.id},'%')</if>
+			</if>
+			<if test="address != null and address.id != null and address.id != ''">
+				AND a.address_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{address.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{address.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{address.id},'%')</if>
+			</if>
+			<if test="installer != null and installer.id != null and installer.id != ''">
+				AND a.installer_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{installer.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{installer.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{installer.id},'%')</if>
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="LexiconOrder" >
+		SELECT 
+			<include refid="lexiconOrderColumns"/>
+		FROM cultural_lexicon_order a
+		<include refid="lexiconOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cultural_lexicon_order(
+			id,
+			customer_id,
+			lexicon_id,
+			lexicon_price_id,
+			address_id,
+			installer_id,
+			num,
+			total_price,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{customer.id},
+			#{lexicon.id},
+			#{lexiconPrice.id},
+			#{address.id},
+			#{installer.id},
+			#{num},
+			#{totalPrice},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cultural_lexicon_order SET 	
+			customer_id = #{customer.id},
+			lexicon_id = #{lexicon.id},
+			lexicon_price_id = #{lexiconPrice.id},
+			address_id = #{address.id},
+			installer_id = #{installer.id},
+			num = #{num},
+			total_price = #{totalPrice},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM cultural_lexicon_order
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE cultural_lexicon_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="LexiconOrder" statementType="STATEMENT">
+		select * FROM cultural_lexicon_order  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

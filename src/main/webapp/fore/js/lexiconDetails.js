@@ -4,9 +4,11 @@
 var sizeId;
 var frameId;
 var craftId;
-var coupletsId = details.id;
-var coupletsPriceId
-function getCoupletsPrice(object) {
+var typefaceId;
+var authorId;
+var lexiconId = details.id;
+var lexiconPriceId;
+function getLexiconPrice(object) {
     var type = $(object).attr('data-type');
 
     if(type == 'size'){
@@ -18,16 +20,31 @@ function getCoupletsPrice(object) {
     if(type == 'craft'){
         craftId = $(object).attr('data-id');
     }
-    if(sizeId && frameId && craftId && coupletsId){
-        console.log(sizeId);
-        console.log(frameId);
-        console.log(craftId);
-        var url = 'getCoupletsPrice';
+    if(type == 'author'){
+        authorId = $(object).attr('data-id');
+        typefaceId = '';
+    }
+    if(type == 'typeface'){
+        typefaceId = $(object).attr('data-id');
+        authorId = '';
+    }
+
+    if(sizeId && frameId && craftId && lexiconId && (authorId || typefaceId)){
+        console.log('*****');
+        console.log('sizeId'+sizeId);
+        console.log('frameId'+frameId);
+        console.log('craftId'+craftId);
+        console.log('authorId'+authorId);
+        console.log('typefaceId'+typefaceId);
+        console.log('*****');
+        var url = 'getLexiconPrice';
         var param = {
             'sizeId':sizeId,
             'frameId':frameId,
             'craftId':craftId,
-            'coupletsId':coupletsId
+            'lexiconId':lexiconId,
+            'authorId':authorId,
+            'typefaceId':typefaceId
         };
 
         $.ajax({
@@ -37,8 +54,8 @@ function getCoupletsPrice(object) {
             data:param,
             async:false,
             success:function (result) {
-                vm.coupletsPrice = result.body;
-                coupletsPriceId = result.body.price.id;
+                vm.thePrice = result.body;
+                lexiconPriceId = result.body.price.id;
             }
         })
     }
@@ -46,16 +63,18 @@ function getCoupletsPrice(object) {
 
 
 //添加订单
-function addCoupletsOrder(){
+function addLexiconOrder(){
     //
-    var url = 'addCoupletsOrder';
+    var url = 'addLexiconOrder';
     //总价
     var totalPrice = vm.totalPrice;
     //购买数量
     var num = vm.num;
-    if(!coupletsPriceId && !sizeId && !frameId && !craftId){
-        layer.msg('请选择规格');
-        return;
+    if(!lexiconPriceId || !sizeId || !frameId || !craftId  ){
+        if(!authorId || !typefaceId){
+            layer.msg('请选择规格');
+            return;
+        }
     }
     if(num == 0){
         layer.msg('请选择数量');
@@ -65,11 +84,11 @@ function addCoupletsOrder(){
     console.log('*******');
     console.log(num);
     console.log(totalPrice);
-    console.log(coupletsId);
-    console.log(coupletsPriceId);
+    console.log(lexiconId);
+    console.log(lexiconPriceId);
     var param = {
-        'coupletsPriceId':coupletsPriceId,
-        'coupletsId':coupletsId,
+        'lexiconPriceId':lexiconPriceId,
+        'lexiconId':lexiconId,
         'totalPrice':totalPrice,
         'num':num,
     }
@@ -97,13 +116,3 @@ function addCoupletsOrder(){
         }
     })
 }
-// $(function () {
-//
-//     layer.open({
-//         content: '是否立即付款',
-//         yes: function (index, layero) {
-//             //do something
-//             layer.close(index); //如果设定了yes回调，需进行手工关闭
-//         }
-//     })
-// })
