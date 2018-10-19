@@ -36,6 +36,16 @@
 				<form:input path="finishedName" htmlEscape="false" maxlength="64"  class=" form-control"/>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
+				<label class="label-item single-overflow pull-left" title="用户：">用户：</label>
+				<sys:gridselect url="${ctx}/cultural/role/customer/data" id="customer" name="customer.id" value="${finishedOrder.customer.id}" labelName="customer.nickname" labelValue="${finishedOrder.customer.nickname}"
+					title="选择用户" cssClass="form-control required" fieldLabels="nickname" fieldKeys="用户" searchLabels="nickname" searchKeys="用户" ></sys:gridselect>
+			</div>
+			 <div class="col-xs-12 col-sm-6 col-md-4">
+				<label class="label-item single-overflow pull-left" title="安装人员：">安装人员：</label>
+				<sys:gridselect url="${ctx}/cultural/role/installer/data" id="installer" name="installer.id" value="${finishedOrder.installer.id}" labelName="installer.name" labelValue="${finishedOrder.installer.name}"
+					title="选择安装人员" cssClass="form-control required" fieldLabels="姓名" fieldKeys="name" searchLabels="姓名" searchKeys="name" ></sys:gridselect>
+			</div>
+			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="form-group">
 					<label class="label-item single-overflow pull-left" title="订单状态：">&nbsp;订单状态：</label>
 					<div class="col-xs-12">

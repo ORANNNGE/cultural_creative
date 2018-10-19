@@ -10,17 +10,36 @@
 		a.price AS "price",
 		a.num AS "num",
 		a.total_price AS "totalPrice",
+		a.customer_id AS "customer.id",
+		a.address_id AS "address.id",
+		a.installer_id AS "installer.id",
 		a.status AS "status",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+				
+				
+				
+				
+				
+				
+				
+		customer.nickname AS "customer.nickname",
+				
+		address.district AS "address.district",
+		address.details AS "address.details",
+				
+		installer.name AS "installer.name"
 	</sql>
 	
 	<sql id="finishedOrderJoins">
 		
+		LEFT JOIN cultural_customer customer ON customer.id = a.customer_id
+		LEFT JOIN cultural_address address ON address.id = a.address_id
+		LEFT JOIN cultural_installer installer ON installer.id = a.installer_id
 	</sql>
 	
     
@@ -45,6 +64,12 @@
 			</if>
 			<if test="finishedName != null and finishedName != ''">
 				AND a.finished_name = #{finishedName}
+			</if>
+			<if test="customer != null and customer.id != null and customer.id != ''">
+				AND a.customer_id = #{customer.id}
+			</if>
+			<if test="installer != null and installer.id != null and installer.id != ''">
+				AND a.installer_id = #{installer.id}
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}
@@ -88,6 +113,9 @@
 			price,
 			num,
 			total_price,
+			customer_id,
+			address_id,
+			installer_id,
 			status,
 			create_by,
 			create_date,
@@ -103,6 +131,9 @@
 			#{price},
 			#{num},
 			#{totalPrice},
+			#{customer.id},
+			#{address.id},
+			#{installer.id},
 			#{status},
 			#{createBy.id},
 			#{createDate},
@@ -121,6 +152,9 @@
 			price = #{price},
 			num = #{num},
 			total_price = #{totalPrice},
+			customer_id = #{customer.id},
+			address_id = #{address.id},
+			installer_id = #{installer.id},
 			status = #{status},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

@@ -110,6 +110,24 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+		        field: 'customer.nickname',
+		        title: '用户',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'address.district',
+		        title: '收货地址',
+		        sortable: true
+		       
+		    }
+			,{
+		        field: 'installer.name',
+		        title: '安装人员',
+		        sortable: true
+		       
+		    }
+			,{
 		        field: 'status',
 		        title: '订单状态',
 		        sortable: true,

@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.order.FinishedOrderMapper;
 /**
  * 其他成品订单Service
  * @author orange
- * @version 2018-10-19
+ * @version 2018-10-20
  */
 @Service
 @Transactional(readOnly = true)

@@ -83,6 +83,8 @@ public class ForeController {
     AuthorService authorService;
     @Autowired
     LexiconOrderService lexiconOrderService;
+    @Autowired
+    FinishedOrderService finishedOrderService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -801,6 +803,76 @@ public class ForeController {
         lexiconOrder.setTotalPrice(totalPrice);
         lexiconOrderService.save(lexiconOrder);
 
+        return json;
+    }
+
+    @RequestMapping(value="addFinishedOrder")
+    @ResponseBody
+    public AjaxJson addFinishedOrder(String type, String finishedId, HttpServletRequest request,Integer num,Double totalPrice,Double price){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String) request.getSession().getAttribute("customerId");
+//        customerId = "1538968164093";
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+        String finishedName = "";
+        if("1".equals(type)){
+            NewYearPic newYearPic = newYearPicService.get(finishedId);
+            finishedName = newYearPic.getTitle();
+        };
+        if("2".equals(type)){
+            Painting painting = paintingService.get(finishedId);
+            finishedName = painting.getTitle();
+        };
+        if("3".equals(type)){
+            Calligraphy calligraphy = calligraphyService.get(finishedId);
+            finishedName = calligraphy.getTitle();
+        };
+        if("4".equals(type)){
+            Decoration decoration = decorationService.get(finishedId);
+            finishedName = decoration.getTitle();
+        };
+        //查询收货地址参数
+        Address selectAddress = new Address();
+        //设置参数
+        selectAddress.setCustomer(customer);
+        selectAddress.setIsDefault("1");
+        List<Address> addressList = addressService.findList(selectAddress);
+        //收货地址
+        Address address = null;
+        for (Address addr : addressList) {
+            //找到默认收货地址
+            if("1".equals(addr.getIsDefault())){
+                address = addr;
+            }
+        }
+        //没有默认收货地址则返回失败
+        if(address == null){
+            json.setSuccess(false);
+            json.setMsg("请设置默认收货地址");
+        }
+        //成品楹联订单
+        FinishedOrder finishedOrder = new FinishedOrder();
+        finishedOrder.setFinishedName(finishedName);
+        finishedOrder.setNum(num);
+        finishedOrder.setFinishedId(finishedId);
+        finishedOrder.setPrice(price);
+        finishedOrder.setAddress(address);
+        finishedOrder.setCustomer(customer);
+        finishedOrder.setInstaller(null);
+        finishedOrderService.save(finishedOrder);
         return json;
     }
 

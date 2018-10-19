@@ -75,15 +75,36 @@
 					</td>
 				</tr>
 				<tr>
+					<td class="width-15 active"><label class="pull-right">用户：</label></td>
+					<td class="width-35">
+						<sys:gridselect url="${ctx}/cultural/role/customer/data" id="customer" name="customer.id" value="${finishedOrder.customer.id}" labelName="customer.nickname" labelValue="${finishedOrder.customer.nickname}"
+							 title="选择用户" cssClass="form-control required" fieldLabels="nickname" fieldKeys="用户" searchLabels="nickname" searchKeys="用户" ></sys:gridselect>
+					</td>
+					<td class="width-15 active"><label class="pull-right">收货地址：</label></td>
+					<td class="width-35">
+						<sys:gridselect url="${ctx}/cultural/order/address/data" id="address" name="address.id" value="${finishedOrder.address.id}" labelName="address.district" labelValue="${finishedOrder.address.district}"
+							 title="选择收货地址" cssClass="form-control required" fieldLabels="地区|详情" fieldKeys="district|details" searchLabels="地区|详情" searchKeys="district|details" ></sys:gridselect>
+					</td>
+				</tr>
+				<tr>
+					<td class="width-15 active"><label class="pull-right">安装人员：</label></td>
+					<td class="width-35">
+						<sys:gridselect url="${ctx}/cultural/role/installer/data" id="installer" name="installer.id" value="${finishedOrder.installer.id}" labelName="installer.name" labelValue="${finishedOrder.installer.name}"
+							 title="选择安装人员" cssClass="form-control required" fieldLabels="姓名" fieldKeys="name" searchLabels="姓名" searchKeys="name" ></sys:gridselect>
+					</td>
 					<td class="width-15 active"><label class="pull-right">订单状态：</label></td>
 					<td class="width-35">
 						<form:radiobuttons path="status" items="${fns:getDictList('order_status')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks "/>
 					</td>
+				</tr>
+				<tr>
 					<td class="width-15 active"><label class="pull-right">备注信息：</label></td>
 					<td class="width-35">
 						<form:textarea path="remarks" htmlEscape="false" rows="4"    class="form-control "/>
 					</td>
-				</tr>
+					<td class="width-15 active"></td>
+		   			<td class="width-35" ></td>
+		  		</tr>
 		 	</tbody>
 		</table>
 	</form:form>
