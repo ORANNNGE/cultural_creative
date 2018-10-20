@@ -14,7 +14,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 成品楹联价格Entity
  * @author orange
- * @version 2018-10-16
+ * @version 2018-10-20
  */
 public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 	
@@ -23,6 +23,9 @@ public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 	private Size size;		// 尺寸
 	private Frame frame;		// 楹联框
 	private Craft craft;		// 制作工艺
+	private String sizeName;		// 尺寸名
+	private String frameName;		// 楹联框名
+	private String craftName;		// 规格名
 	private Double price;		// 价格
 	
 	public CoupletsPrice() {
@@ -69,7 +72,34 @@ public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 		this.craft = craft;
 	}
 	
-	@ExcelField(title="价格", align=2, sort=5)
+	@ExcelField(title="尺寸名", align=2, sort=5)
+	public String getSizeName() {
+		return sizeName;
+	}
+
+	public void setSizeName(String sizeName) {
+		this.sizeName = sizeName;
+	}
+	
+	@ExcelField(title="楹联框名", align=2, sort=6)
+	public String getFrameName() {
+		return frameName;
+	}
+
+	public void setFrameName(String frameName) {
+		this.frameName = frameName;
+	}
+	
+	@ExcelField(title="规格名", align=2, sort=7)
+	public String getCraftName() {
+		return craftName;
+	}
+
+	public void setCraftName(String craftName) {
+		this.craftName = craftName;
+	}
+	
+	@ExcelField(title="价格", align=2, sort=8)
 	public Double getPrice() {
 		return price;
 	}

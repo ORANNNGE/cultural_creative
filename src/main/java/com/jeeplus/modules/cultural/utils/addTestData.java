@@ -62,8 +62,12 @@ public class addTestData {
                         CoupletsPrice coupletsPrice = new CoupletsPrice();
                         coupletsPrice.setCouplets(coupletsList.get(i));
                         coupletsPrice.setFrame(frameList.get(j));
+//                        coupletsPrice.setFrameName(frameList.get(j).getName());
                         coupletsPrice.setSize(sizeList.get(k));
+//                        coupletsPrice.setSizeName(sizeList.get(k).getName());
                         coupletsPrice.setCraft(craftList.get(l));
+//                        coupletsPrice.setCraftName(craftList.get(l).getName());
+
                         coupletsPrice.setPrice(Double.valueOf(new DecimalFormat("#.00").format(Math.random()*100+100)));
                         coupletsPriceList.add(coupletsPrice);
                     }

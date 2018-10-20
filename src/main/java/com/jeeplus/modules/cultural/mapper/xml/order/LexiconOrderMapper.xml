@@ -27,6 +27,12 @@
 		lexicon.topline AS "lexicon.topline",
 				
 		lexiconPrice.price AS "lexiconPrice.price",
+		lexiconPrice.lexicon_name AS "lexiconPrice.lexiconName",
+		lexiconPrice.author_name AS "lexiconPrice.authorName",
+		lexiconPrice.typeface_name AS "lexiconPrice.typefaceName",
+		lexiconPrice.size_name AS "lexiconPrice.sizeName",
+		lexiconPrice.frame_name AS "lexiconPrice.frameName",
+		lexiconPrice.craft_name AS "lexiconPrice.craftName",
 				
 		address.district AS "address.district",
 		address.details AS "address.details",
@@ -34,6 +40,7 @@
 		address.phonenum AS "address.phonenum",
 				
 		installer.name AS "installer.name"
+		installer.phonenum AS "installer.phonenum"
 	</sql>
 	
 	<sql id="lexiconOrderJoins">

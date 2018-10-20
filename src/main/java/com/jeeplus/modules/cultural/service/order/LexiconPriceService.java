@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.order.LexiconPriceMapper;
 /**
  * 楹联词库价格Service
  * @author orange
- * @version 2018-10-19
+ * @version 2018-10-20
  */
 @Service
 @Transactional(readOnly = true)
@@ -36,6 +36,19 @@ public class LexiconPriceService extends CrudService<LexiconPriceMapper, Lexicon
 	
 	@Transactional(readOnly = false)
 	public void save(LexiconPrice lexiconPrice) {
+
+		if(lexiconPrice.getAuthor() != null){
+			lexiconPrice.setAuthorName(lexiconPrice.getAuthor().getName());
+		}
+		if(lexiconPrice.getTypeface() != null){
+			lexiconPrice.setTypefaceName(lexiconPrice.getTypeface().getName());
+		}
+
+		lexiconPrice.setLexiconName(lexiconPrice.getLexicon().getTitle());
+		lexiconPrice.setSizeName(lexiconPrice.getSize().getName());
+		lexiconPrice.setFrameName(lexiconPrice.getFrame().getName());
+		lexiconPrice.setCraftName(lexiconPrice.getCraft().getName());
+
 		super.save(lexiconPrice);
 	}
 	

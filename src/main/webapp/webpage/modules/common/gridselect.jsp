@@ -101,7 +101,7 @@ $(document).ready(function() {
 	 <c:forEach items="${searchLabels}" var="name"  varStatus="status">
 	     <div class="col-xs-12 col-sm-6 col-md-4">
 	   		<label class="label-item single-overflow pull-left" title="类型名：">${searchLabels[status.index]}</label>
-			<input name="${searchKeys[status.index]}"  maxlength="64"  class=" form-control"/>
+			<input name="${searchKeys[status.index]}"  maxlength="128"  class=" form-control"/>
 		 </div>
 	</c:forEach>
 		 <div class="col-xs-12 col-sm-6 col-md-4">

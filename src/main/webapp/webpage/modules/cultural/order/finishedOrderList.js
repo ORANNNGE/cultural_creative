@@ -134,6 +134,12 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+		        field: 'installer.phonenum',
+		        title: '联系电话',
+		        sortable: true
+
+		    }
+			,{
 		        field: 'status',
 		        title: '订单状态',
 		        sortable: true,

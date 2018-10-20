@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.order.CoupletsPriceMapper;
 /**
  * 成品楹联价格Service
  * @author orange
- * @version 2018-10-16
+ * @version 2018-10-20
  */
 @Service
 @Transactional(readOnly = true)
@@ -36,6 +36,11 @@ public class CoupletsPriceService extends CrudService<CoupletsPriceMapper, Coupl
 	
 	@Transactional(readOnly = false)
 	public void save(CoupletsPrice coupletsPrice) {
+
+		coupletsPrice.setSizeName(coupletsPrice.getSize().getName());
+		coupletsPrice.setFrameName(coupletsPrice.getFrame().getName());
+		coupletsPrice.setCraftName(coupletsPrice.getCraft().getName());
+
 		super.save(coupletsPrice);
 	}
 	

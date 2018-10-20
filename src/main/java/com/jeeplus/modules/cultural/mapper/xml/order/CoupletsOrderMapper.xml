@@ -24,6 +24,9 @@
 		couplets.name AS "couplets.name",
 				
 		coupletsPrice.price AS "coupletsPrice.price",
+		coupletsPrice.size_name AS "coupletsPrice.sizeName",
+		coupletsPrice.frame_name AS "coupletsPrice.frameName",
+		coupletsPrice.craft_name AS "coupletsPrice.craftName",
 				
 		address.district AS "address.district",
 		address.details AS "address.details",
@@ -31,6 +34,7 @@
 		address.phonenum AS "address.phonenum",
 				
 		installer.name AS "installer.name"
+		installer.phonenum AS "installer.phonenum"
 	</sql>
 	
 	<sql id="coupletsOrderJoins">
