@@ -29,7 +29,7 @@
             <div class="permi-order">
                 <div class="permi-my">
                     <p>我的订单</p>
-                    <a href="###">全部订单<i><img src="images/coup-next.png" /></i></a>
+                    <a href="personal-order.jsp">全部订单<i><img src="images/coup-next.png" /></i></a>
                 </div>
                 <div class="permi-ul">
                     <ul>

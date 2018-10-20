@@ -19,8 +19,8 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 	
 	private static final long serialVersionUID = 1L;
 	private String type;		// 类型
+	private String name;		// 名称
 	private String finishedId;		// 其他成品id
-	private String finishedName;		// 名称
 	private Double price;		// 价格
 	private Customer customer;		// 用户
 	private Address address;		// 收货地址
@@ -44,22 +44,22 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 		this.type = type;
 	}
 	
-	@ExcelField(title="其他成品id", align=2, sort=2)
+	@ExcelField(title="名称", align=2, sort=2)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@ExcelField(title="其他成品id", align=2, sort=3)
 	public String getFinishedId() {
 		return finishedId;
 	}
 
 	public void setFinishedId(String finishedId) {
 		this.finishedId = finishedId;
-	}
-	
-	@ExcelField(title="名称", align=2, sort=3)
-	public String getFinishedName() {
-		return finishedName;
-	}
-
-	public void setFinishedName(String finishedName) {
-		this.finishedName = finishedName;
 	}
 	
 	@ExcelField(title="价格", align=2, sort=4)

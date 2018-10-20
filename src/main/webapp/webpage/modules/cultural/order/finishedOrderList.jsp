@@ -33,7 +33,7 @@
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="名称：">名称：</label>
-				<form:input path="finishedName" htmlEscape="false" maxlength="64"  class=" form-control"/>
+				<form:input path="name" htmlEscape="false" maxlength="64"  class=" form-control"/>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="用户：">用户：</label>
@@ -43,7 +43,7 @@
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="安装人员：">安装人员：</label>
 				<sys:gridselect url="${ctx}/cultural/role/installer/data" id="installer" name="installer.id" value="${finishedOrder.installer.id}" labelName="installer.name" labelValue="${finishedOrder.installer.name}"
-					title="选择安装人员" cssClass="form-control required" fieldLabels="姓名" fieldKeys="name" searchLabels="姓名" searchKeys="name" ></sys:gridselect>
+					title="选择安装人员" cssClass="form-control required" fieldLabels="姓名|联系电话" fieldKeys="name|phonenum" searchLabels="姓名|联系电话" searchKeys="name|phonenum" ></sys:gridselect>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="form-group">

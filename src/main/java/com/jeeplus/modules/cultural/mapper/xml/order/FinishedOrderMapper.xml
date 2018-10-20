@@ -5,8 +5,8 @@
 	<sql id="finishedOrderColumns">
 		a.id AS "id",
 		a.type AS "type",
+		a.name AS "name",
 		a.finished_id AS "finishedId",
-		a.finished_name AS "finishedName",
 		a.price AS "price",
 		a.customer_id AS "customer.id",
 		a.address_id AS "address.id",
@@ -30,7 +30,7 @@
 		address.name AS "address.name",
 		address.phonenum AS "address.phonenum",
 				
-		installer.name AS "installer.name"
+		installer.name AS "installer.name",
 		installer.phonenum AS "installer.phonenum"
 	</sql>
 	
@@ -61,8 +61,8 @@
 			<if test="type != null and type != ''">
 				AND a.type = #{type}
 			</if>
-			<if test="finishedName != null and finishedName != ''">
-				AND a.finished_name = #{finishedName}
+			<if test="name != null and name != ''">
+				AND a.name = #{name}
 			</if>
 			<if test="customer != null and customer.id != null and customer.id != ''">
 				AND a.customer_id = #{customer.id}
@@ -107,8 +107,8 @@
 		INSERT INTO cultural_finished_order(
 			id,
 			type,
+			name,
 			finished_id,
-			finished_name,
 			price,
 			customer_id,
 			address_id,
@@ -123,8 +123,8 @@
 		) VALUES (
 			#{id},
 			#{type},
+			#{name},
 			#{finishedId},
-			#{finishedName},
 			#{price},
 			#{customer.id},
 			#{address.id},
@@ -142,8 +142,8 @@
 	<update id="update">
 		UPDATE cultural_finished_order SET 	
 			type = #{type},
+			name = #{name},
 			finished_id = #{finishedId},
-			finished_name = #{finishedName},
 			price = #{price},
 			customer_id = #{customer.id},
 			address_id = #{address.id},

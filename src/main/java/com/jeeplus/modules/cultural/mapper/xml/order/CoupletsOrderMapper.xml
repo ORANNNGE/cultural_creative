@@ -33,7 +33,7 @@
 		address.name AS "address.name",
 		address.phonenum AS "address.phonenum",
 				
-		installer.name AS "installer.name"
+		installer.name AS "installer.name",
 		installer.phonenum AS "installer.phonenum"
 	</sql>
 	

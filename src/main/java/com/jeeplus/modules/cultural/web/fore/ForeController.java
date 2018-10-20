@@ -625,7 +625,7 @@ public class ForeController {
     public AjaxJson addCoupletsOrder(String coupletsPriceId, String coupletsId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-        customerId = "1538968164093";
+//        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -752,7 +752,7 @@ public class ForeController {
     public AjaxJson addLexiconOrder(String lexiconPriceId, String lexiconId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-        customerId = "1538968164093";
+//        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -807,12 +807,20 @@ public class ForeController {
         return json;
     }
 
+    /**
+     * 添加其他成品订单
+     * @param type
+     * @param finishedId
+     * @param price
+     * @param request
+     * @return
+     */
     @RequestMapping(value="addFinishedOrder")
     @ResponseBody
     public AjaxJson addFinishedOrder(String type, String finishedId,Double price, HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-        customerId = "1538968164093";
+//        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -867,7 +875,7 @@ public class ForeController {
         //成品楹联订单
         FinishedOrder finishedOrder = new FinishedOrder();
         finishedOrder.setType(type);
-        finishedOrder.setFinishedName(finishedName);
+        finishedOrder.setName(finishedName);
         finishedOrder.setFinishedId(finishedId);
         finishedOrder.setPrice(price);
         finishedOrder.setAddress(address);
@@ -875,6 +883,49 @@ public class ForeController {
         finishedOrder.setInstaller(null);
         finishedOrder.setStatus("1");
         finishedOrderService.save(finishedOrder);
+        return json;
+    }
+
+
+    @RequestMapping(value="getOrderList")
+    @ResponseBody
+    public AjaxJson getOrderList(HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String) request.getSession().getAttribute("customerId");
+//        customerId = "1538968164093";
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+
+        //是否存在该用户
+        Customer customer = customerService.get(customerId);
+        boolean isExist = customer==null?false:true;
+        if(!isExist){
+            json.setSuccess(false);
+            json.setMsg("用户不存在");
+            return json;
+        }
+
+        CoupletsOrder selectCoupletsOrder = new CoupletsOrder();
+        selectCoupletsOrder.setCustomer(customer);
+        List<CoupletsOrder> coupletsOrderList = coupletsOrderService.findList(selectCoupletsOrder);
+
+        LexiconOrder selectLexiconOrder = new LexiconOrder();
+        selectLexiconOrder.setCustomer(customer);
+        List<LexiconOrder> lexiconOrderList = lexiconOrderService.findList(selectLexiconOrder);
+
+        FinishedOrder selectFinishedOrder = new FinishedOrder();
+        selectFinishedOrder.setCustomer(customer);
+        List<FinishedOrder> finishedOrderList = finishedOrderService.findList(selectFinishedOrder);
+
+        json.put("coupletsOrderList", coupletsOrderList);
+        json.put("lexiconOrderList", lexiconOrderList);
+        json.put("finishedOrderList", finishedOrderList);
+
+
         return json;
     }
 

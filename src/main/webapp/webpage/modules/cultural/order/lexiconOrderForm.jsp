@@ -58,7 +58,7 @@
 					<td class="width-15 active"><label class="pull-right">安装人员：</label></td>
 					<td class="width-35">
 						<sys:gridselect url="${ctx}/cultural/role/installer/data" id="installer" name="installer.id" value="${lexiconOrder.installer.id}" labelName="installer.name" labelValue="${lexiconOrder.installer.name}"
-							 title="选择安装人员" cssClass="form-control required" fieldLabels="name" fieldKeys="姓名" searchLabels="name" searchKeys="姓名" ></sys:gridselect>
+							 title="选择安装人员" cssClass="form-control required" fieldLabels="安装人员|联系方式" fieldKeys="name|phonenum" searchLabels="安装人员|联系方式" searchKeys="name|phonenum" ></sys:gridselect>
 					</td>
 					<td class="width-15 active"><label class="pull-right">订单状态：</label></td>
 					<td class="width-35">

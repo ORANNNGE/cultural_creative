@@ -86,57 +86,58 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'finishedName',
+		        field: 'name',
 		        title: '名称',
 		        sortable: true
-		       
+
 		    }
 			,{
 		        field: 'price',
 		        title: '价格',
 		        sortable: true
-		       
+
 		    }
 			,{
 		        field: 'customer.nickname',
 		        title: '用户',
 		        sortable: true
-		       
+
 		    }
 			,{
 		        field: 'address.district',
-		        title: '收货地区',
+		        title: '收货地址',
 		        sortable: true
 
 		    }
 			,{
-		        field: 'address.details',
-		        title: '详细地址',
-		        sortable: true
+			   field: 'address.details',
+			   title: '详细地址',
+			   sortable: true
+
+			}
+			,{
+			   field: 'address.name',
+			   title: '收货人',
+			   sortable: true
+
+			}
+			,{
+			   field: 'address.phonenum',
+			   title: '联系电话',
+			   sortable: true
+
+
+			}
+			,{
+				field: 'installer.name',
+				title: '安装人员',
+				sortable: true
 
 		    }
 			,{
-		        field: 'address.name',
-		        title: '收货人',
-		        sortable: true
-
-		    }
-			,{
-		        field: 'address.phonenum',
-		        title: '联系电话',
-		        sortable: true
-
-		    }
-			,{
-		        field: 'installer.name',
-		        title: '安装人员',
-		        sortable: true
-		       
-		    }
-			,{
-		        field: 'installer.phonenum',
-		        title: '联系电话',
-		        sortable: true
+				field: 'installer.phonenum',
+				title: '联系电话',
+				sortable: true
 
 		    }
 			,{

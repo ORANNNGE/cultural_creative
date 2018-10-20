@@ -102,23 +102,23 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'coupletsPrice.sizeName',
-		        title: '尺寸',
-		        sortable: true
+			   field: 'coupletsPrice.sizeName',
+			   title: '尺寸',
+			   sortable: true
 
-		    }
+			}
 			,{
-		        field: 'coupletsPrice.frameName',
-		        title: '框',
-		        sortable: true
+			   field: 'coupletsPrice.frameName',
+			   title: '框',
+			   sortable: true
 
-		    }
+			}
 			,{
-		        field: 'coupletsPrice.craftName',
-		        title: '工艺',
-		        sortable: true
+			   field: 'coupletsPrice.craftName',
+			   title: '工艺',
+			   sortable: true
 
-		    }
+			}
 			,{
 		        field: 'address.district',
 		        title: '收货地址',
@@ -126,17 +126,36 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+		        field: 'address.details',
+		        title: '详细地址',
+		        sortable: true
+
+		    }
+			,{
+		        field: 'address.name',
+		        title: '收货人',
+		        sortable: true
+
+		    }
+			,{
+		        field: 'address.phonenum',
+		        title: '联系电话',
+		        sortable: true
+
+		    }
+
+			,{
 		        field: 'installer.name',
 		        title: '安装人员',
 		        sortable: true
 		       
 		    }
 			,{
-		        field: 'installer.phonenum',
-		        title: '联系电话',
-		        sortable: true
+			   field: 'installer.phonenum',
+			   title: '联系电话',
+			   sortable: true
 
-		    }
+			}
 			,{
 		        field: 'num',
 		        title: '数量',
