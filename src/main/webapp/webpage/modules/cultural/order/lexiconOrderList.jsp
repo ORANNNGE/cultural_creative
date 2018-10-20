@@ -41,7 +41,7 @@
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="收货地址：">收货地址：</label>
 				<sys:gridselect url="${ctx}/cultural/order/address/data" id="address" name="address.id" value="${lexiconOrder.address.id}" labelName="address.district" labelValue="${lexiconOrder.address.district}"
-					title="选择收货地址" cssClass="form-control required" fieldLabels="地区|详情" fieldKeys="district|details" searchLabels="地区|详情" searchKeys="district|details" ></sys:gridselect>
+					title="选择收货地址" cssClass="form-control required" fieldLabels="地区|详情|收货人|电话" fieldKeys="district|details|name|phonenum" searchLabels="地区|详情|收货人|电话" searchKeys="district|details|name|phonenum" ></sys:gridselect>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="安装人员：">安装人员：</label>

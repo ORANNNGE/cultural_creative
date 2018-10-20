@@ -30,6 +30,8 @@
 				
 		address.district AS "address.district",
 		address.details AS "address.details",
+		address.name AS "address.name",
+		address.phonenum AS "address.phonenum",
 				
 		installer.name AS "installer.name"
 	</sql>

@@ -15,7 +15,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 成品楹联订单Entity
  * @author orange
- * @version 2018-10-19
+ * @version 2018-10-20
  */
 public class CoupletsOrder extends DataEntity<CoupletsOrder> {
 	

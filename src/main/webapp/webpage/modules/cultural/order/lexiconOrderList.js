@@ -108,6 +108,24 @@ $(document).ready(function() {
 		       
 		    }
 			,{
+				field: 'address.details',
+				title: '详细地址',
+				sortable: true
+
+			}
+			,{
+				field: 'address.name',
+				title: '收货人',
+				sortable: true
+
+			}
+			,{
+				field: 'address.phonenum',
+				title: '联系电话',
+				sortable: true
+
+			}
+			,{
 		        field: 'installer.name',
 		        title: '安装人员',
 		        sortable: true

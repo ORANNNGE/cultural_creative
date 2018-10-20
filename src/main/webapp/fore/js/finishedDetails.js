@@ -4,7 +4,7 @@
 
 
 //添加订单
-function addCoupletsOrder(){
+function addFinishedOrder(){
     //
     var finishedId = details.id;
     var price = details.price;
@@ -34,6 +34,7 @@ function addCoupletsOrder(){
     // console.log(coupletsId);
     // console.log(coupletsPriceId);
     var param = {
+        'type':finishedType,
         'finishedId':finishedId,
         'finishedType':finishedType,
         'price':price,

@@ -71,8 +71,10 @@
 </body>
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
 <script type="text/javascript" src="js/specification-change.js" ></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/details.js"></script>
+<script src="js/finishedDetails.js"></script>
 </html>
 

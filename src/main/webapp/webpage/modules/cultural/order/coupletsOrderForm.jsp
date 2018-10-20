@@ -75,7 +75,7 @@
 					<td class="width-15 active"><label class="pull-right">收货地址：</label></td>
 					<td class="width-35">
 						<sys:gridselect url="${ctx}/cultural/order/address/data" id="address" name="address.id" value="${coupletsOrder.address.id}" labelName="address.district" labelValue="${coupletsOrder.address.district}"
-							 title="选择收货地址" cssClass="form-control required" fieldLabels="地区|详情" fieldKeys="district|details" searchLabels="地区|详情" searchKeys="district|details" ></sys:gridselect>
+							 title="选择收货地址" cssClass="form-control required" fieldLabels="地区|详情|收货人|电话" fieldKeys="district|details|name|phonenum" searchLabels="地区|详情|收货人|电话" searchKeys="district|details|name|phonenum" ></sys:gridselect>
 					</td>
 				</tr>
 				<tr>

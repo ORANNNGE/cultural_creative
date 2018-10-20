@@ -98,18 +98,6 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'num',
-		        title: '数量',
-		        sortable: true
-		       
-		    }
-			,{
-		        field: 'totalPrice',
-		        title: '总价',
-		        sortable: true
-		       
-		    }
-			,{
 		        field: 'customer.nickname',
 		        title: '用户',
 		        sortable: true
@@ -117,9 +105,27 @@ $(document).ready(function() {
 		    }
 			,{
 		        field: 'address.district',
-		        title: '收货地址',
+		        title: '收货地区',
 		        sortable: true
-		       
+
+		    }
+			,{
+		        field: 'address.details',
+		        title: '详细地址',
+		        sortable: true
+
+		    }
+			,{
+		        field: 'address.name',
+		        title: '收货人',
+		        sortable: true
+
+		    }
+			,{
+		        field: 'address.phonenum',
+		        title: '联系电话',
+		        sortable: true
+
 		    }
 			,{
 		        field: 'installer.name',

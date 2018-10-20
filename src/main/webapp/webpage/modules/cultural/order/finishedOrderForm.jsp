@@ -55,38 +55,6 @@
 		<table class="table table-bordered">
 		   <tbody>
 				<tr>
-					<td class="width-15 active"><label class="pull-right">名称：</label></td>
-					<td class="width-35">
-						<form:input path="finishedName" htmlEscape="false"    class="form-control "/>
-					</td>
-					<td class="width-15 active"><label class="pull-right">价格：</label></td>
-					<td class="width-35">
-						<form:input path="price" htmlEscape="false"    class="form-control "/>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right">数量：</label></td>
-					<td class="width-35">
-						<form:input path="num" htmlEscape="false"    class="form-control "/>
-					</td>
-					<td class="width-15 active"><label class="pull-right">总价：</label></td>
-					<td class="width-35">
-						<form:input path="totalPrice" htmlEscape="false"    class="form-control "/>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right">用户：</label></td>
-					<td class="width-35">
-						<sys:gridselect url="${ctx}/cultural/role/customer/data" id="customer" name="customer.id" value="${finishedOrder.customer.id}" labelName="customer.nickname" labelValue="${finishedOrder.customer.nickname}"
-							 title="选择用户" cssClass="form-control required" fieldLabels="nickname" fieldKeys="用户" searchLabels="nickname" searchKeys="用户" ></sys:gridselect>
-					</td>
-					<td class="width-15 active"><label class="pull-right">收货地址：</label></td>
-					<td class="width-35">
-						<sys:gridselect url="${ctx}/cultural/order/address/data" id="address" name="address.id" value="${finishedOrder.address.id}" labelName="address.district" labelValue="${finishedOrder.address.district}"
-							 title="选择收货地址" cssClass="form-control required" fieldLabels="地区|详情" fieldKeys="district|details" searchLabels="地区|详情" searchKeys="district|details" ></sys:gridselect>
-					</td>
-				</tr>
-				<tr>
 					<td class="width-15 active"><label class="pull-right">安装人员：</label></td>
 					<td class="width-35">
 						<sys:gridselect url="${ctx}/cultural/role/installer/data" id="installer" name="installer.id" value="${finishedOrder.installer.id}" labelName="installer.name" labelValue="${finishedOrder.installer.name}"

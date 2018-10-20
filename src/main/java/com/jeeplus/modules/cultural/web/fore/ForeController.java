@@ -625,6 +625,7 @@ public class ForeController {
     public AjaxJson addCoupletsOrder(String coupletsPriceId, String coupletsId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
+        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -751,7 +752,7 @@ public class ForeController {
     public AjaxJson addLexiconOrder(String lexiconPriceId, String lexiconId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-//        customerId = "1538968164093";
+        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -808,10 +809,10 @@ public class ForeController {
 
     @RequestMapping(value="addFinishedOrder")
     @ResponseBody
-    public AjaxJson addFinishedOrder(String type, String finishedId, HttpServletRequest request,Integer num,Double totalPrice,Double price){
+    public AjaxJson addFinishedOrder(String type, String finishedId,Double price, HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-//        customerId = "1538968164093";
+        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -865,13 +866,14 @@ public class ForeController {
         }
         //成品楹联订单
         FinishedOrder finishedOrder = new FinishedOrder();
+        finishedOrder.setType(type);
         finishedOrder.setFinishedName(finishedName);
-        finishedOrder.setNum(num);
         finishedOrder.setFinishedId(finishedId);
         finishedOrder.setPrice(price);
         finishedOrder.setAddress(address);
         finishedOrder.setCustomer(customer);
         finishedOrder.setInstaller(null);
+        finishedOrder.setStatus("1");
         finishedOrderService.save(finishedOrder);
         return json;
     }
