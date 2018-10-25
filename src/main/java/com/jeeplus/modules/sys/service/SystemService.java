@@ -104,8 +104,6 @@ public class SystemService extends BaseService implements InitializingBean {
 
 	/**
 	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
-	 * @param user
-	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> findUserByOfficeId(String officeId) {
@@ -407,12 +405,39 @@ public class SystemService extends BaseService implements InitializingBean {
 	 */
 	public static boolean printKeyLoadMessage(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("...．．∵ ∴★．∴∵∴ ╭ ╯╭ ╯╭ ╯╭ ╯∴∵∴∵∴ \r\n ");
-		sb.append("．☆．∵∴∵．∴∵∴▍▍ ▍▍ ▍▍ ▍▍☆ ★∵∴ \r\n ");
-		sb.append("▍．∴∵∴∵．∴▅███████████☆ ★∵ \r\n ");
-		sb.append("◥█▅▅▅▅███▅█▅█▅█▅█▅█▅███◤          欢迎使用 "+Global.getConfig("productName")+Global.getConfig("version")+"\r\n ");
-		sb.append("． ◥███████████████████◤                    http://www.jeeplus.org\r\n ");
-		sb.append(".．.．◥████████████████■◤\r\n ");
+		sb.append(
+				"\t\t　/＼7　　　 ∠＿/\n" +
+				"　 /　│　　 ／　／\n" +
+				"　│　Z ＿,＜　／　　 /`ヽ\n" +
+				"　│　　　　　ヽ　　 /　　〉\n" +
+				"　 Y　　　　　`　 /　　/\n" +
+				"　ｲ●　、　●　　  〈　　/\n" +
+				"　()　 へ　　　　|　＼〈\n" +
+				"　　>ｰ ､_　 ィ　 │ ／／\n" +
+				"　 / へ　　 /　ﾉ＜| ＼＼\n" +
+				"　 ヽ_ﾉ　　(_／　 │／／\n" +
+				"　　7　　　　　　　|／\n" +
+				"　　＞―r￣￣`ｰ―＿");
+
+//		sb.append("...．．∵ ∴★．∴∵∴ ╭ ╯╭ ╯╭ ╯╭ ╯∴∵∴∵∴ \r\n ");
+//		sb.append("．☆．∵∴∵．∴∵∴▍▍ ▍▍ ▍▍ ▍▍☆ ★∵∴ \r\n ");
+//		sb.append("▍．∴∵∴∵．∴▅███████████☆ ★∵ \r\n ");
+//		sb.append("◥█▅▅▅▅███▅█▅█▅█▅█▅█▅███◤          欢迎使用 "+Global.getConfig("productName")+Global.getConfig("version")+"\r\n ");
+//		sb.append("． ◥███████████████████◤                    http://www.jeeplus.org\r\n ");
+//		sb.append(".．.．◥████████████████■◤\r\n ");
+
+//		sb.append("...........／￣￣￣Y￣￣ ＼\n" +
+//				"　 　 l　　　　　　　　　l\n" +
+//				"　　 ヽ,,,,,／ ￣￣￣￣ ヽﾉ\n" +
+//				"　　　|::::: 　　　　　　　l\n" +
+//				"　　　|:::　　 ＿_　　　　 |\n" +
+//				"　　（6　　　＼●>　 <●人\n" +
+//				"　　　!　　　　　 )・・(　 l\n" +
+//				"　　　ヽ 　 　　　　(三)　 ﾉ\n" +
+//				"　　　 ／＼　　　　二　 ノ\n" +
+//				"　　 /⌒ヽ. ‘ー — 一* ＼\n" +
+//				"　　l　　　 |　　　　　 ヽo　ヽ");
+
 		System.out.println(sb.toString());
 		return true;
 	}

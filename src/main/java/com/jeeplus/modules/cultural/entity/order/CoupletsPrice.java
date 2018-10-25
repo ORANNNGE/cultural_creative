@@ -3,10 +3,8 @@
  */
 package com.jeeplus.modules.cultural.entity.order;
 
-import com.jeeplus.modules.cultural.entity.couplets.Couplets;
 import com.jeeplus.modules.cultural.entity.spec.Size;
-import com.jeeplus.modules.cultural.entity.spec.Frame;
-import com.jeeplus.modules.cultural.entity.spec.Craft;
+import com.jeeplus.modules.cultural.entity.order.Combo;
 
 import com.jeeplus.core.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
@@ -14,18 +12,16 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 成品楹联价格Entity
  * @author orange
- * @version 2018-10-20
+ * @version 2018-10-25
  */
 public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 	
 	private static final long serialVersionUID = 1L;
-	private Couplets couplets;		// 成品
+	private String type;		// 类型
 	private Size size;		// 尺寸
-	private Frame frame;		// 楹联框
-	private Craft craft;		// 制作工艺
+	private Combo combo;		// 套餐
 	private String sizeName;		// 尺寸名
-	private String frameName;		// 楹联框名
-	private String craftName;		// 规格名
+	private String comboName;		// 套餐名
 	private Double price;		// 价格
 	
 	public CoupletsPrice() {
@@ -36,13 +32,13 @@ public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 		super(id);
 	}
 
-	@ExcelField(title="成品", fieldType=Couplets.class, value="couplets.name", align=2, sort=1)
-	public Couplets getCouplets() {
-		return couplets;
+	@ExcelField(title="类型", dictType="cultural_lexicon_type", align=2, sort=1)
+	public String getType() {
+		return type;
 	}
 
-	public void setCouplets(Couplets couplets) {
-		this.couplets = couplets;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	@ExcelField(title="尺寸", fieldType=Size.class, value="size.name", align=2, sort=2)
@@ -54,25 +50,16 @@ public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 		this.size = size;
 	}
 	
-	@ExcelField(title="楹联框", fieldType=Frame.class, value="frame.name", align=2, sort=3)
-	public Frame getFrame() {
-		return frame;
+	@ExcelField(title="套餐", fieldType=Combo.class, value="combo.name", align=2, sort=3)
+	public Combo getCombo() {
+		return combo;
 	}
 
-	public void setFrame(Frame frame) {
-		this.frame = frame;
+	public void setCombo(Combo combo) {
+		this.combo = combo;
 	}
 	
-	@ExcelField(title="制作工艺", fieldType=Craft.class, value="craft.name", align=2, sort=4)
-	public Craft getCraft() {
-		return craft;
-	}
-
-	public void setCraft(Craft craft) {
-		this.craft = craft;
-	}
-	
-	@ExcelField(title="尺寸名", align=2, sort=5)
+	@ExcelField(title="尺寸名", align=2, sort=4)
 	public String getSizeName() {
 		return sizeName;
 	}
@@ -81,25 +68,16 @@ public class CoupletsPrice extends DataEntity<CoupletsPrice> {
 		this.sizeName = sizeName;
 	}
 	
-	@ExcelField(title="楹联框名", align=2, sort=6)
-	public String getFrameName() {
-		return frameName;
+	@ExcelField(title="套餐名", align=2, sort=5)
+	public String getComboName() {
+		return comboName;
 	}
 
-	public void setFrameName(String frameName) {
-		this.frameName = frameName;
+	public void setComboName(String comboName) {
+		this.comboName = comboName;
 	}
 	
-	@ExcelField(title="规格名", align=2, sort=7)
-	public String getCraftName() {
-		return craftName;
-	}
-
-	public void setCraftName(String craftName) {
-		this.craftName = craftName;
-	}
-	
-	@ExcelField(title="价格", align=2, sort=8)
+	@ExcelField(title="价格", align=2, sort=6)
 	public Double getPrice() {
 		return price;
 	}

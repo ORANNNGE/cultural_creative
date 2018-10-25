@@ -4,13 +4,11 @@
     
 	<sql id="coupletsPriceColumns">
 		a.id AS "id",
-		a.couplets_id AS "couplets.id",
+		a.type AS "type",
 		a.size_id AS "size.id",
-		a.frame_id AS "frame.id",
-		a.craft_id AS "craft.id",
+		a.combo_id AS "combo.id",
 		a.size_name AS "sizeName",
-		a.frame_name AS "frameName",
-		a.craft_name AS "craftName",
+		a.combo_name AS "comboName",
 		a.price AS "price",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -19,21 +17,16 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 				
-		couplets.name AS "couplets.name",
 				
 		size.name AS "size.name",
 				
-		frame.name AS "frame.name",
-				
-		craft.name AS "craft.name"
+		combo.name AS "combo.name"
 	</sql>
 	
 	<sql id="coupletsPriceJoins">
 		
-		LEFT JOIN cultural_couplets couplets ON couplets.id = a.couplets_id
 		LEFT JOIN cultural_size size ON size.id = a.size_id
-		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
-		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+		LEFT JOIN cultural_combo combo ON combo.id = a.combo_id
 	</sql>
 	
     
@@ -53,17 +46,14 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
-			<if test="couplets != null and couplets.id != null and couplets.id != ''">
-				AND a.couplets_id = #{couplets.id}
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
 			</if>
 			<if test="size != null and size.id != null and size.id != ''">
 				AND a.size_id = #{size.id}
 			</if>
-			<if test="frame != null and frame.id != null and frame.id != ''">
-				AND a.frame_id = #{frame.id}
-			</if>
-			<if test="craft != null and craft.id != null and craft.id != ''">
-				AND a.craft_id = #{craft.id}
+			<if test="combo != null and combo.id != null and combo.id != ''">
+				AND a.combo_id = #{combo.id}
 			</if>
 			<if test="price != null and price != ''">
 				AND a.price = #{price}
@@ -101,13 +91,11 @@
 	<insert id="insert">
 		INSERT INTO cultural_couplets_price(
 			id,
-			couplets_id,
+			type,
 			size_id,
-			frame_id,
-			craft_id,
+			combo_id,
 			size_name,
-			frame_name,
-			craft_name,
+			combo_name,
 			price,
 			create_by,
 			create_date,
@@ -117,13 +105,11 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{couplets.id},
+			#{type},
 			#{size.id},
-			#{frame.id},
-			#{craft.id},
+			#{combo.id},
 			#{sizeName},
-			#{frameName},
-			#{craftName},
+			#{comboName},
 			#{price},
 			#{createBy.id},
 			#{createDate},
@@ -136,13 +122,11 @@
 	
 	<update id="update">
 		UPDATE cultural_couplets_price SET 	
-			couplets_id = #{couplets.id},
+			type = #{type},
 			size_id = #{size.id},
-			frame_id = #{frame.id},
-			craft_id = #{craft.id},
+			combo_id = #{combo.id},
 			size_name = #{sizeName},
-			frame_name = #{frameName},
-			craft_name = #{craftName},
+			combo_name = #{comboName},
 			price = #{price},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

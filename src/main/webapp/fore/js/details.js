@@ -4,7 +4,8 @@
 var pathName = window.location.pathname;
 console.log(pathName);
 var url;
-var specUrl;
+var sizeUrl;
+var comboUrl;
 var finishedType;
 switch (pathName) {
     case "/fore/newYearPicDetails.jsp":
@@ -25,31 +26,19 @@ switch (pathName) {
         break;
     case "/fore/coupletsDetails.jsp":
         url = "getCoupletsById";
-        specUrl = "getCoupletsSpec";
+        sizeUrl = "getCoupletsSize";
+        comboUrl = "getCoupletsCombo";
         break;
     case "/fore/lexiconDetails.jsp":
         url = "getLexiconById";
-        specUrl = "getLexiconSpec";
+        sizeUrl = "getLexiconSpec";
+        comboUrl = "getLexiconCombo";
         break;
 
     default:
         url = "";
 }
 
-//获取规格
-function getSpec(){
-    var data;
-    $.ajax({
-        type:'post',
-        url:specUrl,
-        dataType:'json',
-        async:false,
-        success:function (result) {
-            data = result.body;
-        }
-    })
-    return data;
-}
 
 //获取详情
 console.log(url);
@@ -72,18 +61,75 @@ function getDetails(){
     })
     return data;
 }
-var specData = getSpec();
 // var spec = specData.data;
 
 var data = getDetails();
+console.log(data);
 //详情
 var details = data.data;
+
+
+//根据楹联类型获取尺寸
+var type;
+if(pathName == "/fore/coupletsDetails.jsp"){
+    type = details.lexicon.type;
+}
+if(pathName == "/fore/lexiconDetails.jsp"){
+    type = details.type;
+}
+console.log(type);
+function getSize(){
+    //获取楹联类型
+    var data;
+    $.ajax({
+        type:'post',
+        url:sizeUrl,
+        data:{
+          'type':type
+        },
+        dataType:'json',
+        async:false,
+        success:function (result) {
+            data = result.body;
+        }
+    })
+    return data;
+}
+var sizeData = getSize();
+//根据楹联类型和尺寸size获取套餐combo
+// function getCombo(sizeId){
+//     //获取楹联类型
+//     var data;
+//     $.ajax({
+//         type:'post',
+//         url:comboUrl,
+//         data:{
+//           'type':type,
+//           'sizeId':sizeId,
+//         },
+//         dataType:'json',
+//         async:false,
+//         success:function (result) {
+//             data = result.body;
+//         }
+//     })
+//     return data;
+// }
+//
+// var comboData = getCombo();
+// console.log(comboData);
+
+
 //Vue实例
 var vm = new Vue({
     el:'#details',
     data: {
         data:details,
-        spec:specData,
+        sizeData:sizeData,
+        comboData:{
+            // 'comboList':{
+            // }
+        },
         thePrice:{
             'price':{'price':0}
         },
@@ -112,6 +158,34 @@ var vm = new Vue({
         minus:function () {
             if(this.num == 0) return;
             this.num--;
+        },
+        getCombo:function () {
+
         }
     }
 })
+
+//根据楹联类型和尺寸size获取套餐combo
+function getCombo(sizeId){
+    //获取楹联类型
+    // var data;
+    $.ajax({
+        type:'post',
+        url:comboUrl,
+        data:{
+            'type':type,
+            'sizeId':sizeId,
+        },
+        dataType:'json',
+        // async:false,
+        success:function (result) {
+            data = result.body;
+            if(!result.success){
+                layer.msg(result.msg);
+                return;
+            }
+            vm.comboData = data;
+        }
+    })
+    // return data;
+}

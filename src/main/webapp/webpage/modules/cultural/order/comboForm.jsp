@@ -2,8 +2,10 @@
 <%@ include file="/webpage/include/taglib.jsp"%>
 <html>
 <head>
-	<title>成品楹联价格管理</title>
+	<title>套餐管理</title>
 	<meta name="decorator" content="ani"/>
+	<!-- SUMMERNOTE -->
+	<%@include file="/webpage/include/summernote.jsp" %>
 	<script type="text/javascript">
 		var validateForm;
 		var $table; // 父页面table表格id
@@ -13,6 +15,7 @@
 			  $table = table;
 			  $topIndex = index;
 			  jp.loading();
+					$("input[name='intro']").val($('#intro').summernote('code'));//取富文本的值
 			  $("#inputForm").submit();
 			  return true;
 		  }
@@ -23,7 +26,7 @@
 		$(document).ready(function() {
 			validateForm = $("#inputForm").validate({
 				submitHandler: function(form){
-					jp.post("${ctx}/cultural/order/coupletsPrice/save",$('#inputForm').serialize(),function(data){
+					jp.post("${ctx}/cultural/order/combo/save",$('#inputForm').serialize(),function(data){
 						if(data.success){
 	                    	$table.bootstrapTable('refresh');
 	                    	jp.success(data.msg);
@@ -45,35 +48,31 @@
 				}
 			});
 			
+				//富文本初始化
+			$('#intro').summernote({
+				height: 300,
+                lang: 'zh-CN'
+            });
 		});
 	</script>
 </head>
 <body class="bg-white">
-		<form:form id="inputForm" modelAttribute="coupletsPrice" class="form-horizontal">
+		<form:form id="inputForm" modelAttribute="combo" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>	
 		<table class="table table-bordered">
 		   <tbody>
 				<tr>
-					<td class="width-15 active"><label class="pull-right">类型：</label></td>
+					<td class="width-15 active"><label class="pull-right">套餐名：</label></td>
 					<td class="width-35">
-						<form:radiobuttons path="type" items="${fns:getDictList('cultural_lexicon_type')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks "/>
+						<form:input path="name" htmlEscape="false"    class="form-control "/>
 					</td>
-					<td class="width-15 active"><label class="pull-right">尺寸：</label></td>
+					<td class="width-15 active"><label class="pull-right">套餐介绍：</label></td>
 					<td class="width-35">
-						<sys:gridselect url="${ctx}/cultural/spec/size/data" id="size" name="size.id" value="${coupletsPrice.size.id}" labelName="size.name" labelValue="${coupletsPrice.size.name}"
-							 title="选择尺寸" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right">套餐：</label></td>
-					<td class="width-35">
-						<sys:gridselect url="${ctx}/cultural/order/combo/data" id="combo" name="combo.id" value="${coupletsPrice.combo.id}" labelName="combo.name" labelValue="${coupletsPrice.combo.name}"
-							 title="选择套餐" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
-					</td>
-					<td class="width-15 active"><label class="pull-right">价格：</label></td>
-					<td class="width-35">
-						<form:input path="price" htmlEscape="false"    class="form-control "/>
+                        <input type="hidden" name="intro"/>
+						<div id="intro">
+                          ${fns:unescapeHtml(combo.intro)}
+                        </div>
 					</td>
 				</tr>
 				<tr>

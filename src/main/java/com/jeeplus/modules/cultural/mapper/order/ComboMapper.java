@@ -5,14 +5,14 @@ package com.jeeplus.modules.cultural.mapper.order;
 
 import com.jeeplus.core.persistence.BaseMapper;
 import com.jeeplus.core.persistence.annotation.MyBatisMapper;
-import com.jeeplus.modules.cultural.entity.order.CoupletsPrice;
+import com.jeeplus.modules.cultural.entity.order.Combo;
 
 /**
- * 成品楹联价格MAPPER接口
+ * 套餐MAPPER接口
  * @author orange
- * @version 2018-10-25
+ * @version 2018-10-24
  */
 @MyBatisMapper
-public interface CoupletsPriceMapper extends BaseMapper<CoupletsPrice> {
+public interface ComboMapper extends BaseMapper<Combo> {
 	
 }

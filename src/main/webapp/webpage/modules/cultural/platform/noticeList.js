@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
 $(document).ready(function() {
-	$('#coupletsPriceTable').bootstrapTable({
+	$('#noticeTable').bootstrapTable({
 		 
 		  //请求方法
                method: 'get',
@@ -34,7 +34,7 @@ $(document).ready(function() {
                //可供选择的每页的行数（*）    
                pageList: [10, 25, 50, 100],
                //这个接口需要处理bootstrap table传递的固定参数,并返回特定格式的json数据  
-               url: "${ctx}/cultural/order/coupletsPrice/data",
+               url: "${ctx}/cultural/platform/notice/data",
                //默认值为 'limit',传给服务端的参数为：limit, offset, search, sort, order Else
                //queryParamsType:'',   
                ////查询参数,每次调用是会带上这个参数，可自定义                         
@@ -54,11 +54,11 @@ $(document).ready(function() {
                    if($el.data("item") == "edit"){
                    	edit(row.id);
                    } else if($el.data("item") == "delete"){
-                        jp.confirm('确认要删除该成品楹联价格记录吗？', function(){
+                        jp.confirm('确认要删除该公告记录吗？', function(){
                        	jp.loading();
-                       	jp.get("${ctx}/cultural/order/coupletsPrice/delete?id="+row.id, function(data){
+                       	jp.get("${ctx}/cultural/platform/notice/delete?id="+row.id, function(data){
                    	  		if(data.success){
-                   	  			$('#coupletsPriceTable').bootstrapTable('refresh');
+                   	  			$('#noticeTable').bootstrapTable('refresh');
                    	  			jp.success(data.msg);
                    	  		}else{
                    	  			jp.error(data.msg);
@@ -77,30 +77,27 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'type',
-		        title: '类型',
+		        field: 'title',
+		        title: '标题',
+		        sortable: true
+		        ,formatter:function(value, row , index){
+		        	return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
+		         }
+		       
+		    }
+			,{
+		        field: 'intro',
+		        title: '简介',
+		        sortable: true
+		       
+		    }
+		    ,{
+		        field: 'details',
+		        title: '详情',
 		        sortable: true,
 		        formatter:function(value, row , index){
-		        	return "<a href='javascript:edit(\""+row.id+"\")'>"+jp.getDictLabel(${fns:toJson(fns:getDictList('cultural_lexicon_type'))}, value, "-")+"</a>";
+		        	return jp.unescapeHTML(value);
 		        }
-		       
-		    }
-			,{
-		        field: 'size.name',
-		        title: '尺寸',
-		        sortable: true
-		       
-		    }
-			,{
-		        field: 'combo.name',
-		        title: '套餐',
-		        sortable: true
-		       
-		    }
-			,{
-		        field: 'price',
-		        title: '价格',
-		        sortable: true
 		       
 		    }
 			,{
@@ -117,13 +114,13 @@ $(document).ready(function() {
 	  if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
 
 		 
-		  $('#coupletsPriceTable').bootstrapTable("toggleView");
+		  $('#noticeTable').bootstrapTable("toggleView");
 		}
 	  
-	  $('#coupletsPriceTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
+	  $('#noticeTable').on('check.bs.table uncheck.bs.table load-success.bs.table ' +
                 'check-all.bs.table uncheck-all.bs.table', function () {
-            $('#remove').prop('disabled', ! $('#coupletsPriceTable').bootstrapTable('getSelections').length);
-            $('#edit').prop('disabled', $('#coupletsPriceTable').bootstrapTable('getSelections').length!=1);
+            $('#remove').prop('disabled', ! $('#noticeTable').bootstrapTable('getSelections').length);
+            $('#edit').prop('disabled', $('#noticeTable').bootstrapTable('getSelections').length!=1);
         });
 		  
 		$("#btnImport").click(function(){
@@ -134,7 +131,7 @@ $(document).ready(function() {
 			    content:$("#importBox").html() ,
 			    btn: ['下载模板','确定', '关闭'],
 				    btn1: function(index, layero){
-					  window.location='${ctx}/cultural/order/coupletsPrice/import/template';
+					  window.location='${ctx}/cultural/platform/notice/import/template';
 				  },
 			    btn2: function(index, layero){
 				        var inputForm =top.$("#importForm");
@@ -154,32 +151,32 @@ $(document).ready(function() {
 		});
 		    
 	  $("#search").click("click", function() {// 绑定查询按扭
-		  $('#coupletsPriceTable').bootstrapTable('refresh');
+		  $('#noticeTable').bootstrapTable('refresh');
 		});
 	 
 	 $("#reset").click("click", function() {// 绑定查询按扭
 		  $("#searchForm  input").val("");
 		  $("#searchForm  select").val("");
 		  $("#searchForm  .select-item").html("");
-		  $('#coupletsPriceTable').bootstrapTable('refresh');
+		  $('#noticeTable').bootstrapTable('refresh');
 		});
 		
 		
 	});
 		
   function getIdSelections() {
-        return $.map($("#coupletsPriceTable").bootstrapTable('getSelections'), function (row) {
+        return $.map($("#noticeTable").bootstrapTable('getSelections'), function (row) {
             return row.id
         });
     }
   
   function deleteAll(){
 
-		jp.confirm('确认要删除该成品楹联价格记录吗？', function(){
+		jp.confirm('确认要删除该公告记录吗？', function(){
 			jp.loading();  	
-			jp.get("${ctx}/cultural/order/coupletsPrice/deleteAll?ids=" + getIdSelections(), function(data){
+			jp.get("${ctx}/cultural/platform/notice/deleteAll?ids=" + getIdSelections(), function(data){
          	  		if(data.success){
-         	  			$('#coupletsPriceTable').bootstrapTable('refresh');
+         	  			$('#noticeTable').bootstrapTable('refresh');
          	  			jp.success(data.msg);
          	  		}else{
          	  			jp.error(data.msg);
@@ -189,17 +186,17 @@ $(document).ready(function() {
 		})
   }
    function add(){
-	  jp.openDialog('新增成品楹联价格', "${ctx}/cultural/order/coupletsPrice/form",'800px', '500px', $('#coupletsPriceTable'));
+	  jp.openDialog('新增公告', "${ctx}/cultural/platform/notice/form",'800px', '500px', $('#noticeTable'));
   }
   function edit(id){//没有权限时，不显示确定按钮
   	  if(id == undefined){
 			id = getIdSelections();
 		}
-	   <shiro:hasPermission name="cultural:order:coupletsPrice:edit">
-	  jp.openDialog('编辑成品楹联价格', "${ctx}/cultural/order/coupletsPrice/form?id=" + id,'800px', '500px', $('#coupletsPriceTable'));
+	   <shiro:hasPermission name="cultural:platform:notice:edit">
+	  jp.openDialog('编辑公告', "${ctx}/cultural/platform/notice/form?id=" + id,'800px', '500px', $('#noticeTable'));
 	   </shiro:hasPermission>
-	  <shiro:lacksPermission name="cultural:order:coupletsPrice:edit">
-	  jp.openDialogView('查看成品楹联价格', "${ctx}/cultural/order/coupletsPrice/form?id=" + id,'800px', '500px', $('#coupletsPriceTable'));
+	  <shiro:lacksPermission name="cultural:platform:notice:edit">
+	  jp.openDialogView('查看公告', "${ctx}/cultural/platform/notice/form?id=" + id,'800px', '500px', $('#noticeTable'));
 	  </shiro:lacksPermission>
   }
 

@@ -2,31 +2,33 @@
 查询价格
  */
 var sizeId;
-var frameId;
-var craftId;
+var comboId;
 var coupletsId = details.id;
 var coupletsPriceId
 function getCoupletsPrice(object) {
-    var type = $(object).attr('data-type');
+    var spec = $(object).attr('data-type');
 
-    if(type == 'size'){
+    if(spec == 'size'){
+        $(object).parent().children('p').removeClass('checked');
+        $(object).attr('class','checked');
+        $('.norm-patent').children('p').removeClass('checked');
         sizeId = $(object).attr('data-id');
+        comboId = '';
+        getCombo(sizeId);
     }
-    if(type == 'frame'){
-        frameId = $(object).attr('data-id');
+    if(spec == 'combo'){
+        $(object).parent().children('p').removeClass('checked');
+        $(object).attr('class','checked');
+        comboId = $(object).attr('data-id');
     }
-    if(type == 'craft'){
-        craftId = $(object).attr('data-id');
-    }
-    if(sizeId && frameId && craftId && coupletsId){
+    if(sizeId && comboId && coupletsId){
         console.log(sizeId);
-        console.log(frameId);
-        console.log(craftId);
+        console.log(comboId);
+        console.log(coupletsId);
         var url = 'getCoupletsPrice';
         var param = {
             'sizeId':sizeId,
-            'frameId':frameId,
-            'craftId':craftId,
+            'comboId':comboId,
             'coupletsId':coupletsId
         };
 
@@ -53,7 +55,7 @@ function addCoupletsOrder(){
     var totalPrice = vm.totalPrice;
     //购买数量
     var num = vm.num;
-    if(!coupletsPriceId || !sizeId || !frameId || !craftId){
+    if(!coupletsPriceId || !sizeId || !comboId){
         layer.msg('请选择规格');
         return;
     }

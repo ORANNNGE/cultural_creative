@@ -28,22 +28,16 @@ import com.jeeplus.modules.cultural.service.spec.FrameService;
 import com.jeeplus.modules.cultural.service.spec.SizeService;
 import com.jeeplus.modules.cultural.service.spec.TypefaceService;
 import com.jeeplus.modules.cultural.utils.MsgUtil;
-import com.jeeplus.modules.cultural.utils.PageUtils;
-import com.jeeplus.modules.sys.entity.Log;
-import org.junit.Test;
+import org.apache.commons.collections.iterators.IteratorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.SchemaOutputResolver;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Controller
@@ -85,6 +79,8 @@ public class ForeController {
     LexiconOrderService lexiconOrderService;
     @Autowired
     FinishedOrderService finishedOrderService;
+    @Autowired
+    ComboService comboService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -565,17 +561,68 @@ public class ForeController {
      * 获取成品楹联规格
      * @return
      */
-    @RequestMapping(value="getCoupletsSpec")
+    @RequestMapping(value="getCoupletsSize")
     @ResponseBody
-    public AjaxJson getCoupletsSpec(){
+    public AjaxJson getCoupletsSize(String type){
         AjaxJson json = new AjaxJson();
-        List<Size> sizeList = sizeService.findList(new Size());
-        List<Frame> frameList = frameService.findList(new Frame());
-        List<Craft> craftList = craftService.findList(new Craft());
+        CoupletsPrice coupletsPrice = new CoupletsPrice();
+        //根据楹联类型查询尺寸和套餐
+        coupletsPrice.setType(type);
+        List<CoupletsPrice> coupletsPriceList = coupletsPriceService.findList(coupletsPrice);
+        Map<String,String> sizeMap = new HashMap<>();
+        List<Size> sizeList =  new ArrayList<>();
+        //遍历couplets，并获取couplets中size和combo
+        for (CoupletsPrice price : coupletsPriceList) {
+            sizeMap.put(price.getSize().getId(), price.getSize().getName());
+        }
+
+        Iterator<Map.Entry<String,String>> sizeMapIt = sizeMap.entrySet().iterator();
+
+        while (sizeMapIt.hasNext()){
+            Map.Entry<String,String> sizeEntry = sizeMapIt.next();
+            Size size = new Size();
+            size.setId(sizeEntry.getKey());
+            size.setName(sizeEntry.getValue());
+            sizeList.add(size);
+        }
+
+        Collections.sort(sizeList, new Comparator<Size>() {
+            @Override
+            public int compare(Size o1, Size o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
 
         json.put("sizeList", sizeList);
-        json.put("frameList", frameList);
-        json.put("craftList", craftList);
+
+        return json;
+    }
+    /**
+     * 获取成品楹联规格
+     * @return
+     */
+    @RequestMapping(value="getCoupletsCombo")
+    @ResponseBody
+    public AjaxJson getCoupletsCombo(String type,String sizeId){
+        AjaxJson json = new AjaxJson();
+        CoupletsPrice coupletsPrice = new CoupletsPrice();
+        //根据楹联类型查询尺寸和套餐
+        coupletsPrice.setType(type);
+        List<CoupletsPrice> coupletsPriceList = coupletsPriceService.findList(coupletsPrice);
+        List<Combo> comboList = new ArrayList<>();
+
+        for (CoupletsPrice price : coupletsPriceList) {
+            if(sizeId.equals(price.getSize().getId())){
+                comboList.add(price.getCombo());
+            }
+        }
+        Collections.sort(comboList, new Comparator<Combo>() {
+            @Override
+            public int compare(Combo o1, Combo o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        json.put("comboList", comboList);
 
         return json;
     }
@@ -584,25 +631,24 @@ public class ForeController {
     /**
      * 获取成品楹联价格
      * @param sizeId
-     * @param frameId
-     * @param craftId
      * @param coupletsId
      * @return
      */
     @RequestMapping(value="getCoupletsPrice")
     @ResponseBody
-    public AjaxJson getCoupletsPrice(String sizeId,String frameId,String craftId,String coupletsId){
+    public AjaxJson getCoupletsPrice(String sizeId,String comboId,String coupletsId){
         AjaxJson json = new AjaxJson();
         Size size = sizeService.get(sizeId);
-        Frame frame = frameService.get(frameId);
-        Craft craft = craftService.get(craftId);
+        Combo combo = comboService.get(comboId);
+        if(size == null || combo == null){
+            json.setSuccess(false);
+            json.setMsg("操作失败");
+        }
         Couplets couplets = coupletsService.get(coupletsId);
         CoupletsPrice price = new CoupletsPrice();
         price.setSize(size);
-        price.setFrame(frame);
-        price.setCraft(craft);
-        price.setCouplets(couplets);
-
+        price.setCombo(combo);
+        price.setType(couplets.getLexicon().getType());
         List<CoupletsPrice> coupletsPriceServiceList = coupletsPriceService.findList(price);
         if(coupletsPriceServiceList.size() == 1){
             json.put("price", coupletsPriceServiceList.get(0));
@@ -625,7 +671,7 @@ public class ForeController {
     public AjaxJson addCoupletsOrder(String coupletsPriceId, String coupletsId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-//        customerId = "1538968164093";
+        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);

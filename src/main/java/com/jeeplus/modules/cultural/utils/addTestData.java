@@ -2,6 +2,7 @@ package com.jeeplus.modules.cultural.utils;
 
 import com.jeeplus.modules.cultural.entity.couplets.Couplets;
 import com.jeeplus.modules.cultural.entity.couplets.Lexicon;
+import com.jeeplus.modules.cultural.entity.order.Combo;
 import com.jeeplus.modules.cultural.entity.order.CoupletsPrice;
 import com.jeeplus.modules.cultural.entity.order.LexiconPrice;
 import com.jeeplus.modules.cultural.entity.role.Author;
@@ -11,6 +12,7 @@ import com.jeeplus.modules.cultural.entity.spec.Size;
 import com.jeeplus.modules.cultural.entity.spec.Typeface;
 import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
+import com.jeeplus.modules.cultural.service.order.ComboService;
 import com.jeeplus.modules.cultural.service.order.CoupletsPriceService;
 import com.jeeplus.modules.cultural.service.order.LexiconPriceService;
 import com.jeeplus.modules.cultural.service.role.AuthorService;
@@ -21,6 +23,7 @@ import com.jeeplus.modules.cultural.service.spec.TypefaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -46,47 +49,66 @@ public class addTestData {
     LexiconService lexiconService;
     @Autowired
     LexiconPriceService lexiconPriceService;
+    @Autowired
+    ComboService comboService;
     @RequestMapping("addCoupletsPrice")
-    public void addCoupletsPrice(){
+    @ResponseBody
+    public String addCoupletsPrice(){
         List<Couplets> coupletsList = coupletsService.findList(new Couplets());
-        List<Frame> frameList = frameService.findList(new Frame());
+//        List<Frame> frameList = frameService.findList(new Frame());
         List<Size> sizeList = sizeService.findList(new Size());
-        List<Craft> craftList = craftService.findList(new Craft());
-
+//        List<Craft> craftList = craftService.findList(new Craft());
+        List<Combo> comboList = comboService.findList(new Combo());
+        List<String> types = new ArrayList<>();
+        types.add("1");
+        types.add("2");
+        types.add("3");
         List<CoupletsPrice> coupletsPriceList = new ArrayList<>();
         int count = 0;
-        for (int i = 0; i < coupletsList.size(); i++) {
-            for (int j = 0; j < frameList.size(); j++) {
+//        for (int i = 0; i < coupletsList.size(); i++) {
+//            for (int j = 0; j < frameList.size(); j++) {
                 for (int k = 0; k < sizeList.size(); k++) {
-                    for (int l = 0; l < craftList.size(); l++) {
-                        CoupletsPrice coupletsPrice = new CoupletsPrice();
-                        coupletsPrice.setCouplets(coupletsList.get(i));
-                        coupletsPrice.setFrame(frameList.get(j));
-//                        coupletsPrice.setFrameName(frameList.get(j).getName());
-                        coupletsPrice.setSize(sizeList.get(k));
-//                        coupletsPrice.setSizeName(sizeList.get(k).getName());
-                        coupletsPrice.setCraft(craftList.get(l));
-//                        coupletsPrice.setCraftName(craftList.get(l).getName());
+//                    for (int l = 0; l < craftList.size(); l++) {
+                    for (int j = 0; j < comboList.size(); j++) {
 
-                        coupletsPrice.setPrice(Double.valueOf(new DecimalFormat("#.00").format(Math.random()*100+100)));
-                        coupletsPriceList.add(coupletsPrice);
+                        for (int l = 0; l < types.size(); l++) {
+
+                            CoupletsPrice coupletsPrice = new CoupletsPrice();
+    //                        coupletsPrice.setCouplets(coupletsList.get(i));
+    //                        coupletsPrice.setFrame(frameList.get(j));
+    //                        coupletsPrice.setFrameName(frameList.get(j).getName());
+                            coupletsPrice.setSize(sizeList.get(k));
+                            coupletsPrice.setSizeName(sizeList.get(k).getName());
+    //                        coupletsPrice.setCraft(craftList.get(l));
+    //                        coupletsPrice.setCraftName(craftList.get(l).getName());
+                            coupletsPrice.setCombo(comboList.get(j));
+                            coupletsPrice.setComboName(comboList.get(j).getName());
+                            coupletsPrice.setType(types.get(l));
+                            coupletsPrice.setPrice(Double.valueOf(new DecimalFormat("#.00").format(Math.random()*100+100)));
+                            coupletsPriceList.add(coupletsPrice);
+                        }
+
                     }
                 }
+//                }
 
-            }
+//            }
 
-        }
+//        }
         System.out.println(coupletsPriceList.size());
         for (CoupletsPrice coupletsPrice : coupletsPriceList) {
             System.out.println(
-                    coupletsPrice.getCouplets().getName()+","+
+//                    coupletsPrice.getCouplets().getName()+","+
                     coupletsPrice.getSize().getName()+","+
-                    coupletsPrice.getCraft().getName()+","+
-                    coupletsPrice.getFrame().getName()+","+
+                    coupletsPrice.getSizeName()+","+
+                    coupletsPrice.getComboName()+","+
+//                    coupletsPrice.getCraft().getName()+","+
+//                    coupletsPrice.getFrame().getName()+","+
                     coupletsPrice.getPrice()
             );
             coupletsPriceService.save(coupletsPrice);
         }
+        return "success";
     }
 
     @RequestMapping("addLexiconPrice")
