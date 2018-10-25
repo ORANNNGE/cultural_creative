@@ -108,14 +108,8 @@ $(document).ready(function() {
 
 			}
 			,{
-			   field: 'coupletsPrice.frameName',
-			   title: '框',
-			   sortable: true
-
-			}
-			,{
-			   field: 'coupletsPrice.craftName',
-			   title: '工艺',
+			   field: 'coupletsPrice.comboName',
+			   title: '套餐',
 			   sortable: true
 
 			}

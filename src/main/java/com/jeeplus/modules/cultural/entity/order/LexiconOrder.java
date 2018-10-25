@@ -15,7 +15,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 楹联词库订单Entity
  * @author orange
- * @version 2018-10-20
+ * @version 2018-10-25
  */
 public class LexiconOrder extends DataEntity<LexiconOrder> {
 	

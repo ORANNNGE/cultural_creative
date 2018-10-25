@@ -70,7 +70,7 @@
 					<td class="width-15 active"><label class="pull-right">价格：</label></td>
 					<td class="width-35">
 						<sys:gridselect url="${ctx}/cultural/order/coupletsPrice/data" id="coupletsPrice" name="coupletsPrice.id" value="${coupletsOrder.coupletsPrice.id}" labelName="coupletsPrice.price" labelValue="${coupletsOrder.coupletsPrice.price}"
-							 title="选择价格" cssClass="form-control required" fieldLabels="价格|尺寸|框|工艺" fieldKeys="price|sizeName|frameName|craftName" searchLabels="价格|尺寸|框|工艺" searchKeys="price|price|sizeName|frameName|craftName" ></sys:gridselect>
+							 title="选择价格" cssClass="form-control required" fieldLabels="价格|尺寸|套餐" fieldKeys="price|sizeName|comboName" searchLabels="价格|尺寸|套餐" searchKeys="price|sizeName|comboName" ></sys:gridselect>
 					</td>
 					<td class="width-15 active"><label class="pull-right">收货地址：</label></td>
 					<td class="width-35">
