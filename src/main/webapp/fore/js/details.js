@@ -31,7 +31,7 @@ switch (pathName) {
         break;
     case "/fore/lexiconDetails.jsp":
         url = "getLexiconById";
-        sizeUrl = "getLexiconSpec";
+        sizeUrl = "getLexiconSize";
         comboUrl = "getLexiconCombo";
         break;
 
@@ -79,7 +79,6 @@ if(pathName == "/fore/lexiconDetails.jsp"){
 }
 console.log(type);
 function getSize(){
-    //获取楹联类型
     var data;
     $.ajax({
         type:'post',
@@ -96,28 +95,9 @@ function getSize(){
     return data;
 }
 var sizeData = getSize();
-//根据楹联类型和尺寸size获取套餐combo
-// function getCombo(sizeId){
-//     //获取楹联类型
-//     var data;
-//     $.ajax({
-//         type:'post',
-//         url:comboUrl,
-//         data:{
-//           'type':type,
-//           'sizeId':sizeId,
-//         },
-//         dataType:'json',
-//         async:false,
-//         success:function (result) {
-//             data = result.body;
-//         }
-//     })
-//     return data;
-// }
-//
-// var comboData = getCombo();
-// console.log(comboData);
+var sizeList = sizeData.sizeList;
+var typefaceList = sizeData.typefaceList;
+
 
 
 //Vue实例
@@ -125,10 +105,9 @@ var vm = new Vue({
     el:'#details',
     data: {
         data:details,
-        sizeData:sizeData,
-        comboData:{
-            // 'comboList':{
-            // }
+        sizeList:sizeList,
+        typefaceList:typefaceList,
+        comboList:{
         },
         thePrice:{
             'price':{'price':0}
@@ -166,9 +145,7 @@ var vm = new Vue({
 })
 
 //根据楹联类型和尺寸size获取套餐combo
-function getCombo(sizeId){
-    //获取楹联类型
-    // var data;
+function getCoupletsCombo(sizeId){
     $.ajax({
         type:'post',
         url:comboUrl,
@@ -184,8 +161,29 @@ function getCombo(sizeId){
                 layer.msg(result.msg);
                 return;
             }
-            vm.comboData = data;
+            vm.comboList = data.comboList;
         }
     })
-    // return data;
+}
+//根据楹联类型和尺寸size获取套餐combo
+function getLexiconCombo(sizeId,typefaceId){
+    $.ajax({
+        type:'post',
+        url:comboUrl,
+        data:{
+            'type':type,
+            'sizeId':sizeId,
+            'typefaceId':typefaceId,
+        },
+        dataType:'json',
+        // async:false,
+        success:function (result) {
+            data = result.body;
+            if(!result.success){
+                layer.msg(result.msg);
+                return;
+            }
+            vm.comboList = data.comboList;
+        }
+    })
 }

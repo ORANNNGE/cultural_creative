@@ -55,9 +55,7 @@ public class addTestData {
     @ResponseBody
     public String addCoupletsPrice(){
         List<Couplets> coupletsList = coupletsService.findList(new Couplets());
-//        List<Frame> frameList = frameService.findList(new Frame());
         List<Size> sizeList = sizeService.findList(new Size());
-//        List<Craft> craftList = craftService.findList(new Craft());
         List<Combo> comboList = comboService.findList(new Combo());
         List<String> types = new ArrayList<>();
         types.add("1");
@@ -65,22 +63,12 @@ public class addTestData {
         types.add("3");
         List<CoupletsPrice> coupletsPriceList = new ArrayList<>();
         int count = 0;
-//        for (int i = 0; i < coupletsList.size(); i++) {
-//            for (int j = 0; j < frameList.size(); j++) {
                 for (int k = 0; k < sizeList.size(); k++) {
-//                    for (int l = 0; l < craftList.size(); l++) {
                     for (int j = 0; j < comboList.size(); j++) {
-
                         for (int l = 0; l < types.size(); l++) {
-
                             CoupletsPrice coupletsPrice = new CoupletsPrice();
-    //                        coupletsPrice.setCouplets(coupletsList.get(i));
-    //                        coupletsPrice.setFrame(frameList.get(j));
-    //                        coupletsPrice.setFrameName(frameList.get(j).getName());
                             coupletsPrice.setSize(sizeList.get(k));
                             coupletsPrice.setSizeName(sizeList.get(k).getName());
-    //                        coupletsPrice.setCraft(craftList.get(l));
-    //                        coupletsPrice.setCraftName(craftList.get(l).getName());
                             coupletsPrice.setCombo(comboList.get(j));
                             coupletsPrice.setComboName(comboList.get(j).getName());
                             coupletsPrice.setType(types.get(l));
@@ -90,20 +78,12 @@ public class addTestData {
 
                     }
                 }
-//                }
-
-//            }
-
-//        }
         System.out.println(coupletsPriceList.size());
         for (CoupletsPrice coupletsPrice : coupletsPriceList) {
             System.out.println(
-//                    coupletsPrice.getCouplets().getName()+","+
                     coupletsPrice.getSize().getName()+","+
                     coupletsPrice.getSizeName()+","+
                     coupletsPrice.getComboName()+","+
-//                    coupletsPrice.getCraft().getName()+","+
-//                    coupletsPrice.getFrame().getName()+","+
                     coupletsPrice.getPrice()
             );
             coupletsPriceService.save(coupletsPrice);
@@ -112,65 +92,53 @@ public class addTestData {
     }
 
     @RequestMapping("addLexiconPrice")
-    public void addLexiconPrice(){
-        List<Frame> frameList = frameService.findList(new Frame());
+    @ResponseBody
+    public String addLexiconPrice(){
         List<Size> sizeList = sizeService.findList(new Size());
-        List<Craft> craftList = craftService.findList(new Craft());
         List<Lexicon> lexiconList = lexiconService.findList(new Lexicon());
         Author selectAuthor = new Author();
         selectAuthor.setType("1");
-        List<Author> authorList = authorService.findList(selectAuthor);
         List<Typeface> typefaceList = typefaceService.findList(new Typeface());
-
-
+        List<Combo> comboList = comboService.findList(new Combo());
+        List<String> types = new ArrayList<>();
+        types.add("1");
+        types.add("2");
+        types.add("3");
         List<LexiconPrice> lexiconPriceList = new ArrayList<>();
         int count = 0;
-        for (int i = 0; i < lexiconList.size(); i++) {
-            for (int j = 0; j < frameList.size(); j++) {
+        for (int i = 0; i < types.size(); i++) {
                 for (int k = 0; k < sizeList.size(); k++) {
-                    for (int l = 0; l < craftList.size(); l++) {
-                        for (int m = 0; m < authorList.size(); m++) {
-                            /*
-                             *书法家和字体只能选一项，所以分开插入
-                             */
-                            if(m == authorList.size()-1){
-                                for (int n = 0; n < typefaceList.size(); n++) {
-                                    LexiconPrice price = new LexiconPrice();
-                                    price.setFrame(frameList.get(j));
-                                    price.setSize(sizeList.get(k));
-                                    price.setCraft(craftList.get(l));
-                                    price.setTypeface(typefaceList.get(n));
-                                    price.setPrice(Double.valueOf(new DecimalFormat("#.00").format(Math.random()*100+100)));
-                                    price.setLexicon(lexiconList.get(i));
-                                    lexiconPriceList.add(price);
-                                }
-                            }
+                    for (int l = 0; l < typefaceList.size(); l++) {
+                        for (int m = 0; m < comboList.size(); m++) {
                             LexiconPrice price = new LexiconPrice();
-                            price.setLexicon(lexiconList.get(i));
-                            price.setFrame(frameList.get(j));
+                            price.setType(types.get(i));
                             price.setSize(sizeList.get(k));
-                            price.setCraft(craftList.get(l));
-                            price.setAuthor(authorList.get(m));
+                            price.setSizeName(sizeList.get(k).getName());
+                            price.setTypeface(typefaceList.get(l));
+                            price.setTypefaceName(typefaceList.get(l).getName());
+                            price.setCombo(comboList.get(m));
+                            price.setComboName(comboList.get(m).getName());
+
                             price.setPrice(Double.valueOf(new DecimalFormat("#.00").format(Math.random()*100+100)));
                             lexiconPriceList.add(price);
                         }
-
                     }
                 }
 
-            }
 
         }
         System.out.println(lexiconPriceList.size());
         for (LexiconPrice lexiconPrice : lexiconPriceList) {
             System.out.println(
-                    lexiconPrice.getSize().getName()+","+
-                    lexiconPrice.getCraft().getName()+","+
-                    lexiconPrice.getFrame().getName()+","+
+                    lexiconPrice.getSizeName()+","+
+                    lexiconPrice.getTypefaceName()+","+
+                    lexiconPrice.getComboName()+","+
                     lexiconPrice.getPrice()
             );
             lexiconPriceService.save(lexiconPrice);
         }
+        return "success";
     }
+
 
 }

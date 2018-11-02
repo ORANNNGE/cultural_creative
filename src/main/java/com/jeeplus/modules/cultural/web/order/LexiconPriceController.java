@@ -40,7 +40,7 @@ import com.jeeplus.modules.cultural.service.order.LexiconPriceService;
 /**
  * 楹联词库价格Controller
  * @author orange
- * @version 2018-10-20
+ * @version 2018-10-26
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/order/lexiconPrice")
@@ -104,7 +104,6 @@ public class LexiconPriceController extends BaseController {
 			j.setMsg("非法参数！");
 			return j;
 		}
-
 		lexiconPriceService.save(lexiconPrice);//新建或者编辑保存
 		j.setSuccess(true);
 		j.setMsg("保存词库价格成功");

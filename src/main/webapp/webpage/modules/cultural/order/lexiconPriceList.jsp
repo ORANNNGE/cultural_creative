@@ -24,14 +24,12 @@
 		<div class="accordion-inner">
 			<form:form id="searchForm" modelAttribute="lexiconPrice" class="form form-horizontal well clearfix">
 			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="楹联词库：">楹联词库：</label>
-				<sys:gridselect url="${ctx}/cultural/couplets/lexicon/data" id="lexicon" name="lexicon.id" value="${lexiconPrice.lexicon.id}" labelName="lexicon.title" labelValue="${lexiconPrice.lexicon.title}"
-					title="选择楹联词库" cssClass="form-control required" fieldLabels="标题|上联|下联|横批" fieldKeys="title|rightline|leftline|topline" searchLabels="标题|上联|下联|横批" searchKeys="title|rightline|leftline|topline" ></sys:gridselect>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="作者：">作者：</label>
-				<sys:gridselect url="${ctx}/cultural/role/author/data" id="author" name="author.id" value="${lexiconPrice.author.id}" labelName="author.name" labelValue="${lexiconPrice.author.name}"
-					title="选择作者" cssClass="form-control required" fieldLabels="姓名" fieldKeys="name" searchLabels="姓名" searchKeys="name" ></sys:gridselect>
+				<div class="form-group">
+					<label class="label-item single-overflow pull-left" title="类型：">&nbsp;类型：</label>
+					<div class="col-xs-12">
+						<form:radiobuttons class="i-checks" path="type" items="${fns:getDictList('cultural_lexicon_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</div>
+				</div>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="字体：">字体：</label>
@@ -44,14 +42,9 @@
 					title="选择尺寸" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="楹联框：">楹联框：</label>
-				<sys:gridselect url="${ctx}/cultural/spec/frame/data" id="frame" name="frame.id" value="${lexiconPrice.frame.id}" labelName="frame.name" labelValue="${lexiconPrice.frame.name}"
-					title="选择楹联框" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
-				<label class="label-item single-overflow pull-left" title="制作工艺：">制作工艺：</label>
-				<sys:gridselect url="${ctx}/cultural/spec/craft/data" id="craft" name="craft.id" value="${lexiconPrice.craft.id}" labelName="craft.name" labelValue="${lexiconPrice.craft.name}"
-					title="选择制作工艺" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
+				<label class="label-item single-overflow pull-left" title="套餐：">套餐：</label>
+				<sys:gridselect url="${ctx}/cultural/order/combo/data" id="combo" name="combo.id" value="${lexiconPrice.combo.id}" labelName="combo.name" labelValue="${lexiconPrice.combo.name}"
+					title="选择套餐" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="价格：">价格：</label>

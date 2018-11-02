@@ -40,7 +40,7 @@ import com.jeeplus.modules.cultural.service.order.LexiconOrderService;
 /**
  * 楹联词库订单Controller
  * @author orange
- * @version 2018-10-25
+ * @version 2018-11-01
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cultural/order/lexiconOrder")

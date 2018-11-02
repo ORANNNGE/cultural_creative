@@ -2,49 +2,50 @@
 查询价格
  */
 var sizeId;
-var frameId;
-var craftId;
+var comboId;
 var typefaceId;
-var authorId;
 var lexiconId = details.id;
 var lexiconPriceId;
 function getLexiconPrice(object) {
-    var type = $(object).attr('data-type');
+    var spec = $(object).attr('data-type');
 
-    if(type == 'size'){
-        sizeId = $(object).attr('data-id');
-    }
-    if(type == 'frame'){
-        frameId = $(object).attr('data-id');
-    }
-    if(type == 'craft'){
-        craftId = $(object).attr('data-id');
-    }
-    if(type == 'author'){
-        authorId = $(object).attr('data-id');
-        typefaceId = '';
-    }
-    if(type == 'typeface'){
+    if(spec == 'typeface'){
+        $(object).parent().children('p').removeClass('checked');
+        $(object).attr('class','checked');
         typefaceId = $(object).attr('data-id');
-        authorId = '';
+
+
+    }
+    if(spec == 'size'){
+        $('.thsm-prod').children('p').removeClass('checked');
+        $(object).parent().children('p').removeClass('checked');
+        $(object).attr('class','checked');
+        comboId="";
+        sizeId = $(object).attr('data-id');
+        if(typefaceId){
+            getLexiconCombo(sizeId,typefaceId);
+        }
+    }
+    if(spec == 'combo'){
+        $(object).parent().children('p').removeClass('checked');
+        $(object).attr('class','checked');
+        comboId = $(object).attr('data-id');
+
     }
 
-    if(sizeId && frameId && craftId && lexiconId && (authorId || typefaceId)){
+    if(sizeId && comboId && typefaceId){
         console.log('*****');
         console.log('sizeId'+sizeId);
-        console.log('frameId'+frameId);
-        console.log('craftId'+craftId);
-        console.log('authorId'+authorId);
         console.log('typefaceId'+typefaceId);
+        console.log('comboId'+comboId);
+        console.log('type'+type);
         console.log('*****');
         var url = 'getLexiconPrice';
         var param = {
             'sizeId':sizeId,
-            'frameId':frameId,
-            'craftId':craftId,
-            'lexiconId':lexiconId,
-            'authorId':authorId,
-            'typefaceId':typefaceId
+            'comboId':comboId,
+            'typefaceId':typefaceId,
+            'type':type,
         };
 
         $.ajax({
@@ -70,25 +71,29 @@ function addLexiconOrder(){
     var totalPrice = vm.totalPrice;
     //购买数量
     var num = vm.num;
-    if(!lexiconPriceId || !sizeId || !frameId || !craftId  ){
-        if(!authorId || !typefaceId){
-            layer.msg('请选择规格');
-            return;
-        }
+    if( !sizeId  || !comboId || !typefaceId){
+        layer.msg('请选择规格');
+        return;
     }
     if(num == 0){
         layer.msg('请选择数量');
         return;
     }
 
-    console.log('*******');
+    console.log('------');
     console.log(num);
     console.log(totalPrice);
-    console.log(lexiconId);
+    console.log(sizeId);
+    console.log(comboId);
+    console.log(typefaceId);
     console.log(lexiconPriceId);
     var param = {
-        'lexiconPriceId':lexiconPriceId,
+        'comboId':comboId,
+        'typefaceId':typefaceId,
+        'sizeId':sizeId,
+        'type':type,
         'lexiconId':lexiconId,
+        'lexiconPriceId':lexiconPriceId,
         'totalPrice':totalPrice,
         'num':num,
     }

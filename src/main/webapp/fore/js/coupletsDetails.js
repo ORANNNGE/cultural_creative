@@ -14,7 +14,7 @@ function getCoupletsPrice(object) {
         $('.norm-patent').children('p').removeClass('checked');
         sizeId = $(object).attr('data-id');
         comboId = '';
-        getCombo(sizeId);
+        getCoupletsCombo(sizeId);
     }
     if(spec == 'combo'){
         $(object).parent().children('p').removeClass('checked');
@@ -29,7 +29,7 @@ function getCoupletsPrice(object) {
         var param = {
             'sizeId':sizeId,
             'comboId':comboId,
-            'coupletsId':coupletsId
+            'type':type
         };
 
         $.ajax({

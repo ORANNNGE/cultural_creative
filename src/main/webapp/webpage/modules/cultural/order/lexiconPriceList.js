@@ -77,22 +77,12 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'lexicon.title',
-		        title: '楹联词库',
-		        sortable: true
-		        ,formatter:function(value, row , index){
- 			    if(value == null){
-		            	return "<a href='javascript:edit(\""+row.id+"\")'>-</a>";
-		            }else{
-		                return "<a href='javascript:edit(\""+row.id+"\")'>"+value+"</a>";
-		            }
+		        field: 'type',
+		        title: '类型',
+		        sortable: true,
+		        formatter:function(value, row , index){
+		        	return "<a href='javascript:edit(\""+row.id+"\")'>"+jp.getDictLabel(${fns:toJson(fns:getDictList('cultural_lexicon_type'))}, value, "-")+"</a>";
 		        }
-		       
-		    }
-			,{
-		        field: 'author.name',
-		        title: '作者',
-		        sortable: true
 		       
 		    }
 			,{
@@ -108,14 +98,8 @@ $(document).ready(function() {
 		       
 		    }
 			,{
-		        field: 'frame.name',
-		        title: '楹联框',
-		        sortable: true
-		       
-		    }
-			,{
-		        field: 'craft.name',
-		        title: '制作工艺',
+		        field: 'combo.name',
+		        title: '套餐',
 		        sortable: true
 		       
 		    }

@@ -28,6 +28,7 @@ import com.jeeplus.modules.cultural.service.spec.FrameService;
 import com.jeeplus.modules.cultural.service.spec.SizeService;
 import com.jeeplus.modules.cultural.service.spec.TypefaceService;
 import com.jeeplus.modules.cultural.utils.MsgUtil;
+import com.sun.source.tree.TypeCastTree;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -576,6 +577,7 @@ public class ForeController {
             sizeMap.put(price.getSize().getId(), price.getSize().getName());
         }
 
+
         Iterator<Map.Entry<String,String>> sizeMapIt = sizeMap.entrySet().iterator();
 
         while (sizeMapIt.hasNext()){
@@ -597,6 +599,7 @@ public class ForeController {
 
         return json;
     }
+
     /**
      * 获取成品楹联规格
      * @return
@@ -606,15 +609,18 @@ public class ForeController {
     public AjaxJson getCoupletsCombo(String type,String sizeId){
         AjaxJson json = new AjaxJson();
         CoupletsPrice coupletsPrice = new CoupletsPrice();
+        Size size = new Size();
+        size.setId(sizeId);
         //根据楹联类型查询尺寸和套餐
         coupletsPrice.setType(type);
+        coupletsPrice.setSize(size);
         List<CoupletsPrice> coupletsPriceList = coupletsPriceService.findList(coupletsPrice);
         List<Combo> comboList = new ArrayList<>();
 
         for (CoupletsPrice price : coupletsPriceList) {
-            if(sizeId.equals(price.getSize().getId())){
+//            if(sizeId.equals(price.getSize().getId())){
                 comboList.add(price.getCombo());
-            }
+//            }
         }
         Collections.sort(comboList, new Comparator<Combo>() {
             @Override
@@ -626,17 +632,18 @@ public class ForeController {
 
         return json;
     }
-    
+
 
     /**
-     * 获取成品楹联价格
+     *
      * @param sizeId
-     * @param coupletsId
+     * @param comboId
+     * @param type
      * @return
      */
     @RequestMapping(value="getCoupletsPrice")
     @ResponseBody
-    public AjaxJson getCoupletsPrice(String sizeId,String comboId,String coupletsId){
+    public AjaxJson getCoupletsPrice(String sizeId,String comboId,String type){
         AjaxJson json = new AjaxJson();
         Size size = sizeService.get(sizeId);
         Combo combo = comboService.get(comboId);
@@ -644,11 +651,10 @@ public class ForeController {
             json.setSuccess(false);
             json.setMsg("操作失败");
         }
-        Couplets couplets = coupletsService.get(coupletsId);
         CoupletsPrice price = new CoupletsPrice();
         price.setSize(size);
         price.setCombo(combo);
-        price.setType(couplets.getLexicon().getType());
+        price.setType(type);
         List<CoupletsPrice> coupletsPriceServiceList = coupletsPriceService.findList(price);
         if(coupletsPriceServiceList.size() == 1){
             json.put("price", coupletsPriceServiceList.get(0));
@@ -726,62 +732,103 @@ public class ForeController {
         return json;
     }
 
-    @RequestMapping(value="getLexiconSpec")
+    @RequestMapping(value="getLexiconSize")
     @ResponseBody
-    public AjaxJson getLexiconSpec(){
+    public AjaxJson getLexiconSize(String type){
         AjaxJson json = new AjaxJson();
-        List<Size> sizeList = sizeService.findList(new Size());
-        List<Frame> frameList = frameService.findList(new Frame());
-        List<Craft> craftList = craftService.findList(new Craft());
         List<Typeface> typefaceList = typefaceService.findList(new Typeface());
-        List<Author> authors = authorService.findList(new Author());
-        List<Author> authorList = new ArrayList<>();
-        //只返回书法家
-        for (Author author : authors) {
-            if("1".equals(author.getType())){
-                authorList.add(author);
-            }
+        //查询此类型下的所有价格
+        LexiconPrice lexiconPrice = new LexiconPrice();
+        lexiconPrice.setType(type);
+        List<LexiconPrice> lexiconPriceList = lexiconPriceService.findList(lexiconPrice);
+
+        List<Size> sizeList = new ArrayList<>();
+        Map<String,String> sizeMap = new HashMap<>();
+        //去除重复的size
+        for (LexiconPrice price : lexiconPriceList) {
+            sizeMap.put(price.getSize().getId(), price.getSize().getName());
         }
+
+        Iterator<Map.Entry<String,String>> sizeMapIt = sizeMap.entrySet().iterator();
+
+        while(sizeMapIt.hasNext()){
+            Map.Entry<String,String> entry = sizeMapIt.next();
+            Size size = new Size();
+            size.setId(entry.getKey());
+            size.setName(entry.getValue());
+            sizeList.add(size);
+        }
+        Collections.sort(sizeList, new Comparator<Size>() {
+            @Override
+            public int compare(Size o1, Size o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         json.put("sizeList", sizeList);
-        json.put("frameList", frameList);
-        json.put("craftList", craftList);
         json.put("typefaceList", typefaceList);
-        json.put("authorList", authorList);
 
         return json;
     }
 
     /**
-     *
-     * @param sizeId
-     * @param frameId
-     * @param craftId
-     * @param lexiconId
-     * @param authorId
-     * @param typefaceId
+     * 获取成品楹联规格
      * @return
      */
+    @RequestMapping(value="getLexiconCombo")
+    @ResponseBody
+    public AjaxJson getLexiconCombo(String type,String sizeId,String typefaceId){
+        AjaxJson json = new AjaxJson();
+        //查询符合条件的价格list
+        LexiconPrice lexiconPrice = new LexiconPrice();
+        Size size = new Size();
+        size.setId(sizeId);
+        Typeface typeface = new Typeface();
+        typeface.setId(typefaceId);
+        lexiconPrice.setTypeface(typeface);
+        lexiconPrice.setSize(size);
+        lexiconPrice.setType(type);
+
+        List<LexiconPrice> lexiconPriceList = lexiconPriceService.findList(lexiconPrice);
+
+        List<Combo> comboList = new ArrayList<>();
+        //取出combo
+        for (LexiconPrice price : lexiconPriceList) {
+                comboList.add(price.getCombo());
+        }
+        //按照combo.name进行排序
+        Collections.sort(comboList, new Comparator<Combo>() {
+            @Override
+            public int compare(Combo o1, Combo o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+
+        json.put("comboList", comboList);
+
+        return json;
+    }
+
+
     @RequestMapping(value="getLexiconPrice")
     @ResponseBody
-    public AjaxJson getLexiconPrice(String sizeId,String frameId,String craftId,String lexiconId,String authorId,String typefaceId){
+    public AjaxJson getLexiconPrice(String sizeId,String typefaceId,String comboId,String type){
         AjaxJson json = new AjaxJson();
-        Size size = sizeService.get(sizeId);
-        Frame frame = frameService.get(frameId);
-        Craft craft = craftService.get(craftId);
-        Lexicon lexicon = lexiconService.get(lexiconId);
+        if("".equals(sizeId) || "".equals(typefaceId) || "".equals(type) ||"".equals(comboId)){
+            json.setSuccess(false);
+            json.setMsg("请输入规格");
+        }
+        Size size = new Size();
+        size.setId(sizeId);
+        Typeface typeface = new Typeface();
+        typeface.setId(typefaceId);
+        Combo combo = new Combo();
+        combo.setId(comboId);
+
         LexiconPrice price = new LexiconPrice();
         price.setSize(size);
-        price.setFrame(frame);
-        price.setCraft(craft);
-        price.setLexicon(lexicon);
-        if(authorId != null){
-            Author author = authorService.get(authorId);
-            price.setAuthor(author);
-        }
-        if(typefaceId != null){
-            Typeface typeface = typefaceService.get(typefaceId);
-            price.setTypeface(typeface);
-        }
+        price.setTypeface(typeface);
+        price.setCombo(combo);
+        price.setType(type);
         List<LexiconPrice> lexiconPriceList = lexiconPriceService.findList(price);
 
         if(lexiconPriceList.size() == 1){
@@ -798,7 +845,7 @@ public class ForeController {
     public AjaxJson addLexiconOrder(String lexiconPriceId, String lexiconId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-//        customerId = "1538968164093";
+        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -847,6 +894,7 @@ public class ForeController {
         lexiconOrder.setInstaller(null);
         lexiconOrder.setStatus("1");
         lexiconOrder.setNum(num);
+
         lexiconOrder.setTotalPrice(totalPrice);
         lexiconOrderService.save(lexiconOrder);
 
@@ -866,7 +914,7 @@ public class ForeController {
     public AjaxJson addFinishedOrder(String type, String finishedId,Double price, HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-//        customerId = "1538968164093";
+        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);

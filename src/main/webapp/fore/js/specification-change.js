@@ -45,7 +45,7 @@ $(function(){
 		$('.thesarusm-production').hide()
 		$('.thesarusm-size').hide()
 	})
-	$('.thsm-fo').find('p').toggle(function(){
+	/*$('.thsm-fo').find('p').toggle(function(){
 		$('.thsm-fo').find('p').attr('class','')
 		$('.thsm-fo').find('p').eq($(this).index()).attr('class','checked')
 		$('.thsm-ca').find('p').attr('class','')
@@ -59,7 +59,7 @@ $(function(){
 		$('.thsm-fo').find('p').attr('class','')
 	},function(){
 		$('.thsm-ca').find('p').eq($(this).index()).attr('class',' ')
-	})
+	})*/
 	//选择尺寸
 	$('.thesam-size').click(function(){
 		$('.thesarusm-norm-bg').show()
@@ -69,12 +69,12 @@ $(function(){
 		$('.thesarusm-production').hide()
 		$('.thesarusm-font').hide()
 	})
-	$('.thsm-si').find('p').toggle(function(){
+	/*$('.thsm-si').find('p').toggle(function(){
 		$('.thsm-si').find('p').attr('class','')
 		$('.thsm-si').find('p').eq($(this).index()).attr('class','checked')
 	},function(){
 		$('.thsm-si').find('p').eq($(this).index()).attr('class',' ')
-	})
+	})*/
 	//选择专利产品春联框
 	$('.thesam-patent').click(function(){
 		$('.thesarusm-norm-bg').show()
@@ -84,12 +84,12 @@ $(function(){
 		$('.thesarusm-production').hide()
 		$('.thesarusm-size').hide()
 	})
-	$('.thsm-pate').find('p').toggle(function(){
+	/*$('.thsm-pate').find('p').toggle(function(){
 		$('.thsm-pate').find('p').attr('class','')
 		$('.thsm-pate').find('p').eq($(this).index()).attr('class','checked')
 	},function(){
 		$('.thsm-pate').find('p').eq($(this).index()).attr('class',' ')
-	})
+	})*/
 	//选择制作工艺
 	$('.thesam-production').click(function(){
 		$('.thesarusm-norm-bg').show()
@@ -99,7 +99,7 @@ $(function(){
 		$('.thesarusm-font').hide()
 		$('.thesarusm-size').hide()
 	})
-	$('.thsm-prod').find('p').toggle(function(){
+/*	$('.thsm-prod').find('p').toggle(function(){
 		$('.thsm-prod').find('p').attr('class','')
 		$('.thsm-prod').find('p').eq($(this).index()).attr('class','checked')
 	},function(){
@@ -113,6 +113,9 @@ $(function(){
 	$('.thsm-buy').click(function(){
 		$('.thesarusm-norm-bg').hide()
 		$('.thesaurus-more').css('position','relative')
-})
-
+})*/
+    $('.thsm-buy').click(function(){
+        $('.thesarusm-norm-bg').hide()
+        $('.thesaurus-more').css('position','relative')
+    })
 })

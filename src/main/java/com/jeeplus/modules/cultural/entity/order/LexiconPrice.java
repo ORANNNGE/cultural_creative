@@ -3,12 +3,9 @@
  */
 package com.jeeplus.modules.cultural.entity.order;
 
-import com.jeeplus.modules.cultural.entity.couplets.Lexicon;
-import com.jeeplus.modules.cultural.entity.role.Author;
 import com.jeeplus.modules.cultural.entity.spec.Typeface;
 import com.jeeplus.modules.cultural.entity.spec.Size;
-import com.jeeplus.modules.cultural.entity.spec.Frame;
-import com.jeeplus.modules.cultural.entity.spec.Craft;
+import com.jeeplus.modules.cultural.entity.order.Combo;
 
 import com.jeeplus.core.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
@@ -16,23 +13,18 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 楹联词库价格Entity
  * @author orange
- * @version 2018-10-20
+ * @version 2018-10-26
  */
 public class LexiconPrice extends DataEntity<LexiconPrice> {
 	
 	private static final long serialVersionUID = 1L;
-	private Lexicon lexicon;		// 楹联词库
-	private Author author;		// 作者
+	private String type;		// 类型
 	private Typeface typeface;		// 字体
 	private Size size;		// 尺寸
-	private Frame frame;		// 楹联框
-	private Craft craft;		// 制作工艺
-	private String lexiconName;		// 词库标题
-	private String authorName;		// 作者姓名
+	private Combo combo;		// 套餐
 	private String typefaceName;		// 字体名
 	private String sizeName;		// 尺寸名
-	private String frameName;		// 楹联框名
-	private String craftName;		// 工艺名
+	private String comboName;		// 楹联框名
 	private Double price;		// 价格
 	
 	public LexiconPrice() {
@@ -43,25 +35,16 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 		super(id);
 	}
 
-	@ExcelField(title="楹联词库", fieldType=Lexicon.class, value="lexicon.title", align=2, sort=1)
-	public Lexicon getLexicon() {
-		return lexicon;
+	@ExcelField(title="类型", dictType="cultural_lexicon_type", align=2, sort=1)
+	public String getType() {
+		return type;
 	}
 
-	public void setLexicon(Lexicon lexicon) {
-		this.lexicon = lexicon;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
-	@ExcelField(title="作者", fieldType=Author.class, value="author.name", align=2, sort=2)
-	public Author getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
-	
-	@ExcelField(title="字体", fieldType=Typeface.class, value="typeface.name", align=2, sort=3)
+	@ExcelField(title="字体", fieldType=Typeface.class, value="typeface.name", align=2, sort=2)
 	public Typeface getTypeface() {
 		return typeface;
 	}
@@ -70,7 +53,7 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 		this.typeface = typeface;
 	}
 	
-	@ExcelField(title="尺寸", fieldType=Size.class, value="size.name", align=2, sort=4)
+	@ExcelField(title="尺寸", fieldType=Size.class, value="size.name", align=2, sort=3)
 	public Size getSize() {
 		return size;
 	}
@@ -79,43 +62,16 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 		this.size = size;
 	}
 	
-	@ExcelField(title="楹联框", fieldType=Frame.class, value="frame.name", align=2, sort=5)
-	public Frame getFrame() {
-		return frame;
+	@ExcelField(title="套餐", fieldType=Combo.class, value="combo.name", align=2, sort=4)
+	public Combo getCombo() {
+		return combo;
 	}
 
-	public void setFrame(Frame frame) {
-		this.frame = frame;
+	public void setCombo(Combo combo) {
+		this.combo = combo;
 	}
 	
-	@ExcelField(title="制作工艺", fieldType=Craft.class, value="craft.name", align=2, sort=6)
-	public Craft getCraft() {
-		return craft;
-	}
-
-	public void setCraft(Craft craft) {
-		this.craft = craft;
-	}
-	
-	@ExcelField(title="词库标题", align=2, sort=7)
-	public String getLexiconName() {
-		return lexiconName;
-	}
-
-	public void setLexiconName(String lexiconName) {
-		this.lexiconName = lexiconName;
-	}
-	
-	@ExcelField(title="作者姓名", align=2, sort=8)
-	public String getAuthorName() {
-		return authorName;
-	}
-
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
-	}
-	
-	@ExcelField(title="字体名", align=2, sort=9)
+	@ExcelField(title="字体名", align=2, sort=5)
 	public String getTypefaceName() {
 		return typefaceName;
 	}
@@ -124,7 +80,7 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 		this.typefaceName = typefaceName;
 	}
 	
-	@ExcelField(title="尺寸名", align=2, sort=10)
+	@ExcelField(title="尺寸名", align=2, sort=6)
 	public String getSizeName() {
 		return sizeName;
 	}
@@ -133,25 +89,16 @@ public class LexiconPrice extends DataEntity<LexiconPrice> {
 		this.sizeName = sizeName;
 	}
 	
-	@ExcelField(title="楹联框名", align=2, sort=11)
-	public String getFrameName() {
-		return frameName;
+	@ExcelField(title="楹联框名", align=2, sort=7)
+	public String getComboName() {
+		return comboName;
 	}
 
-	public void setFrameName(String frameName) {
-		this.frameName = frameName;
+	public void setComboName(String comboName) {
+		this.comboName = comboName;
 	}
 	
-	@ExcelField(title="工艺名", align=2, sort=12)
-	public String getCraftName() {
-		return craftName;
-	}
-
-	public void setCraftName(String craftName) {
-		this.craftName = craftName;
-	}
-	
-	@ExcelField(title="价格", align=2, sort=13)
+	@ExcelField(title="价格", align=2, sort=8)
 	public Double getPrice() {
 		return price;
 	}

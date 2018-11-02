@@ -10,7 +10,7 @@ import com.jeeplus.modules.cultural.entity.order.LexiconOrder;
 /**
  * 楹联词库订单MAPPER接口
  * @author orange
- * @version 2018-10-25
+ * @version 2018-11-01
  */
 @MyBatisMapper
 public interface LexiconOrderMapper extends BaseMapper<LexiconOrder> {

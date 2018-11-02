@@ -4,18 +4,13 @@
     
 	<sql id="lexiconPriceColumns">
 		a.id AS "id",
-		a.lexicon_id AS "lexicon.id",
-		a.author_id AS "author.id",
+		a.type AS "type",
 		a.typeface_id AS "typeface.id",
 		a.size_id AS "size.id",
-		a.frame_id AS "frame.id",
-		a.craft_id AS "craft.id",
-		a.lexicon_name AS "lexiconName",
-		a.author_name AS "authorName",
+		a.combo_id AS "combo.id",
 		a.typeface_name AS "typefaceName",
 		a.size_name AS "sizeName",
-		a.frame_name AS "frameName",
-		a.craft_name AS "craftName",
+		a.combo_name AS "comboName",
 		a.price AS "price",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -24,30 +19,19 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 				
-		lexicon.title AS "lexicon.title",
-		lexicon.rightline AS "lexicon.rightline",
-		lexicon.leftline AS "lexicon.leftline",
-		lexicon.topline AS "lexicon.topline",
-				
-		author.name AS "author.name",
 				
 		typeface.name AS "typeface.name",
 				
 		size.name AS "size.name",
 				
-		frame.name AS "frame.name",
-				
-		craft.name AS "craft.name"
+		combo.name AS "combo.name"
 	</sql>
 	
 	<sql id="lexiconPriceJoins">
 		
-		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
-		LEFT JOIN cultural_author author ON author.id = a.author_id
 		LEFT JOIN cultural_typeface typeface ON typeface.id = a.typeface_id
 		LEFT JOIN cultural_size size ON size.id = a.size_id
-		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
-		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+		LEFT JOIN cultural_combo combo ON combo.id = a.combo_id
 	</sql>
 	
     
@@ -67,11 +51,8 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
-			<if test="lexicon != null and lexicon.id != null and lexicon.id != ''">
-				AND a.lexicon_id = #{lexicon.id}
-			</if>
-			<if test="author != null and author.id != null and author.id != ''">
-				AND a.author_id = #{author.id}
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
 			</if>
 			<if test="typeface != null and typeface.id != null and typeface.id != ''">
 				AND a.typeface_id = #{typeface.id}
@@ -79,11 +60,8 @@
 			<if test="size != null and size.id != null and size.id != ''">
 				AND a.size_id = #{size.id}
 			</if>
-			<if test="frame != null and frame.id != null and frame.id != ''">
-				AND a.frame_id = #{frame.id}
-			</if>
-			<if test="craft != null and craft.id != null and craft.id != ''">
-				AND a.craft_id = #{craft.id}
+			<if test="combo != null and combo.id != null and combo.id != ''">
+				AND a.combo_id = #{combo.id}
 			</if>
 			<if test="price != null and price != ''">
 				AND a.price = #{price}
@@ -121,18 +99,13 @@
 	<insert id="insert">
 		INSERT INTO cultural_lexicon_price(
 			id,
-			lexicon_id,
-			author_id,
+			type,
 			typeface_id,
 			size_id,
-			frame_id,
-			craft_id,
-			lexicon_name,
-			author_name,
+			combo_id,
 			typeface_name,
 			size_name,
-			frame_name,
-			craft_name,
+			combo_name,
 			price,
 			create_by,
 			create_date,
@@ -142,18 +115,13 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{lexicon.id},
-			#{author.id},
+			#{type},
 			#{typeface.id},
 			#{size.id},
-			#{frame.id},
-			#{craft.id},
-			#{lexiconName},
-			#{authorName},
+			#{combo.id},
 			#{typefaceName},
 			#{sizeName},
-			#{frameName},
-			#{craftName},
+			#{comboName},
 			#{price},
 			#{createBy.id},
 			#{createDate},
@@ -166,18 +134,13 @@
 	
 	<update id="update">
 		UPDATE cultural_lexicon_price SET 	
-			lexicon_id = #{lexicon.id},
-			author_id = #{author.id},
+			type = #{type},
 			typeface_id = #{typeface.id},
 			size_id = #{size.id},
-			frame_id = #{frame.id},
-			craft_id = #{craft.id},
-			lexicon_name = #{lexiconName},
-			author_name = #{authorName},
+			combo_id = #{combo.id},
 			typeface_name = #{typefaceName},
 			size_name = #{sizeName},
-			frame_name = #{frameName},
-			craft_name = #{craftName},
+			combo_name = #{comboName},
 			price = #{price},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

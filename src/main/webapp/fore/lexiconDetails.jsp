@@ -22,19 +22,19 @@
             <div class="thesam-div">
                 <!--选择字体或书法家-->
                 <div class="thesam-font">
-                    <p>选择字体或书法家</p><span></span> <i><img src="images/coup-next.png"/></i>
+                    <p>选择字体</p><span></span> <i><img src="images/coup-next.png"/></i>
                 </div>
                 <!--选择尺寸-->
                 <div class="thesam-size">
                     <p>选择尺寸</p><span></span><i><img src="images/coup-next.png"/></i>
                 </div>
                 <!--选择专利产品春联框-->
-                <div class="thesam-patent">
+                <%--<div class="thesam-patent">
                     <p>选择专利产品春联框</p><span></span><i><img src="images/coup-next.png"/></i>
-                </div>
+                </div>--%>
                 <!--选择制作工艺-->
                 <div class="thesam-production">
-                    <p>选择制作工艺</p><span></span><i><img src="images/coup-next.png"/></i>
+                    <p>选择套餐</p><span></span><i><img src="images/coup-next.png"/></i>
                 </div>
             </div>
 
@@ -91,13 +91,7 @@
                         <div class="thsm-size">
                             <h3>选择尺寸</h3>
                             <div class="thsm-si">
-                                <p v-for="item in spec.sizeList" v-text="item.intro" :data-id="item.id" data-type="size" onclick="getLexiconPrice(this)"></p>
-                                <%--<p class=" ">1.1米（竖联100cm*18cm，横批40cm*18cm）</p>
-                                <p>1.3米（竖联118cm*21cm，横批47cm*21cm）</p></li>
-                                <p>1.6米（竖联145cm*24cm，横批60cm*24cm）</p></li>
-                                <p>1.8米（竖联170cm*28cm，横批70cm*28cm）</p></li>
-                                <p>2.0米（竖联180cm*30cm，横批70cm*30cm）</p></li>
-                                <p>2.2米（竖联190cm*30cm，横批70cm*30cm）</p></li>--%>
+                                <p v-for="item in sizeList" v-text="item.name" :data-id="item.id" data-type="size" onclick="getLexiconPrice(this)"></p>
                             </div>
                         </div>
                     </div>
@@ -116,16 +110,9 @@
                     </div>
                     <div class="thsm-down">
                         <div class="thsm-production ">
-                            <h3>选择制作工艺</h3>
+                            <h3>选择套餐</h3>
                             <div class="thsm-prod">
-                                <p v-for="item in spec.craftList" v-text="item.intro" :data-id="item.id" data-type="craft" onclick="getLexiconPrice(this)"></p>
-                                <%--<p>PVC平板打印（0.5cm厚度）（配春联框）</p>
-                                <p>实力书法家手写春联</p>
-                                <p class="">不干胶印刷</p>
-                                <p>植绒布印刷</p>
-                                <p>普通铜板纸印刷（全金色）</p>
-                                <p>普通铜板纸印刷（黑色描金）</p>
-                                <p>普通铜板纸印刷（纯黑字）</p>--%>
+                                <p v-for="item in comboList" v-text="item.name" :data-id="item.id" data-type="combo" onclick="getLexiconPrice(this)"></p>
                             </div>
                         </div>
                     </div>
@@ -134,30 +121,7 @@
                     </div>
                 </div>
             </div>
-            <!--选择专利产品春联框-->
-            <div class="thesarusm-patent">
-                <div class="thesarusm-blank"></div>
-                <div class="thesarusm-norm">
-                    <!--图片-->
-                    <div class="thsm-up">
-                        <div class="thsm-up-img"><img src="images/norm-bg.png" /></div>
-                    </div>
-                    <div class="thsm-down">
-                        <div class="thsm-patent">
-                            <h3>选择专利产品春联框</h3>
-                            <div class="thsm-pate">
-                                <p v-for="item in spec.frameList" v-text="item.intro" :data-id="item.id" data-type="frame" onclick="getLexiconPrice(this)"></p>
-                                <%--<p>金色铝合金春联框</p>--%>
-                                <%--<p class=" ">香槟色铝合金春联框</p>--%>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="thsm-buy">
-                        <a href="###">确认</a>
-                    </div>
-                </div>
-            </div>
-            <!--选择字体或书法家-->
+            <!--选择字体-->
             <div class="thesarusm-font">
                 <div class="thesarusm-blank"></div>
                 <div class="thesarusm-norm">
@@ -169,24 +133,8 @@
                         <div class="thsm-font th-font">
                             <h3>选择字体</h3>
                             <div class="thsm-fo">
-                                <p v-for="item in spec.typefaceList" v-text="item.intro" :data-id="item.id" data-type="typeface" onclick="getLexiconPrice(this)"></p>
-                                <%--<p>隶书</p>--%>
-                                <%--<p>行书</p>--%>
-                                <%--<p>行楷</p>--%>
+                                <p v-for="item in typefaceList" v-text="item.intro" :data-id="item.id" data-type="typeface" onclick="getLexiconPrice(this)"></p>
                             </div>
-                        </div>
-                        <div class="thsm-callig th-font">
-                            <h3>选择书法家</h3>
-                            <div class="thsm-ca">
-                                <p v-for="item in spec.authorList" v-text="item.name" :data-id="item.id" data-type="author" onclick="getLexiconPrice(this)"></p>
-                                <%--<p>张默默</p>--%>
-                                <%--<p class=" ">张默默</p>--%>
-                                <%--<p>张默默</p>--%>
-                                <%--<p>张默默</p>--%>
-                            </div>
-                        </div>
-                        <div class="thsm-see">
-                            <a href="###">查看书法家</a>
                         </div>
                     </div>
                     <div class="thsm-buy">

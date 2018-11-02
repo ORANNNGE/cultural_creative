@@ -36,7 +36,7 @@
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="楹联价格：">楹联价格：</label>
 				<sys:gridselect url="${ctx}/cultural/order/lexiconPrice/data" id="lexiconPrice" name="lexiconPrice.id" value="${lexiconOrder.lexiconPrice.id}" labelName="lexiconPrice.price" labelValue="${lexiconOrder.lexiconPrice.price}"
-					title="选择楹联价格" cssClass="form-control required" fieldLabels="价格|楹联|作者|字体|尺寸|框|制作工艺" fieldKeys="price|lexiconName|authorName|typefaceName|sizeName|frameName|craftName" searchLabels="价格|楹联|作者|字体|尺寸|框|制作工艺" searchKeys="price|lexiconName|authorName|typefaceName|sizeName|frameName|craftName" ></sys:gridselect>
+					title="选择楹联价格" cssClass="form-control required" fieldLabels="价格|字体|尺寸|套餐" fieldKeys="price|typefaceName|sizeName|comboName" searchLabels="价格|字体|尺寸|套餐" searchKeys="price|typefaceName|sizeName|comboName" ></sys:gridselect>
 			</div>
 			 <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="收货地址：">收货地址：</label>

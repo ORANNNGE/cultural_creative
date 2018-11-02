@@ -94,14 +94,13 @@
                         <li><!--尺寸-->
                             <h3>选择尺寸</h3>
                             <div class="norm-size">
-
-                                <p v-for="item in sizeData.sizeList" v-text="item.name" :data-id="item.id" data-type="size" onclick="getCoupletsPrice(this)"></p>
+                                <p v-for="item in sizeList" v-text="item.name" :data-id="item.id" data-type="size" onclick="getCoupletsPrice(this)"></p>
                             </div>
                         </li>
                         <li><!--选择专利-->
                             <h3>选择套餐</h3>
                             <div class="norm-patent">
-                                <p v-for="item in comboData.comboList" v-text="item.name" :data-id="item.id" data-type="combo" onclick="getCoupletsPrice(this)"></p>
+                                <p v-for="item in comboList" v-text="item.name" :data-id="item.id" data-type="combo" onclick="getCoupletsPrice(this)"></p>
                             </div>
                         </li>
                     </ul>

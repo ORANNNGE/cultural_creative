@@ -16,7 +16,7 @@ import com.jeeplus.modules.cultural.mapper.order.LexiconOrderMapper;
 /**
  * 楹联词库订单Service
  * @author orange
- * @version 2018-10-25
+ * @version 2018-11-01
  */
 @Service
 @Transactional(readOnly = true)
