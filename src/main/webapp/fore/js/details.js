@@ -4,35 +4,43 @@
 var pathName = window.location.pathname;
 console.log(pathName);
 var url;
-var sizeUrl;
-var comboUrl;
-var finishedType;
+var sizeUrl;//尺寸url
+var comboUrl;//套餐url
+var finishedType;//成品类型
+var orderType;//订单类型
+
 switch (pathName) {
     case "/fore/newYearPicDetails.jsp":
         url = "getNewYearPicById";
         finishedType = '1';
+        orderType = '3';
         break;
     case "/fore/paintingDetails.jsp":
         url = "getPaintingById";
-        finishedType = '2';
+        finishedType = '3';
+        orderType = '3';
         break;
     case "/fore/calligraphyDetails.jsp":
         url = "getCalligraphyById";
-        finishedType = '3';
+        finishedType = '2';
+        orderType = '3';
         break;
     case "/fore/decorationDetails.jsp":
         url = "getDecorationById";
         finishedType = '4';
+        orderType = '3';
         break;
     case "/fore/coupletsDetails.jsp":
         url = "getCoupletsById";
         sizeUrl = "getCoupletsSize";
         comboUrl = "getCoupletsCombo";
+        orderType = '1';
         break;
     case "/fore/lexiconDetails.jsp":
         url = "getLexiconById";
         sizeUrl = "getLexiconSize";
         comboUrl = "getLexiconCombo";
+        orderType = '2';
         break;
 
     default:
@@ -94,9 +102,13 @@ function getSize(){
     })
     return data;
 }
-var sizeData = getSize();
-var sizeList = sizeData.sizeList;
-var typefaceList = sizeData.typefaceList;
+//从sizeData中过去
+var sizeData,sizeList,typefaceList;
+if(orderType == '1' || orderType == '2' ){
+    var sizeData = getSize();
+    var sizeList = sizeData.sizeList;//尺寸
+    var typefaceList = sizeData.typefaceList;//字体
+}
 
 
 

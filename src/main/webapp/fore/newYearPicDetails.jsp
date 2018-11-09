@@ -24,7 +24,7 @@
                 </div>
             </div>
             <!--评价-->
-            <div class="coupm-eva">
+            <%--<div class="coupm-eva">
                 <div class="c-eva-tit">
                     <p>宝贝评价</p><a href="###">查看全部<i><img src="images/coup-small.png"/></i></a>
                 </div>
@@ -40,7 +40,7 @@
                         <p>对联很不错，大气，字哈鞥好</p>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <div class="coupm-low">
             <div class="coupletm-tit">
@@ -67,6 +67,7 @@
 <script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/details.js"></script>
+<script src="js/pay.js"></script>
 <script src="js/finishedDetails.js"></script>
 </html>
 

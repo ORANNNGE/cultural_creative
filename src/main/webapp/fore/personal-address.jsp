@@ -14,15 +14,19 @@
 <div class="personal-address" id="addressList">
     <div class="addre-ul">
         <ul>
-            <li v-for="item in data">
+            <li v-for="item in data" :data-id="item.id">
                 <div class="addre-up">
                     <h3 v-text="item.name"> <span v-text="item.phonenum"></span></h3>
                     <p v-text="item.details"></p>
                 </div>
                 <div class="addre-label">
-                    <label><input type="checkbox" value="默认" /><span>默认</span></label>
-                    <a href="###">编辑</a>
-                    <p class="addre-delete">删除</p>
+                    <label>
+                        <input type="checkbox" value="默认" checked="checked" v-if="item.isDefault == 1" onclick="setDefaultAddr(this)"/>
+                        <input type="checkbox" value="默认" v-else onclick="setDefaultAddr(this)"/>
+                        <span>默认</span>
+                    </label>
+                    <a :href="'personal-addAddress.jsp?id=' + item.id">编辑</a>
+                    <p class="addre-delete" onclick="delAddr(this)">删除</p>
                 </div>
             </li>
         </ul>
@@ -36,5 +40,6 @@
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
 <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="js/personal-address.js"></script>
 </html>

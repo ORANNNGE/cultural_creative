@@ -51,6 +51,9 @@ var decorationVm = new Vue({
             }
             this.page = loadPage;
         },
+        toDecorationDetails:function(id){
+            location.href='decorationDetails.jsp?id='+id;
+        },
     }
 })
 //下拉加载

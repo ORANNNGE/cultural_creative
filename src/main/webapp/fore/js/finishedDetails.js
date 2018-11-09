@@ -5,28 +5,16 @@
 
 //添加订单
 function addFinishedOrder(){
-    //
+    //其他成品id
     var finishedId = details.id;
-    var price = details.price;
+    var totalPrice = details.price;
     var url = 'addFinishedOrder';
-    //总价
-    // var totalPrice = vm.totalPrice;
-    //购买数量
-    // var num = vm.num;
-    // if(!coupletsPriceId || !sizeId || !frameId || !craftId){
-    //     layer.msg('请选择规格');
-    //     return;
-    // }
-    // if(num == 0){
-    //     layer.msg('请选择数量');
-    //     return;
-    // }
-
+    //订单id
+    var orderId;
     console.log('*******');
-
     console.log(finishedId);
     console.log(finishedType);
-    console.log(price);
+    console.log(totalPrice);
     console.log('*******');
 
     // console.log(num);
@@ -36,8 +24,8 @@ function addFinishedOrder(){
     var param = {
         'type':finishedType,
         'finishedId':finishedId,
-        'finishedType':finishedType,
-        'price':price,
+        // 'finishedType':finishedType,
+        'price':totalPrice,
         // 'num':num,
     }
 
@@ -52,15 +40,16 @@ function addFinishedOrder(){
                 layer.msg(result.msg);
                 return;
             }
+            //订单id
+            orderId = result.body.orderId;
             layer.open({
                 content: '订单已生成，是否立即付款？',
                 yes: function (index, layero) {
                     //do something
+                    payReq(orderType,orderId,totalPrice)
                     layer.close(index); //如果设定了yes回调，需进行手工关闭
                 }
             })
-
-
         }
     })
 }

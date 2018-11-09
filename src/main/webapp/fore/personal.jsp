@@ -33,19 +33,19 @@
                 </div>
                 <div class="permi-ul">
                     <ul>
-                        <li><a href="###">
+                        <li><a href="personal-order.jsp">
                             <i><img src="images/per-all.png" /></i>
                             <span>全部</span>
                         </a></li>
-                        <li><a href="###">
+                        <li><a href="personal-order.jsp?status=1">
                             <i><img src="images/per-fk.png" /></i>
                             <span>待付款</span>
                         </a></li>
-                        <li><a href="###">
+                        <li><a href="personal-order.jsp?status=2">
                             <i><img src="images/per-az.png" /></i>
                             <span>待安装</span>
                         </a></li>
-                        <li><a href="###">
+                        <li><a href="personal-order.jsp?status=3">
                             <i><img src="images/per-wc.png" /></i>
                             <span>已完成</span>
                         </a></li>
@@ -54,10 +54,10 @@
             </div>
             <div class="permi-more">
                 <a href="personal-base.jsp"><i><img src="images/per-jbzl.png"/></i>基本资料</a>
-                <a href="###"><i><img src="images/per-ggxx.png"/></i>公告信息</a>
-                <a href="###"><i><img src="images/per-ptjs.png"/></i>平台介绍</a>
-                <a href="###"><i><img src="images/per-lxkf.png"/></i>联系客服</a>
-                <a href="###"><i><img src="images/per-bzzx.png"/></i>帮助中心</a>
+                <a href="personal-notice.jsp"><i><img src="images/per-ggxx.png"/></i>公告信息</a>
+                <a href="personal-plat-intro.jsp"><i><img src="images/per-ptjs.png"/></i>平台介绍</a>
+                <a href="personal-customer-service.jsp"><i><img src="images/per-lxkf.png"/></i>联系客服</a>
+                <a href="personal-help.jsp"><i><img src="images/per-bzzx.png"/></i>帮助中心</a>
             </div>
         </div>
     </div>

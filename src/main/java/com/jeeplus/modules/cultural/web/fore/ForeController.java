@@ -1,9 +1,11 @@
 package com.jeeplus.modules.cultural.web.fore;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.deserializer.AbstractDateDeserializer;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jeeplus.common.json.AjaxJson;
+import com.jeeplus.common.utils.StringUtils;
 import com.jeeplus.modules.cultural.entity.couplets.Couplets;
 import com.jeeplus.modules.cultural.entity.couplets.Lexicon;
 import com.jeeplus.modules.cultural.entity.finished.Calligraphy;
@@ -11,6 +13,7 @@ import com.jeeplus.modules.cultural.entity.finished.Decoration;
 import com.jeeplus.modules.cultural.entity.finished.NewYearPic;
 import com.jeeplus.modules.cultural.entity.finished.Painting;
 import com.jeeplus.modules.cultural.entity.order.*;
+import com.jeeplus.modules.cultural.entity.platform.*;
 import com.jeeplus.modules.cultural.entity.role.Author;
 import com.jeeplus.modules.cultural.entity.role.Customer;
 import com.jeeplus.modules.cultural.entity.spec.Craft;
@@ -21,6 +24,7 @@ import com.jeeplus.modules.cultural.service.couplets.CoupletsService;
 import com.jeeplus.modules.cultural.service.couplets.LexiconService;
 import com.jeeplus.modules.cultural.service.finished.*;
 import com.jeeplus.modules.cultural.service.order.*;
+import com.jeeplus.modules.cultural.service.platform.*;
 import com.jeeplus.modules.cultural.service.role.AuthorService;
 import com.jeeplus.modules.cultural.service.role.CustomerService;
 import com.jeeplus.modules.cultural.service.spec.CraftService;
@@ -29,6 +33,7 @@ import com.jeeplus.modules.cultural.service.spec.SizeService;
 import com.jeeplus.modules.cultural.service.spec.TypefaceService;
 import com.jeeplus.modules.cultural.utils.MsgUtil;
 import com.sun.source.tree.TypeCastTree;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +43,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -82,6 +89,16 @@ public class ForeController {
     FinishedOrderService finishedOrderService;
     @Autowired
     ComboService comboService;
+    @Autowired
+    NoticeService noticeService;
+    @Autowired
+    PlatIntroService platIntroService;
+    @Autowired
+    CustomerServService customerServService;
+    @Autowired
+    LeaveMsgService leaveMsgService;
+    @Autowired
+    PlatHelpService platHelpService;
     private Logger logger = LoggerFactory.getLogger(ForeController.class);
 
     /**
@@ -409,7 +426,7 @@ public class ForeController {
         }
     }
 
-    @RequestMapping(value="getVerifyCode")
+   /* @RequestMapping(value="getVerifyCode")
     @ResponseBody
     public AjaxJson getVerifyCode(String phoneNum,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
@@ -443,19 +460,19 @@ public class ForeController {
         json.setMsg("已发送");
         json.put("respMsg", respMsg);
         return json;
-    }
+    }*/
 
     @RequestMapping(value="bindPhoneNum")
     @ResponseBody
-    public AjaxJson bindPhoneNum(String verifyCode,HttpServletRequest request){
+    public AjaxJson bindPhoneNum(String phoneNum,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
 
         //从session 获取用户id
         String customerId = (String)request.getSession().getAttribute("customerId");
         //从session 获取用户之前验证的手机号
-        String phoneNum = (String)request.getSession().getAttribute("verifyPhoneNum");
-        //从session 获取发送的验证码
-        String code = (String)request.getSession().getAttribute("code");
+//        String phoneNum = (String)request.getSession().getAttribute("verifyPhoneNum");
+//        //从session 获取发送的验证码
+//        String code = (String)request.getSession().getAttribute("code");
 
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
@@ -473,18 +490,18 @@ public class ForeController {
             return json;
         }
 
-        if(verifyCode == null || "".equals(verifyCode)){
-            json.setSuccess(false);
-            json.setMsg("请输入验证码");
-            return json;
-        }
+//        if(verifyCode == null || "".equals(verifyCode)){
+//            json.setSuccess(false);
+//            json.setMsg("请输入验证码");
+//            return json;
+//        }
 
         //验证手机号
-        if(!verifyCode.equals(code)){
-            json.setSuccess(false);
-            json.setMsg("验证码不正确");
-            return json;
-        }
+//        if(!verifyCode.equals(code)){
+//            json.setSuccess(false);
+//            json.setMsg("验证码不正确");
+//            return json;
+//        }
 
         customer.setPhonenum(phoneNum);
         customerService.save(customer);
@@ -509,7 +526,11 @@ public class ForeController {
             json.setMsg("登录已过期，请重新授权登录");
             return json;
         }
-
+        if(!StringUtils.isEmpty(address.getId())){
+            address.setCustomer(customerService.get(customerId));
+            addressService.save(address);
+            return json;
+        }
         //是否存在该用户
         Customer customer = customerService.get(customerId);
         boolean isExist = customer==null?false:true;
@@ -518,10 +539,75 @@ public class ForeController {
             json.setMsg("用户不存在");
             return json;
         }
+        Address selectAddress = new Address();
         address.setCustomer(customer);
-        address.setIsDefault("0");
+        List<Address> addressList = addressService.findList(selectAddress);
+        if(addressList.size()>0){
+            address.setIsDefault("0");
+        }else {
+            address.setIsDefault("1");
+        }
+        address.setCustomer(customer);
         addressService.save(address);
         json.setMsg("添加成功");
+        return json;
+    }
+
+    @RequestMapping(value="setDefaultAddr")
+    @ResponseBody
+    public AjaxJson setDefaultAddr(String id,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        if(customer == null){
+            json.setSuccess(false);
+            json.setMsg("请重新登录");
+        }
+        Address selectAddress = new Address();
+        selectAddress.setCustomer(customer);
+        List<Address> addressList = addressService.findList(selectAddress);
+        for (Address address : addressList) {
+            if(id.equals(address.getId())){
+                address.setIsDefault("1");
+            }else {
+                address.setIsDefault("0");
+            }
+            addressService.save(address);
+        }
+        return json;
+    }
+
+    @RequestMapping(value="delAddr")
+    @ResponseBody
+    public AjaxJson delAddr(String id,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        if(customer == null){
+            json.setSuccess(false);
+            json.setMsg("请重新登录");
+        }
+        Address address = new Address();
+        address.setId(id);
+        addressService.delete(address);
+        return json;
+    }
+
+    @RequestMapping(value="getAddr")
+    @ResponseBody
+    public AjaxJson getAddr(String id,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        if(customer == null){
+            json.setSuccess(false);
+            json.setMsg("请重新登录");
+        }
+        Address address = addressService.get(id);
+
+        if(address == null){
+            json.setSuccess(false);
+            json.setMsg("地址不存在");
+            return json;
+        }
+        json.put("address", address);
         return json;
     }
 
@@ -677,7 +763,7 @@ public class ForeController {
     public AjaxJson addCoupletsOrder(String coupletsPriceId, String coupletsId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-        customerId = "1538968164093";
+//        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -715,6 +801,7 @@ public class ForeController {
         if(address == null){
             json.setSuccess(false);
             json.setMsg("请设置默认收货地址");
+            return json;
         }
         //成品楹联订单
         CoupletsOrder coupletsOrder = new CoupletsOrder();
@@ -729,6 +816,8 @@ public class ForeController {
         //持久化
         coupletsOrderService.save(coupletsOrder);
         json.setMsg("购买成功");
+        json.put("orderId", coupletsOrder.getId());
+
         return json;
     }
 
@@ -845,7 +934,7 @@ public class ForeController {
     public AjaxJson addLexiconOrder(String lexiconPriceId, String lexiconId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-        customerId = "1538968164093";
+//        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -897,6 +986,8 @@ public class ForeController {
 
         lexiconOrder.setTotalPrice(totalPrice);
         lexiconOrderService.save(lexiconOrder);
+        json.setMsg("购买成功");
+        json.put("orderId", lexiconOrder.getId());
 
         return json;
     }
@@ -914,7 +1005,7 @@ public class ForeController {
     public AjaxJson addFinishedOrder(String type, String finishedId,Double price, HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-        customerId = "1538968164093";
+//        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -935,11 +1026,11 @@ public class ForeController {
             NewYearPic newYearPic = newYearPicService.get(finishedId);
             finishedName = newYearPic.getTitle();
         };
-        if("2".equals(type)){
+        if("3".equals(type)){
             Painting painting = paintingService.get(finishedId);
             finishedName = painting.getTitle();
         };
-        if("3".equals(type)){
+        if("2".equals(type)){
             Calligraphy calligraphy = calligraphyService.get(finishedId);
             finishedName = calligraphy.getTitle();
         };
@@ -977,6 +1068,8 @@ public class ForeController {
         finishedOrder.setInstaller(null);
         finishedOrder.setStatus("1");
         finishedOrderService.save(finishedOrder);
+        json.setMsg("购买成功");
+        json.put("orderId", finishedOrder.getId());
         return json;
     }
 
@@ -1023,4 +1116,263 @@ public class ForeController {
         return json;
     }
 
-}
+    /**
+     * 删除订单
+     * @param orderId
+     * @param orderType
+     * @return
+     */
+    @RequestMapping(value="delOrder")
+    @ResponseBody
+    public AjaxJson delOrder(String orderId,String orderType,HttpServletRequest request){
+
+        AjaxJson json = new AjaxJson();
+        String customerId = (String) request.getSession().getAttribute("customerId");
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+        if(orderId == null || orderType == null){
+            json.setSuccess(false);
+            json.setMsg("订单不存在");
+            return json;
+        }
+
+        if("1".equals(orderType)){
+            CoupletsOrder order = coupletsOrderService.get(orderId);
+            if(order == null){
+                json.setSuccess(false);
+                json.setMsg("订单不存在");
+                return json;
+            }
+            coupletsOrderService.delete(order);
+            System.out.println("***************************************************************************");
+        }
+        if("2".equals(orderType)){
+            LexiconOrder order = lexiconOrderService.get(orderId);
+            if(order == null){
+                json.setSuccess(false);
+                json.setMsg("订单不存在");
+                return json;
+            }
+            lexiconOrderService.delete(order);
+            System.out.println("***************************************************************************");
+        }
+        if("3".equals(orderType)){
+            FinishedOrder order = finishedOrderService.get(orderId);
+            if(order == null){
+                json.setSuccess(false);
+                json.setMsg("订单不存在");
+                return json;
+            }
+            finishedOrderService.delete(order);
+            System.out.println("***************************************************************************");
+        }
+
+        return json;
+    }
+
+    /**
+     * 确认订单
+     * @param orderId
+     * @param orderType
+     * @return
+     */
+    @RequestMapping(value="ensureOrder")
+    @ResponseBody
+    public AjaxJson ensureOrder(String orderId,String orderType,HttpServletRequest request){
+        AjaxJson json = new AjaxJson();
+        String customerId = (String) request.getSession().getAttribute("customerId");
+        //登录是否过期
+        if(customerId == null || "".equals(customerId)){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+        if(orderId == null || orderType == null){
+            json.setSuccess(false);
+            json.setMsg("请订单不存在");
+            return json;
+        }
+        if("1".equals(orderType)){
+            CoupletsOrder order = coupletsOrderService.get(orderId);
+            if(order == null){
+                json.setSuccess(false);
+                json.setMsg("请订单不存在");
+                return json;
+            }
+            order.setStatus("3");
+            coupletsOrderService.save(order);
+            System.out.println("***************************************************************************");
+        }
+        if("2".equals(orderType)){
+            LexiconOrder order = lexiconOrderService.get(orderId);
+            if(order == null){
+                json.setSuccess(false);
+                json.setMsg("请订单不存在");
+                return json;
+            }
+            order.setStatus("3");
+            lexiconOrderService.save(order);
+            System.out.println("***************************************************************************");
+        }
+        if("3".equals(orderType)){
+            FinishedOrder order = finishedOrderService.get(orderId);
+            if(order == null){
+                json.setSuccess(false);
+                json.setMsg("请订单不存在");
+                return json;
+            }
+            order.setStatus("3");
+            finishedOrderService.save(order);
+            System.out.println("***************************************************************************");
+        }
+        return json;
+    }
+
+    /**
+     * 公告列表
+     * @return
+     */
+    @RequestMapping(value="getNoticeList")
+    @ResponseBody
+    public AjaxJson getNoticeList() throws ParseException {
+        AjaxJson json = new AjaxJson();
+        List<Notice> noticeList = noticeService.findList(new Notice());
+        if(noticeList.size() == 0){
+            json.setSuccess(false);
+            json.setMsg("暂无公告");
+            return json;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
+        for (Notice notice : noticeList) {
+            notice.setCurrentUser(null);
+            notice.setDataScope(null);
+            notice.setPage(null);
+            notice.setCreateBy(null);
+            notice.setUpdateBy(null);
+            notice.setDetails(null);
+        }
+        json.put("noticeList", noticeList);
+        return json;
+    }
+
+    /**
+     * 公告详情
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getNoticeDetails")
+    @ResponseBody
+    public AjaxJson getNoticeDetails(String id){
+        AjaxJson json = new AjaxJson();
+        Notice notice = noticeService.get(id);
+        if(notice == null){
+            json.setSuccess(false);
+            json.setMsg("公告不存在");
+            return json;
+        }
+            notice.setCurrentUser(null);
+            notice.setDataScope(null);
+            notice.setPage(null);
+            notice.setCreateBy(null);
+            notice.setUpdateBy(null);
+        json.put("notice", notice);
+        return json;
+    }
+
+    /**
+     * 平台简介
+     * @return
+     */
+    @RequestMapping(value="getPlatIntro")
+    @ResponseBody
+    public AjaxJson getPlatIntro(){
+        AjaxJson json = new AjaxJson();
+        List<PlatIntro> platIntroList = platIntroService.findList(new PlatIntro());
+        List<Author> authorList = authorService.findList(new Author());
+        if(platIntroList.size() == 0 || authorList.size() == 0 ){
+            json.setSuccess(false);
+            json.setMsg("无数据");
+            return json;
+        }
+        PlatIntro platIntro = platIntroList.get(0);
+        json.put("platIntro", platIntro);
+        json.put("authorList", authorList);
+        return json;
+    }
+
+    /**
+     * 客服联系方式
+     * @return
+     */
+    @RequestMapping(value="getCustomerServ")
+    @ResponseBody
+    public AjaxJson getCustomerServ(){
+        AjaxJson json = new AjaxJson();
+        List<CustomerServ> customerServList = customerServService.findList(new CustomerServ());
+        if(customerServList.size() == 0 || customerServList.size() == 0 ){
+            json.setSuccess(false);
+            json.setMsg("无数据");
+            return json;
+        }
+        CustomerServ customerServ = customerServList.get(0);
+        json.put("customerServ", customerServ);
+        return json;
+    }
+
+    /**
+     * 帮助
+     * @return
+     */
+    @RequestMapping(value="getPlatHelp")
+    @ResponseBody
+    public AjaxJson getPlatHelp(){
+        AjaxJson json = new AjaxJson();
+        List<PlatHelp> platHelpList = platHelpService.findList(new PlatHelp());
+        if(platHelpList.size() == 0){
+            json.setSuccess(false);
+            json.setMsg("无数据");
+            return json;
+        }
+        PlatHelp platHelp = platHelpList.get(0);
+        json.put("platHelp", platHelp);
+        return json;
+    }
+
+    /**
+     * 用户留言
+      * @param msg
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="addLeaveMsg")
+    @ResponseBody
+    public AjaxJson addLeaveMsg(String msg,HttpServletRequest request){
+
+        AjaxJson json = new AjaxJson();
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        //登录是否过期
+        if(customer == null){
+            json.setSuccess(false);
+            json.setMsg("登录已过期，请重新授权登录");
+            return json;
+        }
+        if(StringUtils.isEmpty(msg)){
+            json.setSuccess(false);
+            json.setMsg("请输入内容");
+            return json;
+        }
+        LeaveMsg leaveMsg = new LeaveMsg();
+        leaveMsg.setCustomer(customer);
+        leaveMsg.setContent(msg);
+        leaveMsgService.save(leaveMsg);
+        return json;
+    }
+
+
+
+
+   }

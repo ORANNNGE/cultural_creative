@@ -39,7 +39,7 @@
             </div>
 
             <!--评价-->
-            <div class="coupm-eva">
+           <%-- <div class="coupm-eva">
                 <div class="c-eva-tit">
                     <p>宝贝评价</p><a href="###">查看全部<i><img src="images/coup-small.png"/></i></a>
                 </div>
@@ -55,7 +55,7 @@
                         <p>对联很不错，大气，字哈鞥好</p>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <div class="thesam-low">
             <div class="thesaurm-tit">
@@ -153,6 +153,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/details.js"></script>
+<script src="js/pay.js"></script>
 <script src="js/lexiconDetails.js"></script>
 <script type="text/javascript" src="js/specification-change.js" ></script>
 </html>

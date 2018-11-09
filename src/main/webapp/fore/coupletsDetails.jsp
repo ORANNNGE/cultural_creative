@@ -26,7 +26,7 @@
                 <p>选择规格<i><img src="images/coup-next.png"/></i></p>
             </div>
             <!--评价-->
-            <div class="coupm-eva">
+            <%--<div class="coupm-eva">
                 <div class="c-eva-tit">
                     <p>宝贝评价</p><a href="###">查看全部<i><img src="images/coup-small.png"/></i></a>
                 </div>
@@ -42,7 +42,7 @@
                         <p>对联很不错，大气，字哈鞥好</p>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <div class="coupm-low">
             <div class="coupletm-tit">
@@ -52,7 +52,7 @@
                 <div class="c-intr-tit">商品介绍</div>
                 <div v-html="details"></div>
             </div>
-            <div class="c-intr-ul">
+            <%--<div class="c-intr-ul">
                 <ul>
                     <li>
                         <div class="c-intr-one">
@@ -73,10 +73,10 @@
                         </div>
                     </li>
                 </ul>
-            </div>
-            <div class="coupm-foot">
+            </div>--%>
+            <%--<div class="coupm-foot">
                 <div class="c-foot-img"><img src="images/coup-s1.png" /> </div>
-            </div>
+            </div>--%>
             <div class="coupm-a" onclick="addCoupletsOrder()">
                 <a href="##" >立即购买</a>
             </div>
@@ -132,6 +132,7 @@
 <script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
+<script src="js/pay.js"></script>
 <script src="js/details.js"></script>
 <script src="js/coupletsDetails.js"></script>
 </html>

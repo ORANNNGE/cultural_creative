@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>文创天下·楹联</title>
+    <title>天下诗联·楹联</title>
 </head>
 <body>
 <div class="index-body" id="index">

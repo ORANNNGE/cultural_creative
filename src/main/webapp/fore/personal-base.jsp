@@ -39,14 +39,14 @@
                         <input id="phoneNum" type="text" placeholder="请输入手机号码" />
                         <i><img src="images/base-phone.png"/></i>
                     </div>
-                    <span class="pop-span" onclick="getVerifyCode()">获取验证码</span>
+                    <%--<span class="pop-span" onclick="getVerifyCode()">获取验证码</span>--%>
                 </label>
-                <label>
-                    <div class="pop-inp">
-                        <input id="verifyCode" type="text" placeholder="请输入验证码" />
-                        <i><img src="images/base-yzm.png"/></i>
-                    </div>
-                </label>
+                <%--<label>--%>
+                    <%--<div class="pop-inp">--%>
+                        <%--<input id="verifyCode" type="text" placeholder="请输入验证码" />--%>
+                        <%--<i><img src="images/base-yzm.png"/></i>--%>
+                    <%--</div>--%>
+                <%--</label>--%>
                 <label>
                     <input class="pop-subm" type="submit" value="提交" onclick="bindPhoneNum()"/>
                 </label>
@@ -82,7 +82,7 @@
 <script src="js/customerInfo.js"></script>
 <script>
     //发送验证码
-    function getVerifyCode() {
+    function bindPhoneNum() {
         var phoneNum = $('#phoneNum').val();
         var validatePhoneNum = /^1[356789]\d{9}$/;
         console.log(phoneNum);
@@ -91,7 +91,7 @@
             layer.msg("手机号格式错误，请重新输入");
             return;
         }
-        var url = 'getVerifyCode';
+        var url = 'bindPhoneNum';
         $.ajax({
             type:'post',
             data:{'phoneNum':phoneNum},
@@ -99,18 +99,20 @@
             url:url,
             success:function(result) {
                 // var data = result.body;
-                if(result.success){
-                    $('.pop-span').html('已发送');
+                if(result.success == false){
+                   /* $('.pop-span').html('已发送');
                     $('.pop-span').attr('onclick','');
                     $('.pop-span').css('background','#696969');
-                    $('#phoneNum').attr('disabled','disabled');
+                    $('#phoneNum').attr('disabled','disabled');*/
                     layer.msg(result.msg);
+                    return;
                 }
+                layer.msg(reuslt.msg);
             }
         })
     }
     //绑定手机号
-    function bindPhoneNum() {
+    /*function bindPhoneNum() {
         var verifyCode = $('#verifyCode').val();
         var validateVerifyCode = /^\d{6}$/;
         console.log(verifyCode);
@@ -137,7 +139,7 @@
                 }
             }
         })
-    }
+    }*/
 
 </script>
 </html>

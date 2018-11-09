@@ -102,6 +102,7 @@ public class PlatIntroController extends BaseController {
 			j.setMsg("非法参数！");
 			return j;
 		}
+		platIntro.setName("平台简介");
 		platIntroService.save(platIntro);//新建或者编辑保存
 		j.setSuccess(true);
 		j.setMsg("保存平台简介成功");

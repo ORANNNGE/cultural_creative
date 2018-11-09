@@ -15,3 +15,13 @@ function parseBlob(text){
     temp = null;
     return output;
 }
+
+function dateFormat(date) {
+    var myDate = new Date(date);
+    var month = myDate.getMonth() + 1;
+    var day = myDate.getDate();
+    month = (month.toString().length == 1) ? ("0" + month) : month;
+    day = (day.toString().length == 1) ? ("0" + day) : day;
+    var result = myDate.getFullYear() + '-' + month + '-' + day; //当前日期
+    return result;
+}

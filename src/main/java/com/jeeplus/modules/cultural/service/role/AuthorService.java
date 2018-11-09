@@ -27,7 +27,11 @@ public class AuthorService extends CrudService<AuthorMapper, Author> {
 	}
 	
 	public List<Author> findList(Author author) {
-		return super.findList(author);
+		List<Author> datas = super.findList(author);
+		for (Author data : datas) {
+			data.setPicture(data.getPicture().replace("|",""));
+		}
+		return datas;
 	}
 	
 	public Page<Author> findPage(Page<Author> page, Author author) {

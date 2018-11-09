@@ -20,10 +20,10 @@
         <div class="interior year-pictures">
             <div class="year-ul">
                 <ul>
-                    <li v-for="item in decorations">
+                    <li v-for="item in decorations" @click="toDecorationDetails(item.id)">
                         <div class="year-img"><img :src="item.picture" /></div>
                         <div class="year-txt">
-                            <p class="year-p" v-text="item.details">室内装饰品</p>
+                            <p class="year-p" v-text="item.title">室内装饰品</p>
                             <div class="year-a clearfix">
                                 <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
                             </div>

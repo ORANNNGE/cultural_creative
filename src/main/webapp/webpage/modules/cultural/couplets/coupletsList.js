@@ -85,7 +85,7 @@ $(document).ready(function() {
 		         }
 		       
 		    }
-			,{
+			/*,{
 		        field: 'lexicon.title',
 		        title: '词库',
 		        sortable: true
@@ -108,7 +108,7 @@ $(document).ready(function() {
 		        title: '制作工艺',
 		        sortable: true
 		       
-		    }
+		    }*/
 		    ,{
 		        field: 'picture',
 		        title: '图片',

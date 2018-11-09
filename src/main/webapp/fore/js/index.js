@@ -7,6 +7,9 @@ var state = getParaFromURL('state');
 // console.log('code:'+code);
 // console.log('state:'+state);
 function wechatLogin(){
+    if(!code){
+        return;
+    }
     $.ajax({
         type:'post',
         data:{'code':code},
@@ -18,7 +21,7 @@ function wechatLogin(){
                 layer.msg('授权登录成功');
                 return;
             }
-            layer.msg('授权登录失败');
+            // layer.msg('授权登录失败');
         }
     })
 }

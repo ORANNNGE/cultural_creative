@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
     <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
-    <title>文创天下·楹联</title>
+    <title>天下诗联·楹联</title>
 </head>
 <body>
 <div class="index-body" id="index">
@@ -17,9 +17,9 @@
     <div class="lunbo" id="lunbo">
         <div class="bd">
             <ul>
-                <li><a href="#"><img src="images/index-bg.png" /></a></li>
-                <li><a href="#"><img src="images/index-bg.png" /></a></li>
-                <li><a href="#"><img src="images/index-bg.png" /></a></li>
+                <li><a href="#"><img src="images/tianxianshilian.png" /></a></li>
+                <li><a href="#"><img src="images/tianxianshilian.png" /></a></li>
+                <li><a href="#"><img src="images/tianxianshilian.png" /></a></li>
             </ul>
         </div>
         <div class="hd">
@@ -27,6 +27,26 @@
         </div>
     </div>
     <div class="middle" >
+        <!--家庭成品楹联-->
+        <div class="mid-tit home-tit">
+            <span></span><h1>家庭成品楹联</h1><span></span>
+        </div>
+        <div class="home" id="homeCouplets">
+            <div class="home-ul">
+                <ul>
+                    <li v-for="item in homeData">
+                        <a class="home-i-a" :href="'coupletsDetails.jsp?id='+item.id"><div class="home-img"><img :src="item.picture" /></div></a>
+                        <a class="home-a" :href="'coupletsDetails.jsp?id='+item.id" v-text="item.name"></a>
+                        <div class="home-txt">
+                            <span v-text=" '￥' + item.price"></span>
+                            <p v-if="item.lexicon.isOriginal == '1'">原创</p>
+                            <p v-else>常用</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="midd-more-a"><a href="home.jsp">查看更多>></a></div>
+        </div>
         <!--单位成品楹联-->
         <div class="mid-tit">
             <span></span><h1>单位成品楹联</h1><span></span>
@@ -52,7 +72,7 @@
             </div>
             <div class="midd-more-a"><a href="govAndComp.jsp">查看更多>></a></div>
         </div>
-        <!--家庭成品楹联-->
+<%--        <!--家庭成品楹联-->
         <div class="mid-tit home-tit">
             <span></span><h1>家庭成品楹联</h1><span></span>
         </div>
@@ -71,7 +91,7 @@
                 </ul>
             </div>
             <div class="midd-more-a"><a href="home.jsp">查看更多>></a></div>
-        </div>
+        </div>--%>
         <!--年画作品-->
         <div class="mid-tit year-tit">
             <span></span><h1>年画作品</h1><span></span>
@@ -149,7 +169,7 @@
                     <li v-for="item in decorationsData">
                         <a class="year-img" :href="'decorationDetails.jsp?id='+item.id"><img :src="item.picture" /></a>
                         <div class="year-txt">
-                            <p class="year-p" v-text="item.details">室内装饰品</p>
+                            <p class="year-p" v-text="item.title">室内装饰品</p>
                             <div class="year-a clearfix">
                                 <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
                             </div>

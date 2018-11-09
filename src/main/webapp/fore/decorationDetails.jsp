@@ -12,7 +12,6 @@
 </head>
 <body>
 <div class="index-body" id="details">
-    <!--楹联成品库(商品详情)-->
     <div class="couplet-more">
         <div class="coupm-up">
             <!--标题-->
@@ -24,7 +23,7 @@
                 </div>
             </div>
             <!--评价-->
-            <div class="coupm-eva">
+           <%-- <div class="coupm-eva">
                 <div class="c-eva-tit">
                     <p>宝贝评价</p><a href="###">查看全部<i><img src="images/coup-small.png"/></i></a>
                 </div>
@@ -40,7 +39,7 @@
                         <p>对联很不错，大气，字哈鞥好</p>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <div class="coupm-low">
             <div class="coupletm-tit">
@@ -49,19 +48,8 @@
             <div class="coupm-intr">
                 <div class="c-intr-tit">商品介绍</div>
                 <div v-html="details"></div>
-                <%--<div class="c-decor-p">
-                    <p>商品名称：艺轩天道酬勤字画带框牌匾老板办公室装饰画</p>
-                    <p>画芯材质：油画布</p>
-                    <p>风格：现代中式</p>
-                    <p>适用场景：办公室</p>
-                    <p>工艺：喷绘</p>
-                </div>--%>
             </div>
-           <%-- <div class="coupm-decor">
-                <div class="c-foot-img"><img src="images/index-s1.png" /> </div>
-                <div class="c-foot-img"><img src="images/index-s2.png" /> </div>
-            </div>--%>
-            <div class="coupm-a">
+            <div class="coupm-a" onclick="addFinishedOrder()">
                 <a href="##">立即购买</a>
             </div>
         </div>
@@ -74,6 +62,7 @@
 <script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/myUtils.js"></script>
+<script src="js/pay.js"></script>
 <script src="js/details.js"></script>
 <script src="js/finishedDetails.js"></script>
 </html>

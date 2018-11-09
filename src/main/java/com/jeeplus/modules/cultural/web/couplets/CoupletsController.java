@@ -99,11 +99,11 @@ public class CoupletsController extends BaseController {
 	@RequestMapping(value = "save")
 	public AjaxJson save(Couplets couplets, Model model, RedirectAttributes redirectAttributes) throws Exception{
 		AjaxJson j = new AjaxJson();
-		if (!beanValidator(model, couplets)){
-			j.setSuccess(false);
-			j.setMsg("非法参数！");
-			return j;
-		}
+//		if (!beanValidator(model, couplets)){
+//			j.setSuccess(false);
+//			j.setMsg("非法参数！");
+//			return j;
+//		}
 		coupletsService.save(couplets);//新建或者编辑保存
 		j.setSuccess(true);
 		j.setMsg("保存成品楹联成功");

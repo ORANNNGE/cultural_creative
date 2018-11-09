@@ -7,7 +7,7 @@
 
 	<head>
 	<meta name="decorator" content="ani"/>
-		<title>文创天下 登录</title>
+		<title>天下诗联 登录</title>
 		<script>
 			if (window.top !== window.self) {
 				window.top.location = window.location;
@@ -46,7 +46,7 @@
 		<div class="row">
 			<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
 				<img  class="img-circle" src="${ctxStatic}/common/images/flat-avatar.png" class="user-avatar" />
-				<h1>文创天下</h1>
+				<h1>天下诗联</h1>
 				<sys:message content="${message}" showType="1"/>
 				<form id="loginForm" role="form" action="${ctx}/login" method="post">
 					<div class="form-content">

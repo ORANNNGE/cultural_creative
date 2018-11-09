@@ -8,6 +8,7 @@
 	<script type="text/javascript" charset="utf-8" src="${ctxStatic}/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" src="${ctxStatic}/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" src="${ctxStatic}/ueditor/ueditor.all.js"></script>
+    <%@include file="/webpage/include/summernote.jsp" %>
 	<script type="text/javascript">
 		var validateForm;
 		var $table; // 父页面table表格id
@@ -17,7 +18,7 @@
 			  $table = table;
 			  $topIndex = index;
 			  var docContent = UE.getEditor('editor').getContent();
-			  $('#intro').val(docContent);
+			  $('#details').val(docContent);
 			  jp.loading();
 			  //$("input[name='details']").val($('#details').summernote('code'));//取富文本的值
 			  $("#inputForm").submit();
@@ -75,7 +76,7 @@
 							 title="选择词库" cssClass="form-control required" fieldLabels="标题|上联|下联|横批" fieldKeys="title|rightline|leftline|topline" searchLabels="标题|上联|下联|横批" searchKeys="title|rightline|leftline|topline" ></sys:gridselect>
 					</td>
 				</tr>
-				<tr>
+				<%--<tr>
 					<td class="width-15 active"><label class="pull-right">尺寸：</label></td>
 					<td class="width-35">
 						<sys:gridselect url="${ctx}/cultural/spec/size/data" id="size" name="size.id" value="${couplets.size.id}" labelName="size.name" labelValue="${couplets.size.name}"
@@ -92,7 +93,7 @@
 					<td class="width-35">
 						<sys:gridselect url="${ctx}/cultural/spec/craft/data" id="craft" name="craft.id" value="${couplets.craft.id}" labelName="craft.name" labelValue="${couplets.craft.name}"
 							 title="选择制作工艺" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
-					</td>
+					</td>--%>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>图片：</label></td>
 					<td class="width-35">
 						<form:hidden id="picture" path="picture" htmlEscape="false" maxlength="255" class="form-control"/>
@@ -109,10 +110,10 @@
 							<form:hidden path="details" htmlEscape="true"/>
 							<script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
 					</td>
-					<td class="width-15 active"><label class="pull-right">推荐到首页：</label></td>
-					<td class="width-35">
-						<form:radiobuttons path="recommend" items="${fns:getDictList('cultural_recommend')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks "/>
-					</td>
+					<%--<td class="width-15 active"><label class="pull-right">推荐到首页：</label></td>--%>
+					<%--<td class="width-35">--%>
+						<%--<form:radiobuttons path="recommend" items="${fns:getDictList('cultural_recommend')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks "/>--%>
+					<%--</td>--%>
 				</tr>
 				<tr>
 					<td class="width-15 active"><label class="pull-right">定价：</label></td>
@@ -130,7 +131,7 @@
 <script type="text/javascript">
 	var ue = UE.getEditor('editor');
 	$(function () {
-		var content = $('#intro').val();
+		var content = $('#details').val();
 		// 判断ueditor 编辑器是否创建成功
 		ue.addListener("ready", function () {
 			// editor准备好之后才可以使用

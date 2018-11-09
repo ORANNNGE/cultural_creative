@@ -6,7 +6,7 @@
 
 	<head>
 	<meta name="decorator" content="ani"/>
-		<title>文创天下 登录</title>
+		<title>天下诗联 登录</title>
 		<script>
 			if (window.top !== window.self) {
 				window.top.location = window.location;

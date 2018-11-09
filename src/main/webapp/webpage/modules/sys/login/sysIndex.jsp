@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>文创天下</title>
+    <title>天下诗联</title>
 	<meta name="decorator" content="ani"/>
 	<script src="${ctxStatic}/plugin/js-menu/contabs.js"></script>
 	<script src="${ctxStatic}/common/js/fullscreen.js"></script>
@@ -26,7 +26,7 @@
 				<span class="icon-bar"></span>
 			</button>
 
-			<a class="navbar-brand J_menuItem"  href="${ctx}/home">文创天下 </a>
+			<a class="navbar-brand J_menuItem"  href="${ctx}/home">天下诗联 </a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<form class="navbar-form navbar-left" role="search">

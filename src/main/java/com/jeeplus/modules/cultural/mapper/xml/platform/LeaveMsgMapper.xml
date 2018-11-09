@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jeeplus.modules.cultural.mapper.plat.PlatIntroMapper">
+<mapper namespace="com.jeeplus.modules.cultural.mapper.platform.LeaveMsgMapper">
     
-	<sql id="platIntroColumns">
+	<sql id="leaveMsgColumns">
 		a.id AS "id",
+		a.customer_id AS "customer.id",
+		a.content AS "content",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		a.intro AS "intro"
+				
+		customer.nickname AS "customer.nickname"
 	</sql>
 	
-	<sql id="platIntroJoins">
+	<sql id="leaveMsgJoins">
 		
+		LEFT JOIN cultural_customer customer ON customer.id = a.customer_id
 	</sql>
 	
-    <resultMap type="PlatIntro" id="PlatIntroResult" autoMapping="true">
-    	<result column="intro" property="intro"   typeHandler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"/>
-    </resultMap>
     
-	<select id="get" resultMap="PlatIntroResult" >
+	<select id="get" resultType="LeaveMsg" >
 		SELECT 
-			<include refid="platIntroColumns"/>
-		FROM cultural_plat_intro a
-		<include refid="platIntroJoins"/>
+			<include refid="leaveMsgColumns"/>
+		FROM cultural_leave_msg a
+		<include refid="leaveMsgJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultMap="PlatIntroResult" >
+	<select id="findList" resultType="LeaveMsg" >
 		SELECT 
-			<include refid="platIntroColumns"/>
-		FROM cultural_plat_intro a
-		<include refid="platIntroJoins"/>
+			<include refid="leaveMsgColumns"/>
+		FROM cultural_leave_msg a
+		<include refid="leaveMsgJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
@@ -48,11 +49,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultMap="PlatIntroResult" >
+	<select id="findAllList" resultType="LeaveMsg" >
 		SELECT 
-			<include refid="platIntroColumns"/>
-		FROM cultural_plat_intro a
-		<include refid="platIntroJoins"/>
+			<include refid="leaveMsgColumns"/>
+		FROM cultural_leave_msg a
+		<include refid="leaveMsgJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			${dataScope}
@@ -68,54 +69,57 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO cultural_plat_intro(
+		INSERT INTO cultural_leave_msg(
 			id,
+			customer_id,
+			content,
 			create_by,
 			create_date,
 			update_by,
 			update_date,
 			remarks,
-			del_flag,
-			intro
+			del_flag
 		) VALUES (
 			#{id},
+			#{customer.id},
+			#{content},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag},
-			#{intro}
+			#{delFlag}
 		)
 	</insert>
 	
 	<update id="update">
-		UPDATE cultural_plat_intro SET 	
+		UPDATE cultural_leave_msg SET 	
+			customer_id = #{customer.id},
+			content = #{content},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks},
-			intro = #{intro}
+			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 	
 	
 	<!--物理删除-->
 	<update id="delete">
-		DELETE FROM cultural_plat_intro
+		DELETE FROM cultural_leave_msg
 		WHERE id = #{id}
 	</update>
 	
 	<!--逻辑删除-->
 	<update id="deleteByLogic">
-		UPDATE cultural_plat_intro SET 
+		UPDATE cultural_leave_msg SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="PlatIntro" statementType="STATEMENT">
-		select * FROM cultural_plat_intro  where ${propertyName} = '${value}'
+	<select id="findUniqueByProperty" resultType="LeaveMsg" statementType="STATEMENT">
+		select * FROM cultural_leave_msg  where ${propertyName} = '${value}'
 	</select>
 	
 </mapper>

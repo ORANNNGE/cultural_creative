@@ -27,7 +27,7 @@
 				<label class="label-item single-overflow pull-left" title="标题：">标题：</label>
 				<form:input path="name" htmlEscape="false" maxlength="255"  class=" form-control"/>
 			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			<%-- <div class="col-xs-12 col-sm-6 col-md-4">
 				<label class="label-item single-overflow pull-left" title="词库：">词库：</label>
 				<sys:gridselect url="${ctx}/cultural/couplets/lexicon/data" id="lexicon" name="lexicon.id" value="${couplets.lexicon.id}" labelName="lexicon.title" labelValue="${couplets.lexicon.title}"
 					title="选择词库" cssClass="form-control required" fieldLabels="标题|上联|下联|横批" fieldKeys="title|rightline|leftline|topline" searchLabels="标题|上联|下联|横批" searchKeys="title|rightline|leftline|topline" ></sys:gridselect>
@@ -46,15 +46,15 @@
 				<label class="label-item single-overflow pull-left" title="制作工艺：">制作工艺：</label>
 				<sys:gridselect url="${ctx}/cultural/spec/craft/data" id="craft" name="craft.id" value="${couplets.craft.id}" labelName="craft.name" labelValue="${couplets.craft.name}"
 					title="选择制作工艺" cssClass="form-control required" fieldLabels="名称" fieldKeys="name" searchLabels="名称" searchKeys="name" ></sys:gridselect>
-			</div>
-			 <div class="col-xs-12 col-sm-6 col-md-4">
+			</div>--%>
+			 <%--<div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="form-group">
 					<label class="label-item single-overflow pull-left" title="推荐到首页：">&nbsp;推荐到首页：</label>
 					<div class="col-xs-12">
 						<form:radiobuttons class="i-checks" path="recommend" items="${fns:getDictList('cultural_recommend')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 					</div>
 				</div>
-			</div>
+			</div>--%>
 		 <div class="col-xs-12 col-sm-6 col-md-4">
 			<div style="margin-top:26px">
 			  <a  id="search" class="btn btn-primary btn-rounded  btn-bordered btn-sm"><i class="fa fa-search"></i> 查询</a>

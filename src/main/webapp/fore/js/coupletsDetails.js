@@ -53,6 +53,7 @@ function addCoupletsOrder(){
     var url = 'addCoupletsOrder';
     //总价
     var totalPrice = vm.totalPrice;
+    var orderId;
     //购买数量
     var num = vm.num;
     if(!coupletsPriceId || !sizeId || !comboId){
@@ -83,14 +84,16 @@ function addCoupletsOrder(){
         data:param,
         async:false,
         success:function (result) {
-            if(!result.success){
+            if(result.success == false){
                 layer.msg(result.msg);
                 return;
             }
+            orderId = result.body.orderId;
             layer.open({
                 content: '订单已生成，是否立即付款？',
                 yes: function (index, layero) {
                     //do something
+                    payReq(orderType,orderId,totalPrice);
                     layer.close(index); //如果设定了yes回调，需进行手工关闭
                 }
             })
@@ -99,3 +102,4 @@ function addCoupletsOrder(){
         }
     })
 }
+
