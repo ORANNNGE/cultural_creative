@@ -2,7 +2,9 @@
 查询价格
  */
 var sizeId;
+var sizeName;
 var comboId;
+var comboName;
 var coupletsId = details.id;
 var coupletsPriceId
 function getCoupletsPrice(object) {
@@ -85,8 +87,18 @@ function addCoupletsOrder(){
         async:false,
         success:function (result) {
             if(result.success == false){
-                layer.msg(result.msg);
-                return;
+                if(result.errorCode != -1){
+                    layer.msg(result.msg);
+                    return;
+                }
+                layer.open({
+                    type:2,
+                    title:'请设置收货地址',
+                    area: ['380px', '80%'],
+                    shadeClose: true,
+                    shade: 0.5,
+                    content: 'personal-address.jsp',
+                })
             }
             orderId = result.body.orderId;
             layer.open({

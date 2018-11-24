@@ -10,6 +10,15 @@
     <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
     <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
     <title>天下诗联·楹联</title>
+    <style>
+        .txtMarquee-left{
+          padding-top: 2%;
+        }
+        .txtMarquee-left p{
+            font-size: 14px;
+            line-height: 14px;
+        }
+    </style>
 </head>
 <body>
 <div class="index-body" id="index">
@@ -25,6 +34,10 @@
         <div class="hd">
             <ul class="clearfix"></ul>
         </div>
+    </div>
+    <!-- 滚动消息 -->
+    <div class="txtMarquee-left">
+        <p style=""><nobr>平台商城展示春联均为原创作品，凝聚着作者心血，已申请版权保护，未经许可，不得使用。</nobr></p>
     </div>
     <div class="middle" >
         <!--家庭成品楹联-->
@@ -72,26 +85,6 @@
             </div>
             <div class="midd-more-a"><a href="govAndComp.jsp">查看更多>></a></div>
         </div>
-<%--        <!--家庭成品楹联-->
-        <div class="mid-tit home-tit">
-            <span></span><h1>家庭成品楹联</h1><span></span>
-        </div>
-        <div class="home" id="homeCouplets">
-            <div class="home-ul">
-                <ul>
-                    <li v-for="item in homeData">
-                        <a class="home-i-a" :href="'coupletsDetails.jsp?id='+item.id"><div class="home-img"><img :src="item.picture" /></div></a>
-                        <a class="home-a" :href="'coupletsDetails.jsp?id='+item.id" v-text="item.name"></a>
-                        <div class="home-txt">
-                            <span v-text=" '￥' + item.price"></span>
-                            <p v-if="item.lexicon.isOriginal == '1'">原创</p>
-                            <p v-else>常用</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="midd-more-a"><a href="home.jsp">查看更多>></a></div>
-        </div>--%>
         <!--年画作品-->
         <div class="mid-tit year-tit">
             <span></span><h1>年画作品</h1><span></span>
@@ -104,7 +97,7 @@
                         <div class="year-txt">
                             <p class="year-p" v-text="item.title"></p>
                             <div class="year-a clearfix">
-                                <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
+                                <span v-text=" '￥' + item.price"></span><a :href="'newYearPicDetails.jsp?id='+item.id">立即购买</a>
                             </div>
                         </div>
                     </li>
@@ -171,7 +164,7 @@
                         <div class="year-txt">
                             <p class="year-p" v-text="item.title">室内装饰品</p>
                             <div class="year-a clearfix">
-                                <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
+                                <span v-text=" '￥' + item.price"></span><a :href="'decorationDetails.jsp?id='+item.id">立即购买</a>
                             </div>
                         </div>
                     </li>
@@ -186,12 +179,15 @@
 </body>
 <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
 <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
-<script src="../static/plugin/layui/layer/layer.js"></script>   
+<script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js" ></script>
+<script src="../static/plugin/layui/layer/layer.js"></script>
 <script src="js/myUtils.js"></script>
 <script src="js/footerNavigation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/index.js"></script>
 <script type="text/javascript">
+
+    jQuery(".txtMarquee-left").slide({mainCell:"p",autoPlay:true,effect:"leftMarquee",interTime:50,trigger:"click"});
     TouchSlide({
         slideCell:"#lunbo",
         titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
@@ -200,6 +196,7 @@
         autoPlay:true,//自动播放
         autoPage:true, //自动分页
     });
+
 </script>
 </html>
 

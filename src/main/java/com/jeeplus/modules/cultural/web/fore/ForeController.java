@@ -178,11 +178,13 @@ public class ForeController {
      */
     @RequestMapping(value = "getLexiconList")
     @ResponseBody
-    public AjaxJson getLexiconList(Integer pageSize,Integer pageNum){
+    public AjaxJson getLexiconList(String type, Integer pageSize,Integer pageNum){
         AjaxJson json = new AjaxJson();
         //调用PageHelper静态方法startPage()，必须要在查询数据库之前调用
         PageHelper.startPage(pageNum,pageSize);
-        List<Lexicon> lexiconList = lexiconService.findList(new Lexicon());
+        Lexicon selectLexicon = new Lexicon();
+        selectLexicon.setType(type);
+        List<Lexicon> lexiconList = lexiconService.findList(selectLexicon);
         //将查询出来的数据放入PageInfo
         PageInfo page = new PageInfo(lexiconList);
         json.put("page",page);
@@ -519,26 +521,20 @@ public class ForeController {
     @ResponseBody
     public AjaxJson addAddress(Address address,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
-        String customerId = (String)request.getSession().getAttribute("customerId");
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+//        Customer customer  = customerService.get("dfbad77e2574458fa06b209ebbe9e6e5");
         //登录是否过期
-        if(customerId == null || "".equals(customerId)){
+        if(customer == null){
             json.setSuccess(false);
             json.setMsg("登录已过期，请重新授权登录");
             return json;
         }
         if(!StringUtils.isEmpty(address.getId())){
-            address.setCustomer(customerService.get(customerId));
+            address.setCustomer(customer);
             addressService.save(address);
             return json;
         }
         //是否存在该用户
-        Customer customer = customerService.get(customerId);
-        boolean isExist = customer==null?false:true;
-        if(!isExist){
-            json.setSuccess(false);
-            json.setMsg("用户不存在");
-            return json;
-        }
         Address selectAddress = new Address();
         address.setCustomer(customer);
         List<Address> addressList = addressService.findList(selectAddress);
@@ -558,6 +554,7 @@ public class ForeController {
     public AjaxJson setDefaultAddr(String id,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         Customer customer = (Customer) request.getSession().getAttribute("customer");
+//        Customer customer = customerService.get("dfbad77e2574458fa06b209ebbe9e6e5");
         if(customer == null){
             json.setSuccess(false);
             json.setMsg("请重新登录");
@@ -581,6 +578,7 @@ public class ForeController {
     public AjaxJson delAddr(String id,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         Customer customer = (Customer) request.getSession().getAttribute("customer");
+//        Customer customer  = customerService.get("dfbad77e2574458fa06b209ebbe9e6e5");
         if(customer == null){
             json.setSuccess(false);
             json.setMsg("请重新登录");
@@ -595,7 +593,8 @@ public class ForeController {
     @ResponseBody
     public AjaxJson getAddr(String id,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
-        Customer customer = (Customer) request.getSession().getAttribute("customer");
+//        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        Customer customer  = customerService.get("dfbad77e2574458fa06b209ebbe9e6e5");
         if(customer == null){
             json.setSuccess(false);
             json.setMsg("请重新登录");
@@ -620,25 +619,16 @@ public class ForeController {
     @ResponseBody
     public AjaxJson getAddressList(HttpServletRequest request){
         AjaxJson json = new AjaxJson();
-        String customerId = (String)request.getSession().getAttribute("customerId");
-
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+//        Customer customer  = customerService.get("dfbad77e2574458fa06b209ebbe9e6e5");
         //登录是否过期
-        if(customerId == null || "".equals(customerId)){
+        if(customer == null ){
             json.setSuccess(false);
             json.setMsg("登录已过期，请重新授权登录");
             return json;
         }
 
-        //是否存在该用户
-        Customer customer = customerService.get(customerId);
-        boolean isExist = customer==null?false:true;
-        if(!isExist){
-            json.setSuccess(false);
-            json.setMsg("用户不存在");
-            return json;
-        }
-
-        List<Address> addressList = addressService.getListByCustomerId(customerId);
+        List<Address> addressList = addressService.getListByCustomerId(customer.getId());
         json.setMsg("总计"+addressList.size()+"条记录");
         json.put("data", addressList);
         return json;
@@ -766,6 +756,7 @@ public class ForeController {
 //        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
+            json.setErrorCode("0");
             json.setSuccess(false);
             json.setMsg("登录已过期，请重新授权登录");
             return json;
@@ -775,6 +766,7 @@ public class ForeController {
         Customer customer = customerService.get(customerId);
         boolean isExist = customer==null?false:true;
         if(!isExist){
+            json.setErrorCode("0");
             json.setSuccess(false);
             json.setMsg("用户不存在");
             return json;
@@ -799,6 +791,7 @@ public class ForeController {
         }
         //没有默认收货地址则返回失败
         if(address == null){
+            json.setErrorCode("-1");
             json.setSuccess(false);
             json.setMsg("请设置默认收货地址");
             return json;
@@ -815,6 +808,8 @@ public class ForeController {
         coupletsOrder.setStatus("1");
         //持久化
         coupletsOrderService.save(coupletsOrder);
+
+        json.setErrorCode("1");
         json.setMsg("购买成功");
         json.put("orderId", coupletsOrder.getId());
 
@@ -934,7 +929,7 @@ public class ForeController {
     public AjaxJson addLexiconOrder(String lexiconPriceId, String lexiconId, HttpServletRequest request,Integer num,Double totalPrice){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
-//        customerId = "1538968164093";
+//        customerId = "dfbad77e2574458fa06b209ebbe9e6e5";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
             json.setSuccess(false);
@@ -946,6 +941,7 @@ public class ForeController {
         Customer customer = customerService.get(customerId);
         boolean isExist = customer==null?false:true;
         if(!isExist){
+            json.setErrorCode("0");
             json.setSuccess(false);
             json.setMsg("用户不存在");
             return json;
@@ -970,8 +966,10 @@ public class ForeController {
         }
         //没有默认收货地址则返回失败
         if(address == null){
+            json.setErrorCode("-1");
             json.setSuccess(false);
             json.setMsg("请设置默认收货地址");
+            return json;
         }
         //成品楹联订单
 //        CoupletsOrder coupletsOrder = new CoupletsOrder();
@@ -986,6 +984,8 @@ public class ForeController {
 
         lexiconOrder.setTotalPrice(totalPrice);
         lexiconOrderService.save(lexiconOrder);
+
+        json.setErrorCode("1");
         json.setMsg("购买成功");
         json.put("orderId", lexiconOrder.getId());
 
@@ -1008,6 +1008,7 @@ public class ForeController {
 //        customerId = "1538968164093";
         //登录是否过期
         if(customerId == null || "".equals(customerId)){
+            json.setErrorCode("0");
             json.setSuccess(false);
             json.setMsg("登录已过期，请重新授权登录");
             return json;
@@ -1017,6 +1018,7 @@ public class ForeController {
         Customer customer = customerService.get(customerId);
         boolean isExist = customer==null?false:true;
         if(!isExist){
+            json.setErrorCode("0");
             json.setSuccess(false);
             json.setMsg("用户不存在");
             return json;
@@ -1054,8 +1056,10 @@ public class ForeController {
         }
         //没有默认收货地址则返回失败
         if(address == null){
+            json.setErrorCode("-1");
             json.setSuccess(false);
             json.setMsg("请设置默认收货地址");
+            return json;
         }
         //成品楹联订单
         FinishedOrder finishedOrder = new FinishedOrder();
@@ -1068,6 +1072,8 @@ public class ForeController {
         finishedOrder.setInstaller(null);
         finishedOrder.setStatus("1");
         finishedOrderService.save(finishedOrder);
+
+        json.setErrorCode("1");
         json.setMsg("购买成功");
         json.put("orderId", finishedOrder.getId());
         return json;

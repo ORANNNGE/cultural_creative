@@ -92,6 +92,7 @@
 .coupm-tit .more{
 	margin-bottom: .05rem;
 }
+
 .coupm-up .coupm-speci{
 	background: #fff;
 	width: 100%;
@@ -100,6 +101,22 @@
 	padding: 0 .12rem;
 	text-align: left;
 	margin: .05rem 0;
+}
+
+.coupm-currentSpec{
+	background: #fff;
+	width: 100%;
+	height: 1.5rem;
+	line-height: .25rem;
+    font-size: 0.14rem;
+	padding: 0 .12rem;
+	text-align: left;
+	margin: .05rem 0;
+}
+.coupm-currentSpec p span{
+    font-size: 0.13rem;
+    color: #4E5465;
+
 }
 .coupm-up .coupm-speci p{
 	width: 100%;
@@ -554,8 +571,7 @@
 	width: 100%;
 }
 .calligrapher-down .grap-img img:first-child{
-	margin-bottom: .08
-	rem;
+	margin-bottom: .08rem;
 }
 /*楹联词库(商品详情)*/
 .thesam-up .thesam-tit{
@@ -674,7 +690,7 @@
 .thesam-low .thesam-a label{
 	display: inline-block;
     float: left;
-    width: 42%;
+    width: 40%;
 }
 .thesam-low .thesam-a label p{
 	display: inline-block;
@@ -700,7 +716,7 @@
 	display: inline-block;
     font-size: .14rem;
     color: #f00;
-    width: 28%;
+    width: 33%;
     text-align: center;
 }
 .thesarusm-norm-bg{

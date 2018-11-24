@@ -39,8 +39,8 @@ var homeCouplets = homePage.list;
 var coupletsVm = new Vue({
     el:'#couplets',
     data: {
-        couplets:governmentCouplets,
-        page:governmentPage,
+        couplets:homeCouplets,
+        page:homePage,
     },
     methods:{
         //下拉加载更多
@@ -95,12 +95,12 @@ $(window).scroll(function(){
     var scrollHeight = $(document).height();
     var windowHeight = $(this).height();
     //判断当前显示的楹联类型
-    var govermentOn = $('#government').attr('class') == 'on' ? true : false;
+    var governmentOn = $('#government').attr('class') == 'on' ? true : false;
     var companyOn = $('#company').attr('class') == 'on' ? true : false;
     var homeOn = $('#home').attr('class') == 'on' ? true : false;
     // console.log(govermentOn);
     if(scrollTop + windowHeight == scrollHeight){
-        if(govermentOn){
+        if(governmentOn){
             var page = coupletsVm.page;
             var pageNum = page.pageNum + 1;
             var isLastPage = page.isLastPage;

@@ -21,9 +21,9 @@
         <div class="couplet">
             <div class="coup-tab">
                 <ul>
-                    <li id="government" @click="governmentCouplets"class="on" >机关事业</li>
+                    <li id="home" @click="homeCouplets" class="on">家庭用户</li>
+                    <li id="government" @click="governmentCouplets"  >机关事业</li>
                     <li id="company" @click="companyCouplets">企业商户</li>
-                    <li id="home" @click="homeCouplets">家庭用户</li>
                 </ul>
             </div>
             <div class="cou-ul">
@@ -33,7 +33,7 @@
                         <div class="cou-txt">
                             <p v-text="item.name"></p>
                             <div class="cou-a clearfix">
-                                <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
+                                <span v-text=" '￥' + item.price"></span><a  :href="'coupletsDetails.jsp?id='+item.id">立即购买</a>
                             </div>
                         </div>
                     </li>

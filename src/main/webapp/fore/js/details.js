@@ -124,7 +124,8 @@ var vm = new Vue({
         thePrice:{
             'price':{'price':0}
         },
-        num:1
+        num:1,
+
     },
     computed: {
         details:function () {

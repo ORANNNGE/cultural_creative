@@ -19,10 +19,17 @@
     <div class="middle">
         <!--楹联词库-->
         <div class="thesaurus">
+            <div class="coup-tab">
+                <ul>
+                    <li id="home" @click="homeLexicon" class="on">家庭用户</li>
+                    <li id="government" @click="governmentLexicon" >机关事业</li>
+                    <li id="company" @click="companyLexicon">企业商户</li>
+                </ul>
+            </div>
             <div class="thesaurus-ul">
                 <ul >
                     <li v-for="item in lexicons">
-                        <div class="thesaurus-img"><img :src="'../' + item.picture" /></div>
+                        <a class="thesaurus-img" :href="'lexiconDetails.jsp?id='+item.id"><img :src="'../' + item.picture" /></a>
                         <div class="thesaurus-btn">
                             <a :href="'lexiconDetails.jsp?id='+item.id">选定</a>
                         </div>

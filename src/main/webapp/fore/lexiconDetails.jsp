@@ -37,7 +37,10 @@
                     <p>选择套餐</p><span></span><i><img src="images/coup-next.png"/></i>
                 </div>
             </div>
-
+            <div class="coupm-currentSpec" v-if="thePrice.price.price != 0">
+                <p v-text="'已选择规格：' + thePrice.price.sizeName + '，字体：' + thePrice.price.typefaceName + '，套餐：' + thePrice.price.comboName"></p>
+                <p><span  v-text="'套餐详情：' + thePrice.price.remarks"></span></p>
+            </div>
             <!--评价-->
            <%-- <div class="coupm-eva">
                 <div class="c-eva-tit">
@@ -74,7 +77,7 @@
                     <input type="number" value="1" v-model="num"/>
                     <input type="button" value="+" @click="plus"/>
                 </label>
-                <p class="thesam-a-pri">总价：<span v-text="'￥' + totalPrice" ></span></p>
+                <p class="thesam-a-pri"><span v-text="'总价：￥' + totalPrice" ></span></p>
                 <a href="##" onclick="addLexiconOrder()">立即购买</a>
             </div>
         </div>
@@ -85,7 +88,7 @@
                 <div class="thesarusm-norm">
                     <!--图片-->
                     <div class="thsm-up">
-                        <div class="thsm-up-img"><img src="images/norm-bg.png" /></div>
+                        <div class="thsm-up-img"><img :src="data.picture" /></div>
                     </div>
                     <div class="thsm-down">
                         <div class="thsm-size">
@@ -106,7 +109,7 @@
                 <div class="thesarusm-norm">
                     <!--图片-->
                     <div class="thsm-up">
-                        <div class="thsm-up-img"><img src="images/norm-bg.png" /></div>
+                        <div class="thsm-up-img"><img :src="data.picture" /></div>
                     </div>
                     <div class="thsm-down">
                         <div class="thsm-production ">
@@ -127,7 +130,7 @@
                 <div class="thesarusm-norm">
                     <!--图片-->
                     <div class="thsm-up">
-                        <div class="thsm-up-img"><img src="images/norm-bg.png" /></div>
+                        <div class="thsm-up-img"><img :src="data.picture" /></div>
                     </div>
                     <div class="thsm-down">
                         <div class="thsm-font th-font">

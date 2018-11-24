@@ -25,6 +25,10 @@
             <div class="coupm-speci">
                 <p>选择规格<i><img src="images/coup-next.png"/></i></p>
             </div>
+            <div class="coupm-currentSpec" v-if="thePrice.price.price != 0">
+                <p v-text="'已选择规格：' + thePrice.price.sizeName + '，套餐：' + thePrice.price.comboName"></p>
+                <p><span  v-text="'套餐详情：' + thePrice.price.remarks"></span></p>
+            </div>
             <!--评价-->
             <%--<div class="coupm-eva">
                 <div class="c-eva-tit">
@@ -86,7 +90,7 @@
             <div class="coupletm-norm">
                 <!--￥100-->
                 <div class="norm-up">
-                    <div class="norm-up-img"><img src="images/norm-bg.png" /></div>
+                    <div class="norm-up-img"><img :src="data.picture" /></div>
                     <div class="norm-price"><p v-text="'￥'+thePrice.price.price"></p></div>
                 </div>
                 <div class="norm-down">

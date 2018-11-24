@@ -135,8 +135,8 @@ public class WechatController {
         map.put("openid",customer.getOpenid());
         map.put("out_trade_no", orderId);
         map.put("spbill_create_ip",MyWXConfig.getIpAddr(request));
-        map.put("total_fee","1");//修改
-//        map.put("total_fee",price);//修改
+//        map.put("total_fee","1");//修改
+        map.put("total_fee",price);//修改
         map.put("trade_type",MyWXConfig.getTrade_type());
 
         String sign = WXPayUtil.generateSignature(map,MyWXConfig.key);
