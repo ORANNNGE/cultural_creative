@@ -21,11 +21,11 @@
             <div class="year-ul">
                 <ul>
                     <li v-for="item in newYearPics">
-                        <div class="year-img"><img :src="item.picture" /></div>
+                        <a class="year-img" :href="'newYearPicDetails.jsp?id='+item.id"><img :src="item.picture" /></a>
                         <div class="year-txt">
                             <p class="year-p" v-text="item.title"></p>
                             <div class="year-a clearfix">
-                                <span v-text=" '￥' + item.price"></span><a href="###">立即购买</a>
+                                <span v-text=" '￥' + item.price"></span><a :href="'newYearPicDetails.jsp?id='+item.id">立即购买</a>
                             </div>
                         </div>
                     </li>

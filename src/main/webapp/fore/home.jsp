@@ -21,8 +21,8 @@
             <div class="home-ul">
                 <ul>
                     <li v-for="item in couplets">
-                        <a class="home-i-a" href="###"><div class="home-img"><img :src="item.picture" /></div></a>
-                        <a class="home-a" href="###" v-text="item.name"></a>
+                        <a class="home-i-a" :href="'coupletsDetails.jsp?id='+item.id"><div class="home-img"><img :src="item.picture" /></div></a>
+                        <a class="home-a" :href="'coupletsDetails.jsp?id='+item.id" v-text="item.name"></a>
                         <div class="home-txt">
                             <span v-text=" '￥' + item.price">￥200</span>
                             <p v-if="item.lexicon.isOriginal == '1'">原创</p>

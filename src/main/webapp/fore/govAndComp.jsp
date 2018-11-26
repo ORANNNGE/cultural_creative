@@ -26,8 +26,8 @@
             <div class="bd">
                 <ul>
                     <li v-for="item in couplets">
-                        <a class="unit-i-a" href="###"><div class="unit-img"><img v-bind:src="item.picture" /></div></a>
-                        <a class="unit-a" href="###" v-text="item.name"></a>
+                        <a class="unit-i-a" :href="'coupletsDetails.jsp?id='+item.id"><div class="unit-img"><img v-bind:src="item.picture" /></div></a>
+                        <a class="unit-a" :href="'coupletsDetails.jsp?id='+item.id" v-text="item.name"></a>
                         <div class="unit-txt">
                             <span v-text="'￥'+item.price"></span>
                             <p v-if="item.lexicon.isOriginal == '1'">原创</p>

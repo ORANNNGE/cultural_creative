@@ -1298,7 +1298,9 @@ public class ForeController {
     public AjaxJson getPlatIntro(){
         AjaxJson json = new AjaxJson();
         List<PlatIntro> platIntroList = platIntroService.findList(new PlatIntro());
-        List<Author> authorList = authorService.findList(new Author());
+        Author selectAuthor = new Author();
+        selectAuthor.setType("4");
+        List<Author> authorList = authorService.findList(selectAuthor);
         if(platIntroList.size() == 0 || authorList.size() == 0 ){
             json.setSuccess(false);
             json.setMsg("无数据");
