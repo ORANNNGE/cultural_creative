@@ -231,4 +231,5 @@
 		where lexicon.type= #{type}
 	</select>
 
+
 </mapper>

@@ -110,10 +110,10 @@
 							<form:hidden path="details" htmlEscape="true"/>
 							<script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
 					</td>
-					<%--<td class="width-15 active"><label class="pull-right">推荐到首页：</label></td>--%>
-					<%--<td class="width-35">--%>
-						<%--<form:radiobuttons path="recommend" items="${fns:getDictList('cultural_recommend')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks "/>--%>
-					<%--</td>--%>
+					<td class="width-15 active"><label class="pull-right">推荐到首页：</label></td>
+					<td class="width-35">
+						<form:radiobuttons path="recommend" items="${fns:getDictList('cultural_recommend')}" itemLabel="label" itemValue="value" htmlEscape="false" class="i-checks "/>
+					</td>
 				</tr>
 				<tr>
 					<td class="width-15 active"><label class="pull-right">定价：</label></td>
