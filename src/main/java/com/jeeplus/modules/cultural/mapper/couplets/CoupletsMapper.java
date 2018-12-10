@@ -17,5 +17,8 @@ import java.util.List;
 @MyBatisMapper
 public interface CoupletsMapper extends BaseMapper<Couplets> {
     List<Couplets> getCoupletsList(String type);
+    List<Couplets> getRecommendCoupletsList(String type);
+    List<Couplets> getNotRecommendCoupletsList(String type);
     int getCount(String type);
+    List<Couplets> getIndexRecommendCoupletsList(String type);
 }

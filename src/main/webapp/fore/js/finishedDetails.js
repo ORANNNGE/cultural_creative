@@ -7,14 +7,16 @@
 function addFinishedOrder(){
     //其他成品id
     var finishedId = details.id;
-    var totalPrice = details.price;
+    var totalPrice = vm.totalPrice;
     var url = 'addFinishedOrder';
+    var num = vm.num;
     //订单id
     var orderId;
     console.log('*******');
     console.log(finishedId);
     console.log(finishedType);
     console.log(totalPrice);
+    console.log(num);
     console.log('*******');
 
     // console.log(num);
@@ -26,7 +28,7 @@ function addFinishedOrder(){
         'finishedId':finishedId,
         // 'finishedType':finishedType,
         'price':totalPrice,
-        // 'num':num,
+        'num':num,
     }
 
     $.ajax({

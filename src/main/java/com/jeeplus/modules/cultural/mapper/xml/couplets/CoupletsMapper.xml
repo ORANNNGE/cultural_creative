@@ -223,12 +223,116 @@
 		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
 		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
 		where lexicon.type = #{type}
+		order by a.create_date desc
 	</select>
 
 	<select id="getCount" resultType="java.lang.Integer">
 		select count(*) from cultural_couplets a
 		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
 		where lexicon.type= #{type}
+	</select>
+
+	<!--  查询推荐的楹联  -->
+	<select id="getRecommendCoupletsList" resultMap="CoupletsResult">
+		select
+		a.id AS "id",
+		a.name AS "name",
+		a.lexicon_id AS "lexicon.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.picture AS "picture",
+		a.details AS "details",
+		a.recommend AS "recommend",
+		a.price AS "price",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+
+		lexicon.title AS "lexicon.title",
+		lexicon.type AS "lexicon.type",
+		lexicon.isoriginal AS "lexicon.isOriginal",
+
+		size.name AS "size.name",
+		frame.name AS "frame.name",
+		craft.name AS "craft.name"
+
+		from cultural_couplets a
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+		where lexicon.type = #{type}
+		and a.recommend = '1'
+		order by a.create_date desc
+	</select>
+
+	<!--  查询四个推荐的楹联  -->
+	<select id="getIndexRecommendCoupletsList" resultMap="CoupletsResult">
+		select
+		a.id AS "id",
+		a.name AS "name",
+		a.lexicon_id AS "lexicon.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.picture AS "picture",
+		a.details AS "details",
+		a.recommend AS "recommend",
+		a.price AS "price",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+
+		lexicon.title AS "lexicon.title",
+		lexicon.type AS "lexicon.type",
+		lexicon.isoriginal AS "lexicon.isOriginal",
+
+		size.name AS "size.name",
+		frame.name AS "frame.name",
+		craft.name AS "craft.name"
+
+		from cultural_couplets a
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+		where lexicon.type = #{type}
+		and a.recommend = '1'
+		order by a.create_date desc
+		limit 0, 4
+	</select>
+
+	<!--  查询不是推荐的楹联  -->
+	<select id="getNotRecommendCoupletsList" resultMap="CoupletsResult">
+		select
+		a.id AS "id",
+		a.name AS "name",
+		a.lexicon_id AS "lexicon.id",
+		a.size_id AS "size.id",
+		a.frame_id AS "frame.id",
+		a.craft_id AS "craft.id",
+		a.picture AS "picture",
+		a.details AS "details",
+		a.recommend AS "recommend",
+		a.price AS "price",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+
+		lexicon.title AS "lexicon.title",
+		lexicon.type AS "lexicon.type",
+		lexicon.isoriginal AS "lexicon.isOriginal",
+
+		size.name AS "size.name",
+		frame.name AS "frame.name",
+		craft.name AS "craft.name"
+
+		from cultural_couplets a
+		LEFT JOIN cultural_lexicon lexicon ON lexicon.id = a.lexicon_id
+		LEFT JOIN cultural_size size ON size.id = a.size_id
+		LEFT JOIN cultural_frame frame ON frame.id = a.frame_id
+		LEFT JOIN cultural_craft craft ON craft.id = a.craft_id
+		where lexicon.type = #{type}
+		and a.recommend = '0'
+		order by a.create_date desc
 	</select>
 
 

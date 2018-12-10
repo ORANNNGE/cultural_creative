@@ -115,14 +115,14 @@ public class ForeController {
         for (Couplets c : couplets) {
             c.setPicture(c.getPicture().replace("|",""));
         }
-        //机关 楹联
-        List<Couplets>  government = new ArrayList<>();
+        //首页推荐的机关楹联
+        List<Couplets>  government = coupletsService.getIndexRecommendCoupletsList("1");
         //单位 楹联
-        List<Couplets>  company = new ArrayList<>();
+        List<Couplets>  company = coupletsService.getIndexRecommendCoupletsList("2");
         //家庭 楹联
-        List<Couplets>  home = new ArrayList<>();
+        List<Couplets>  home = coupletsService.getIndexRecommendCoupletsList("3");
         // 分别给三种楹联赋值
-        for (Couplets c : couplets) {
+/*        for (Couplets c : couplets) {
             if("1".equals(c.getLexicon().getType()) && government.size() < 4){
                 government.add(c);
             }
@@ -132,7 +132,7 @@ public class ForeController {
             if("3".equals(c.getLexicon().getType()) && home.size() < 4){
                 home.add(c);
             }
-        }
+        }*/
         //获取书画作品、装饰品和年画
         List<Calligraphy> calligraphies = calligraphyService.getNewest();
         List<Painting> paintings = paintingService.getNewest();
@@ -160,12 +160,19 @@ public class ForeController {
     @RequestMapping(value = "getCoupletsList")
     @ResponseBody
     public AjaxJson getCoupletsList(String type,Integer pageSize,Integer pageNum){
+        List<Couplets> recommendCouplets = new ArrayList<>();
+        if(pageNum == 1){
+            recommendCouplets = coupletsService.getRecommendCoupletsList(type);
+        }
         AjaxJson json = new AjaxJson();
         //调用PageHelper静态方法startPage()，必须要在查询数据库之前调用
         PageHelper.startPage(pageNum,pageSize);
-        List<Couplets> coupletsList = coupletsService.getCoupletsList(type);
+        List<Couplets> coupletsList = coupletsService.getNotRecommendCoupletsList(type);
+//        coupletsList.addAll(recommendCouplets);
+        coupletsList.addAll(0, recommendCouplets);
         //将查询出来的数据放入PageInfo
         PageInfo page = new PageInfo(coupletsList);
+
         json.put("page",page);
         return json;
     }
@@ -1002,7 +1009,7 @@ public class ForeController {
      */
     @RequestMapping(value="addFinishedOrder")
     @ResponseBody
-    public AjaxJson addFinishedOrder(String type, String finishedId,Double price, HttpServletRequest request){
+    public AjaxJson addFinishedOrder(String type, String finishedId,Double price, Integer num,HttpServletRequest request){
         AjaxJson json = new AjaxJson();
         String customerId = (String) request.getSession().getAttribute("customerId");
 //        customerId = "1538968164093";
@@ -1071,6 +1078,7 @@ public class ForeController {
         finishedOrder.setCustomer(customer);
         finishedOrder.setInstaller(null);
         finishedOrder.setStatus("1");
+        finishedOrder.setNum(num);
         finishedOrderService.save(finishedOrder);
 
         json.setErrorCode("1");

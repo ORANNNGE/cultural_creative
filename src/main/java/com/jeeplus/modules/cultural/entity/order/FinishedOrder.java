@@ -13,7 +13,7 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 /**
  * 其他成品订单Entity
  * @author orange
- * @version 2018-10-20
+ * @version 2018-12-04
  */
 public class FinishedOrder extends DataEntity<FinishedOrder> {
 	
@@ -22,6 +22,7 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 	private String name;		// 名称
 	private String finishedId;		// 其他成品id
 	private Double price;		// 价格
+	private Integer num;		// 数量
 	private Customer customer;		// 用户
 	private Address address;		// 收货地址
 	private Installer installer;		// 安装人员
@@ -71,7 +72,16 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 		this.price = price;
 	}
 	
-	@ExcelField(title="用户", fieldType=Customer.class, value="customer.nickname", align=2, sort=5)
+	@ExcelField(title="数量", align=2, sort=5)
+	public Integer getNum() {
+		return num;
+	}
+
+	public void setNum(Integer num) {
+		this.num = num;
+	}
+	
+	@ExcelField(title="用户", fieldType=Customer.class, value="customer.nickname", align=2, sort=6)
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -80,7 +90,7 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 		this.customer = customer;
 	}
 	
-	@ExcelField(title="收货地址", fieldType=Address.class, value="address.district", align=2, sort=6)
+	@ExcelField(title="收货地址", fieldType=Address.class, value="address.district", align=2, sort=7)
 	public Address getAddress() {
 		return address;
 	}
@@ -89,7 +99,7 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 		this.address = address;
 	}
 	
-	@ExcelField(title="安装人员", fieldType=Installer.class, value="installer.name", align=2, sort=7)
+	@ExcelField(title="安装人员", fieldType=Installer.class, value="installer.name", align=2, sort=8)
 	public Installer getInstaller() {
 		return installer;
 	}
@@ -98,7 +108,7 @@ public class FinishedOrder extends DataEntity<FinishedOrder> {
 		this.installer = installer;
 	}
 	
-	@ExcelField(title="订单状态", dictType="order_status", align=2, sort=8)
+	@ExcelField(title="订单状态", dictType="order_status", align=2, sort=9)
 	public String getStatus() {
 		return status;
 	}

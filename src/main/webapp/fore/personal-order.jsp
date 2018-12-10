@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="order-p">
                                     <p class="order-p-a" v-text="'￥'+item.price"></p>
-                                    <p class="order-p-c">X1</p>
+                                    <p class="order-p-c" v-text="'X'+item.num"></p>
                                 </div>
                             </div>
                         </div>

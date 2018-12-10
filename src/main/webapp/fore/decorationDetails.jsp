@@ -41,6 +41,7 @@
                 </div>
             </div>--%>
         </div>
+<!--
         <div class="coupm-low">
             <div class="coupletm-tit">
                 <span></span><h1>图文详情</h1><span></span>
@@ -53,7 +54,30 @@
                 <a href="##">立即购买</a>
             </div>
         </div>
-
+-->
+        <div class="thesam-low">
+            <div class="thesaurm-tit">
+                <span></span><h1>图文详情</h1><span></span>
+            </div>
+            <div class="thesaurm-intr">
+                <div class="thesam-intr-tit">作品简介</div>
+                <div v-html="details"></div>
+            </div>
+            <%--<div class="coupm-decor">
+                <div class="c-foot-img"><img src="images/index-s1.png" /> </div>
+                <div class="c-foot-img"><img src="images/index-s2.png" /> </div>
+            </div>--%>
+            <div class="thesam-a" >
+                <label>
+                    <p>数量</p>
+                    <input type="button" value="-" @click="minus"/>
+                    <input type="number" value="1" v-model="num"/>
+                    <input type="button" value="+" @click="plus"/>
+                </label>
+                <p class="thesam-a-pri"><span v-text="'总价：￥' + totalPrice" ></span></p>
+                <a href="###" onclick="addFinishedOrder()">立即购买</a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -8,6 +8,7 @@
 		a.name AS "name",
 		a.finished_id AS "finishedId",
 		a.price AS "price",
+		a.num AS "num",
 		a.customer_id AS "customer.id",
 		a.address_id AS "address.id",
 		a.installer_id AS "installer.id",
@@ -18,6 +19,7 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+				
 				
 				
 				
@@ -110,6 +112,7 @@
 			name,
 			finished_id,
 			price,
+			num,
 			customer_id,
 			address_id,
 			installer_id,
@@ -126,6 +129,7 @@
 			#{name},
 			#{finishedId},
 			#{price},
+			#{num},
 			#{customer.id},
 			#{address.id},
 			#{installer.id},
@@ -145,6 +149,7 @@
 			name = #{name},
 			finished_id = #{finishedId},
 			price = #{price},
+			num = #{num},
 			customer_id = #{customer.id},
 			address_id = #{address.id},
 			installer_id = #{installer.id},

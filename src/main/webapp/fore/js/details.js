@@ -127,6 +127,11 @@ var vm = new Vue({
         num:1,
 
     },
+    created:function(){
+        if(finishedType){
+            this.thePrice.price.price = details.price;
+        }
+    },
     computed: {
         details:function () {
             var text = this.data.details;

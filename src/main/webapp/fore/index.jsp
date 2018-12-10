@@ -9,15 +9,20 @@
     <link rel="stylesheet" href="css/style.css" />
     <script type="text/javascript" src="js/jquery.1.8.2.min.js" ></script>
     <script type="text/javascript" src="js/TouchSlide.1.1.js" ></script>
-    <title>天下诗联·楹联</title>
+    <title>天下诗联</title>
     <style>
         .txtMarquee-left{
-          padding-top: 2%;
+            padding-top: 2%;
         }
-        .txtMarquee-left p{
-            font-size: 14px;
-            line-height: 14px;
+        .info-size{
+            font-size: 0.14rem;
+            line-height: 0.16rem;
+            color:	#ff0000;
         }
+        .tempWrap{
+
+        }
+
     </style>
 </head>
 <body>
@@ -27,8 +32,8 @@
         <div class="bd">
             <ul>
                 <li><a href="#"><img src="images/tianxianshilian.png" /></a></li>
-                <li><a href="#"><img src="images/tianxianshilian.png" /></a></li>
-                <li><a href="#"><img src="images/tianxianshilian.png" /></a></li>
+                <li><a href="#"><img src="images/tianxianshilian2.png" /></a></li>
+                <li><a href="#"><img src="images/tianxianshilian3.png" /></a></li>
             </ul>
         </div>
         <div class="hd">
@@ -36,8 +41,13 @@
         </div>
     </div>
     <!-- 滚动消息 -->
-    <div class="txtMarquee-left">
-        <p style=""><nobr>平台商城展示春联均为原创作品，凝聚着作者心血，已申请版权保护，未经许可，不得使用。</nobr></p>
+    <div class="txtMarquee-top">
+        <div class="bd">
+            <ul>
+                <li><a target="_blank" class="info-size">平台商城展示春联均为原创作品，凝聚着作者心血</a></li>
+                <li><a target="_blank" class="info-size">已申请版权保护，未经许可，不得使用</a></li>
+            </ul>
+        </div>
     </div>
     <div class="middle" >
         <!--家庭成品楹联-->
@@ -117,7 +127,7 @@
                 <div class="igra-ul">
                     <ul>
                         <li v-for="(item,index) in clgpAndPntData">
-                                <div v-if="index%2 != 1">
+                            <div v-if="index%2 != 1">
                                 <div class="igra-bg"><img src="images/index-shbg.png" /> </div>
                                 <div class="igra-div" @click="clgrafAndPaintDetails(item.id)">
                                     <a class="igra-img" ><img :src="item.picture" /></a>
@@ -187,7 +197,8 @@
 <script src="js/index.js"></script>
 <script type="text/javascript">
 
-    jQuery(".txtMarquee-left").slide({mainCell:"p",autoPlay:true,effect:"leftMarquee",interTime:50,trigger:"click"});
+    //jQuery(".txtMarquee-left").slide({mainCell:"p",autoPlay:true,effect:"leftMarquee",interTime:50,trigger:"click"});
+    jQuery(".txtMarquee-top").slide({mainCell:".bd ul",autoPlay:true,effect:"topMarquee",vis:1,interTime:100,trigger:"click"});
     TouchSlide({
         slideCell:"#lunbo",
         titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
